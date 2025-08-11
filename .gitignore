@@ -4,13 +4,13 @@ objs
 # Ignore cub3d
 cub3d
 
-# Ignore all object files in 42-Complete-Library
-42-Complete-Library/**/*.o
+# Ignore all object files in complete-lib
+complete_lib/*/*.o
 
 # Ignore specific static libraries
-42-Complete-Library/complete_lib/42_GNL/libgnl.a
-42-Complete-Library/complete_lib/42_Libft/libft.a
-42-Complete-Library/complete_lib/42_Printf/libftprintf.a
+complete_lib/42_GNL/libgnl.a
+complete_lib/42_Libft/libft.a
+complete_lib/42_Printf/libftprintf.a
 
 # Ignore VSCode settings
 .vscode
