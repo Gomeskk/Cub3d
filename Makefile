@@ -15,18 +15,18 @@ WHITE   = \e[1;37m
 DEFAULT = \e[0m
 
 # Variables
-MLX_DIR = 42-Complete-Library/complete_lib/minilibx-linux
+MLX_DIR = complete_lib/minilibx-linux
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 INCLUDES = inc/
 IFLAGS = -I $(INCLUDES) -I $(MLX_DIR)
 
 # Library paths
-LIBFT_PATH      = 42-Complete-Library/complete_lib/42_Libft
+LIBFT_PATH      = complete_lib/42_Libft
 LIBFT           = $(LIBFT_PATH)libft.a
-FT_PRINTF_PATH  = 42-Complete-Library/complete_lib/42_Printf
+FT_PRINTF_PATH  = complete_lib/42_Printf
 FT_PRINTF       = $(FT_PRINTF_PATH)libftprintf.a
-GNL_PATH        = 42-Complete-Library/complete_lib/42_GNL
+GNL_PATH        = complete_lib/42_GNL
 GNL             = $(GNL_PATH)libgnl.a
 PERSONAL_LIBS   = -lft -lgnl -lftprintf
 
