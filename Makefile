@@ -47,7 +47,7 @@ all: mlx $(NAME)
 
 # Build mlx library if missing
 $(MLX_DIR)/libmlx_Linux.a:
-	@make -C $(MLX_DIR) # > /dev/null 2>&1
+	@make -C $(MLX_DIR)  > /dev/null 2>&1
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ && \
@@ -75,7 +75,7 @@ $(GNL):
 
 clean:
 	@echo "$(RED)Cleaning object files...$(RESET)"
-	@make clean -C $(MLX_DIR) # > /dev/null 2>&1
+	@make clean -C $(MLX_DIR)  > /dev/null 2>&1
 	@make clean -C $(LIBFT_PATH)
 	@make clean -C $(FT_PRINTF_PATH)
 	@make clean -C $(GNL_PATH)
@@ -89,7 +89,7 @@ clean:
 
 fclean: clean
 	@echo "$(RED)Cleaning executable...$(RESET)"
-	@make clean -C $(MLX_DIR) # > /dev/null 2>&1
+	@make clean -C $(MLX_DIR)  > /dev/null 2>&1
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(FT_PRINTF_PATH)
 	@make fclean -C $(GNL_PATH)
