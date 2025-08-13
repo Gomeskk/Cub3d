@@ -40,7 +40,7 @@ TOTAL_SRCS = $(words $(SRCS))
 FILES = 0
 
 # Combined library flags
-LIBS = -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
+LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 
 # Ensure mlx lib is built before building our project
 all: mlx $(NAME)
