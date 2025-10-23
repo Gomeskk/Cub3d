@@ -11,6 +11,10 @@
 # include <string.h>
 # include <unistd.h>
 
+# define WRONG_ARGC "cub3d: singular map argument expected."
+# define WRONG_MAP "cub3d: .cub file extended argument expected."
+# define MAP_ERROR "cub3d: map error."
+
 # define HEIGHT 1080
 # define WIDTH 1920
 # define TILE_SIZE 64
@@ -81,6 +85,10 @@ typedef struct s_cub3d
 	t_keys		keys;
 	t_mouse		mouse;
 }				t_cub3d;
+
+//PARSER
+int	check_map_name(char *map);
+int	read_map(char *map, t_cub3d *data);
 
 // map
 //static int	    count_lines(char *file);

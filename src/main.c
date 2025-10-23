@@ -1,7 +1,7 @@
 
 #include "cub3d.h"
 
-static int	close_game(t_cub3d *game)
+int	close_game(t_cub3d *game)
 {
 	free_map(&game->map);
 	mlx_destroy_window(game->mlx, game->window);
@@ -10,13 +10,13 @@ static int	close_game(t_cub3d *game)
 	exit(0);
 }
 
-static int	handle_key(int keycode, t_cub3d *game)
+int	handle_key(int keycode, t_cub3d *game)
 {
 	if (keycode == 65307) // ESC key in X11
 		close_game(game);
 	return (0);
 }
-
+/*+
 int	main(void)
 {
 	t_cub3d	game;
@@ -29,7 +29,7 @@ int	main(void)
 		return (1);
 	if (load_map(&game.map, "maps/test_map.cub"))
 		return (1);
-	if (!validate_map(&game.map))
+		if (!validate_map(&game.map))
 	{
 		free_map(&game.map);
 		return (1);
@@ -41,7 +41,7 @@ int	main(void)
 	return (0);
 }
 
-/* static int	handle_key(int keycode, void *param)
+static int	handle_key(int keycode, void *param)
 {
 	(void)param;
 	if (keycode == XK_Escape)
@@ -76,7 +76,7 @@ int	main(void)
 	}
 	printf("Map loaded: rows=%d cols=%d\n", game.map.row_count,
 		game.map.col_count);
-	if (!validate_map(&game.map))
+		if (!validate_map(&game.map))
 	{
 		fprintf(stderr,
 			"validate_map() failed (map not rectangular or not enclosed)\n");
