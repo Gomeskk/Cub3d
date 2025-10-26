@@ -4,9 +4,9 @@
 
 # include "../complete_lib/42_GNL/get_next_line_bonus.h"
 # include "../complete_lib/42_Libft/libft.h"
+# include "../complete_lib/minilibx-linux/mlx.h"
+# include "../complete_lib/minilibx-linux/mlx_int.h"
 # include <fcntl.h>
-# include <mlx.h>
-# include <mlx_int.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
