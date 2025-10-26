@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:12:33 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/10/23 17:25:23 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/10/26 18:17:32 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,4 @@ int	main(int argc, char **argv)
 		return (ft_putendl_fd(MAP_ERROR, 2), 1);
 	free_ar((void **)data.map.map);
 }
+
