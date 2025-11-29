@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:49:54 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/06/16 18:56:27 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/11/05 22:35:04 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int is_space(char c)
 	else
 		return (0);
 }
+
 
 // int	main(void)
 // {

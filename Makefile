@@ -35,11 +35,11 @@ OBJS 			= $(SRCS:%.c=$(OBJ_DIR)%.o)
 
 # Library paths
 LIBFT_PATH      = complete_lib/42_Libft
-LIBFT           = $(LIBFT_PATH)libft.a
+LIBFT           = $(LIBFT_PATH)/libft.a
 FT_PRINTF_PATH  = complete_lib/42_Printf
-FT_PRINTF       = $(FT_PRINTF_PATH)libftprintf.a
+FT_PRINTF       = $(FT_PRINTF_PATH)/libftprintf.a
 GNL_PATH        = complete_lib/42_GNL
-GNL             = $(GNL_PATH)libgnl.a
+GNL             = $(GNL_PATH)/libgnl.a
 PERSONAL_LIBS   = -lft -lgnl -lftprintf
 LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 

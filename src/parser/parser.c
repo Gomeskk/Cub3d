@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:21:01 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/10/23 17:33:17 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/11/09 16:01:57 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	read_map(char *map, t_cub3d *data)
 	line = get_next_line(fd);
 	while (line)
 	{
-		trim =ft_strtrim(line, "\n");
+		trim = ft_strtrim(line, "\n");
 		data->map.map[i] = ft_strdup(trim);
-		printf("map -> %s\n", data->map.map[i]);
 		free(trim);
 		free(line);
 		line = get_next_line(fd);

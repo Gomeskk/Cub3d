@@ -12,8 +12,16 @@
 # include <unistd.h>
 
 # define WRONG_ARGC "cub3d: singular map argument expected."
-# define WRONG_MAP "cub3d: .cub file extended argument expected."
+# define WRONG_MAP_NAME "cub3d: .cub argument extended expected."
 # define MAP_ERROR "cub3d: map error."
+# define WRONG_MAP "cub3d: non acceptable map."
+# define NO_IDENTIFIERS "cub3d: non acceptable identifiers."
+# define INV_NO "cub3d: invalid or duplicate 'NO'."
+# define INV_SO "cub3d: invalid or duplicate 'SO'."
+# define INV_EA "cub3d: invalid or duplicate 'EA'."
+# define INV_WE "cub3d: invalid or duplicate 'WE'."
+# define INV_CEILING "cub3d: invalid or duplicate 'C'."
+# define INV_FLOOR "cub3d: invalid or duplicate 'F'."
 
 # define HEIGHT 1080
 # define WIDTH 1920
@@ -39,6 +47,7 @@ typedef struct s_map
 {
 	char		**map;
 	char		**map_cpy;
+	int			start;
 	int			row_count;
 	int			col_count;
 }				t_map;
@@ -74,10 +83,21 @@ typedef enum e_status
 	CREDITS,
 }				t_status;
 
+typedef	struct s_textures
+{
+	int			floor;
+	int			ceiling;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+}				t_textures;
+
 typedef struct s_cub3d
 {
 	void		*mlx;
 	void		*window;
+	t_textures	textures;
 	t_status	status;
 	t_tiles		tiles;
 	t_map		map;
@@ -86,9 +106,15 @@ typedef struct s_cub3d
 	t_mouse		mouse;
 }				t_cub3d;
 
-//PARSER
-int	check_map_name(char *map);
-int	read_map(char *map, t_cub3d *data);
+//			PARSER			//
+int		check_map_name(char *map);
+int		read_map(char *map, t_cub3d *data);
+
+//			FREE			//
+void	free_all(t_cub3d *data);
+
+
+
 
 // map
 //static int	    count_lines(char *file);
