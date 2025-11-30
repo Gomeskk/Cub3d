@@ -44,7 +44,7 @@ PERSONAL_LIBS   = -lft -lgnl -lftprintf
 LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 
 ### MLX COMPILE FLAGS ###
-MLX_CC			= -L complete_lib/minilibx-linux -lmlx -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 MLX_INC			= -I/usr/include -Imlx_linux -O3 
 
 

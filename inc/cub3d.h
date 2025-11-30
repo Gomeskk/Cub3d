@@ -46,10 +46,11 @@ typedef struct s_tiles
 typedef struct s_map
 {
 	char		**map;
-	char		**map_cpy;
+	char		**grid;
 	int			start;
 	int			row_count;
 	int			col_count;
+	int			start_point;
 }				t_map;
 
 typedef struct s_player

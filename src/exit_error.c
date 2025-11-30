@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:14:59 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/11/23 16:15:55 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/11/30 20:13:41 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,6 @@ void	free_all(t_cub3d *data)
 		free(data->textures.so);
 	if (data->map.map)
 		free_ar((void **)data->map.map);
+	if (data->map.grid)
+		free_ar((void **)data->map.grid);
 }
