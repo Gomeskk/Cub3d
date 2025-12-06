@@ -19,10 +19,10 @@ CFLAGS 			= -Wall -Wextra -Werror -g
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) cub3d.c exit_error.c
+SRCS 			= $(PARSER_SRCS) cub3d.c exit_error.c init.c test.c utils.c
 SRC_DIR 		= src/
 
-PARSER_SRCS		= parser.c
+PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
 
