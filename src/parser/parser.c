@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:21:01 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 17:05:49 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/06 22:17:31 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,6 @@ int	parse_identifiers(t_cub3d *data)
 	char	*line;
 	int		flag;
 
-	data->textures.no = NULL;
-	data->textures.so = NULL;
-	data->textures.ea = NULL;
-	data->textures.we = NULL;
-	data->textures.floor = -1;
-	data->textures.ceiling = -1;
 	i = 0;
 	flag = 0;
 	if (!data->map.map)

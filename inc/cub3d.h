@@ -33,6 +33,9 @@ typedef struct s_cub3d
 	t_mouse		mouse;
 }				t_cub3d;
 
+//			INIT			//
+void    init_data(t_cub3d *data);
+
 //			PARSER			//
 int		parse_map(t_cub3d *data);
 int		parse_texture(char *s, char **dest, char *texture, int flag, t_cub3d *data);
