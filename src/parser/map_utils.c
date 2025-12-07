@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:26:03 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 22:14:43 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/06 22:55:19 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	read_map(char *map, t_cub3d *data)
 
 	i = 0;
 	fd = open(map, O_RDONLY);
-		if (fd < 0)
-			return (0);
+	if (fd < 0)
+		return (0);
 	data->map.row_count = count_lines(map);
 	data->map.map = malloc(sizeof(char *) * (data->map.row_count + 1));
 	if (!data->map.map)

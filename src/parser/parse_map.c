@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:23:51 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 22:18:14 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/07 01:33:48 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ int has_space_neighbor(char **g, int r, int c)
 
 int	parse_map(t_cub3d *data)
 {
+	printf("a");
 	if (!data->map.map || !data->map.map[data->map.start])
 		return (0);
+	data->map.row_count = 0;
 	//get max len NON RECTANGULAR MAP >:C
 	while (data->map.map[data->map.start + data->map.row_count])
 	{
