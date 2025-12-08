@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:12:33 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/01 16:37:11 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/06 22:53:01 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	main(int argc, char **argv)
 {
 	t_cub3d	data;
-	
+
+	init_data(&data);
 	if (argc != 2)
 		return (ft_putendl_fd(WRONG_ARGC, 2), 1);
 	if (!check_map_name(argv[1]))
