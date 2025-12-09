@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:25:34 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 17:50:57 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/09 00:20:13 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ int	is_closed(t_cub3d *data)
 
 void	indetifier_checker(t_cub3d *data)
 {
-	if (!data->textures.no)
+	if (!data->textures.no || data->textures.no[0] == '1')
 		ft_putendl_fd(NO_MISSING, 2);
-	if (!data->textures.so)
+	if (!data->textures.so || data->textures.so[0] == '1')
 		ft_putendl_fd(SO_MISSING, 2);
-	if (!data->textures.ea)
+	if (!data->textures.ea || data->textures.ea[0] == '1')
 		ft_putendl_fd(EA_MISSING, 2);
-	if (!data->textures.we)
+	if (!data->textures.we || data->textures.we[0] == '1')
 		ft_putendl_fd(WE_MISSING, 2);
 	if (data->textures.ceiling == -1)
 		ft_putendl_fd(C_MISSING, 2);
 	if (data->textures.floor == -1)
 		ft_putendl_fd(F_MISSING, 2);
-	if (!data->textures.no || !data->textures.so || !data->textures.we || !data->textures.ea || data->textures.ceiling == -1 || data->textures.floor == -1)
+	if (!data->textures.no || data->textures.no[0] == '1' ||  !data->textures.so || data->textures.so[0] == '1' || !data->textures.we || data->textures.we[0] == '1' || !data->textures.ea || data->textures.ea[0] == '1' || data->textures.ceiling == -1 || data->textures.floor == -1)
 	{
 		ft_putendl_fd(TEXTURES, 2);
 		exit_error(data, EXAMPLE);
