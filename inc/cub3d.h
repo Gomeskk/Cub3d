@@ -10,6 +10,7 @@
 # include <unistd.h>
 # include "defines.h"
 # include "structs.h"
+# include "keys.h"
 
 /* typedef struct s_img
 {
@@ -22,15 +23,17 @@
 
 typedef struct s_cub3d
 {
-	void		*mlx;
-	void		*window;
-	t_textures	textures;
-	t_status	status;
-	t_tiles		tiles;
-	t_map		map;
-	t_player	player;
-	t_keys		keys;
-	t_mouse		mouse;
+	void			*mlx;
+	void			*window;
+	t_textures		textures;
+	t_status		status;
+	t_tiles			tiles;
+	t_map			map;
+	t_player		player;
+	t_keys			keys;
+	t_mouse			mouse;
+	t_menu			menu;
+	t_game_settings	game_settings;
 }				t_cub3d;
 
 //			INIT			//
@@ -65,6 +68,15 @@ int 	has_space_neighbor(char **g, int r, int c);
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
 void	exit_error(t_cub3d *data, char *message);
+
+//			MENU			//
+int		init_menu_images(t_cub3d *data);
+void	init_menu_state(t_cub3d *data);
+void	cleanup_menu(t_cub3d *data);
+int		handle_main_menu_keys(int keycode, t_cub3d *data);
+int		handle_difficulty_keys(int keycode, t_cub3d *data);
+int		menu_key_handler(int keycode, t_cub3d *data);
+void	render_main_menu(t_cub3d *data);
 
 //			TESTER				//
 void	print_rgb(int color);

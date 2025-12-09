@@ -4,6 +4,13 @@
 # include "../complete_lib/minilibx-linux/mlx.h"
 # include "../complete_lib/minilibx-linux/mlx_int.h"
 
+typedef struct s_menu_img
+{
+	void		*image;
+	int			width;
+	int			height;
+}				t_menu_img;
+
 typedef struct s_tiles
 {
 	t_img		wall;
@@ -60,5 +67,29 @@ typedef	struct s_textures
 	char		*we;
 	char		*ea;
 }				t_textures;
+
+typedef struct s_menu
+{
+	t_menu_img	start_normal;
+	t_menu_img	start_hover;
+	t_menu_img	start_selected;
+	t_menu_img	diff_easy;
+	t_menu_img	diff_medium;
+	t_menu_img	diff_hard;
+	t_menu_img	arrow_up;
+	t_menu_img	arrow_down;
+	t_menu_img	sensibility[4];
+	t_menu_img	credits_screen;
+	int			menu_choice;
+	int			difficulty_choice;
+	int			sensibility_level;
+}				t_menu;
+
+typedef struct s_game_settings
+{
+	int			player_health;
+	float		enemy_speed_mult;
+	float		enemy_damage_mult;
+}				t_game_settings;
 
 #endif

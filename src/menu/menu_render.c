@@ -2,29 +2,22 @@
 
 void	render_main_menu(t_cub3d *data)
 {
-/* 	mlx_clear_window(data->mlx, data->window);
+	mlx_clear_window(data->mlx, data->window);
 	
-	To center an image, calculate: x = (WIDTH - img_width) / 2, y = (HEIGHT - img_height) / 2
-	Or position at (0, 0) if image is full screen
-	
-	Switch based on menu_choice:
-	case 0: // Start Game option
-	    mlx_put_image_to_window(data->mlx, data->window, 
-	        data->menu.start_normal.image, 0, 0);
-	    break;
-	case 1: // Difficulty option
-	    mlx_put_image_to_window(data->mlx, data->window,
-	        data->menu.start_hover.image, 0, 0);
-	    break;
-	case 2: // Credits option
-	    mlx_put_image_to_window(data->mlx, data->window,
-	        data->menu.start_selected.image, 0, 0);
-	    break; */
+	if (data->menu.menu_choice == 0)
+		mlx_put_image_to_window(data->mlx, data->window,
+			data->menu.start_normal.image, 0, 0);
+	else if (data->menu.menu_choice == 1)
+		mlx_put_image_to_window(data->mlx, data->window,
+			data->menu.start_hover.image, 0, 0);
+	else if (data->menu.menu_choice == 2)
+		mlx_put_image_to_window(data->mlx, data->window,
+			data->menu.start_selected.image, 0, 0);
 }
 
-void	render_difficulty_menu(t_cub3d *data)
+/* void	render_difficulty_menu(t_cub3d *data)
 {
-/* 	mlx_clear_window(data->mlx, data->window);
+	mlx_clear_window(data->mlx, data->window);
 	
 	if difficulty_choice == 0:
 	    mlx_put_image_to_window(data->mlx, data->window,
@@ -40,21 +33,21 @@ void	render_difficulty_menu(t_cub3d *data)
 	mlx_put_image_to_window(data->mlx, data->window,
 	    data->menu.arrow_up.image, ARROW_X, ARROW_UP_Y);
 	mlx_put_image_to_window(data->mlx, data->window,
-	    data->menu.arrow_down.image, ARROW_X, ARROW_DOWN_Y); */
-}
-
+	    data->menu.arrow_down.image, ARROW_X, ARROW_DOWN_Y);
+} */
+/* 
 void	render_credits(t_cub3d *data)
 {
-/* 	mlx_clear_window(data->mlx, data->window);
+	mlx_clear_window(data->mlx, data->window);
 	mlx_put_image_to_window(data->mlx, data->window,
 	    data->menu.credits_screen.image, 0, 0);
 	mlx_string_put(data->mlx, data->window,
-	    WIDTH/2, HEIGHT - 50, 0xFFFFFF, "Press ESC to return"); */
-}
+	    WIDTH/2, HEIGHT - 50, 0xFFFFFF, "Press ESC to return");
+} */
 
-int	render_game_handler(t_cub3d *data)
+/* int	render_game_handler(t_cub3d *data)
 {
-/* 	static double time = 0;
+	static double time = 0;
 	time += get_delta_time(); // You need to implement this
 	if time >= 1.0 / FPS:
 	    switch data->status:
@@ -71,5 +64,5 @@ int	render_game_handler(t_cub3d *data)
 	            render_gameplay(data); // Your actual game rendering
 	            break;
 	    time = 0;
-	return 0; */
-}
+	return 0;
+} */

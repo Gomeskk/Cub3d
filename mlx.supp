@@ -1,0 +1,87 @@
+{
+   MLX_Init_Leak
+   Memcheck:Leak
+   ...
+   fun:mlx_init
+}
+
+{
+   X11_OpenDisplay_Leak
+   Memcheck:Leak
+   ...
+   fun:XOpenDisplay
+}
+
+{
+   XCB_Connect_Leak
+   Memcheck:Leak
+   ...
+   fun:xcb_connect_to_fd
+}
+
+{
+   XCB_Extension_Leak
+   Memcheck:Leak
+   ...
+   fun:xcb_get_extension_data
+}
+
+{
+   X11_Extension_Leak
+   Memcheck:Leak
+   ...
+   fun:XInitExtension
+}
+
+{
+   Xkb_Leak
+   Memcheck:Leak
+   ...
+   fun:XkbGetMap
+}
+
+{
+   XShm_Leak
+   Memcheck:Leak
+   ...
+   fun:XShmQueryVersion
+}
+
+{
+   MLX_New_Window_Leak
+   Memcheck:Leak
+   ...
+   fun:mlx_new_window
+}
+
+{
+   MLX_XPM_Leak
+   Memcheck:Leak
+   ...
+   fun:mlx_xpm_file_to_image
+}
+
+{
+   X11_Uninit_Value
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:mlx_init
+}
+
+{
+   X11_Uninit_Value_Window
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:mlx_new_window
+}
+
+{
+   X11_XFlush_Leak
+   Memcheck:Leak
+   ...
+   fun:XFlush
+}

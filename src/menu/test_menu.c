@@ -1,0 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*   test_menu.c - Test menu initialization and image loading                */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/cub3d.h"
+#include <stdio.h>
+
+
+/* tor run for testing : 
+cd /home/gomes/Cub3d
+gcc -o test_menu src/menu/test_menu.c src/menu/menu_init.c src/menu/menu_events.c src/menu/menu_render.c \
+  -I./inc -I./complete_lib/minilibx-linux \
+  complete_lib/minilibx-linux/libmlx.a \
+  -L./complete_lib/42_Libft -lft \
+  -lXext -lX11 -lm
+./test_menu
+ */
+int	close_window(t_cub3d *data)
+{
+	cleanup_menu(data);
+	mlx_destroy_window(data->mlx, data->window);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	exit(0);
+	return (0);
+}
+
+int	main(void)
+{
+	t_cub3d	data;
+	data.mlx = mlx_init();
+	if (!data.mlx)
+	{
+		printf("Error: Failed to initialize MLX\n");
+		return (1);
+	}
+	data.window = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Menu Test"); // Create window
+	if (!data.window)
+	{
+		printf("Error: Failed to create window\n");
+		free(data.mlx);
+		return (1);
+	}
+	printf("Loading menu images...\n");
+	if (init_menu_images(&data) == -1)
+	{
+		printf("Error: Failed to load menu images\n");
+		mlx_destroy_window(data.mlx, data.window);
+		mlx_destroy_display(data.mlx);
+		free(data.mlx);
+		return (1);
+	}
+	printf("✓ Menu images loaded successfully!\n");
+	init_menu_state(&data);// Initialize menu state
+	printf("✓ Menu state initialized\n");
+	printf("  - menu_choice: %d\n", data.menu.menu_choice);
+	printf("  - difficulty_choice: %d\n", data.menu.difficulty_choice);
+	printf("  - sensibility_level: %d\n", data.menu.sensibility_level);
+	printf("  - status: %d (MENU=%d)\n", data.status, MENU);
+	printf("\nDisplaying menu (use UP/DOWN or W/S to navigate)...\n");// Display the first menu image (start_normal)
+	mlx_put_image_to_window(data.mlx, data.window,
+		data.menu.start_normal.image, 0, 0);
+	printf("✓ Image displayed at (0, 0)\n");
+	printf("  - Image dimensions: %dx%d\n",
+		data.menu.start_normal.width, data.menu.start_normal.height);
+	mlx_hook(data.window, 17, 0, close_window, &data); 	// Setup hooks
+	mlx_key_hook(data.window, menu_key_handler, &data);
+	printf("\n=== Test Complete ===\n");
+	printf("Controls:\n");
+	printf("  UP/DOWN or W/S: Navigate menu\n");
+	printf("  ENTER/SPACE: Select option\n");
+	printf("  ESC: Exit\n\n");
+	mlx_loop(data.mlx);// Start MLX loop
+	return (0);
+}
