@@ -1,26 +1,3 @@
-/* typedef struct s_menu
-{
-    // Main menu images
-    t_img   start_normal;      // Main menu - no selection
-    t_img   start_hover;       // Main menu - hovering state
-    t_img   start_selected;    // Main menu - selected state
-    
-    // Difficulty selection images
-    t_img   diff_easy;         // Easy difficulty screen
-    t_img   diff_medium;       // Medium difficulty screen
-    t_img   diff_hard;         // Hard difficulty scre
-    // Navigation elements
-    t_img   arrow_up;          // Up arrow indicator
-    t_img   arrow_down;        // Down arrow indicator
-    
-    // Sensibility images (array of 4 states) for mouse sensitivity
-    t_img   sensibility[4];    // Indices: 0=0.0, 1=0.5, 2=1.5, 3=2.0
-    
-    // Other screens
-    t_img   credits_screen;    // Credits display
-    
-}   t_menu; */
-
 /* Store gameplay parameters affected by difficulty/settings */
 /* typedef struct s_game_settings
 {
@@ -51,26 +28,6 @@ double          fps_timer;            // Timer for FPS limiting */
     CREDITS,           // Credits screen
     GAME,              // Active gameplay
 }   t_status; */
-
-/* Linux/X11 keycodes for minilibx-linux */
-// // Keyboard keycodes Linux/X11 tenho de ir ver os numeros
-// # define KEY_ESC        
-// # define KEY_W
-// # define KEY_A
-// # define KEY_S
-// # define KEY_D
-// # define KEY_UP
-// # define KEY_DOWN
-// # define KEY_LEFT
-// # define KEY_RIGHT
-// # define KEY_SPACE
-// # define KEY_RETURN
-// # define KEY_ENTER
-// # define KEY_SHIFT
-// # define KEY_CTRL
-// # define KEY_TAB
-// # define KEY_E
-
 
 /* // Menu initialization
 int     init_menu_images(t_cub3d *data);
