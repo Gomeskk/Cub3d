@@ -10,12 +10,11 @@
 
 /* tor run for testing : 
 cd /home/gomes/Cub3d
-gcc -o test_menu src/menu/test_menu.c src/menu/menu_init.c src/menu/menu_events.c src/menu/menu_render.c \
+gcc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_init.c src/menu/menu_events.c src/menu/menu_render.c \
   -I./inc -I./complete_lib/minilibx-linux \
   complete_lib/minilibx-linux/libmlx.a \
   -L./complete_lib/42_Libft -lft \
   -lXext -lX11 -lm
-./test_menu
  */
 int	close_window(t_cub3d *data)
 {

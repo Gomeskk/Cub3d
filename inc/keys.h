@@ -18,5 +18,6 @@
 # define KEY_CTRL       65507
 # define KEY_TAB        65289
 # define KEY_E          101
+# define KEY_BACKSPACE  65288
 
 #endif

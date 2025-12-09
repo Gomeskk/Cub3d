@@ -77,6 +77,8 @@ int		handle_main_menu_keys(int keycode, t_cub3d *data);
 int		handle_difficulty_keys(int keycode, t_cub3d *data);
 int		menu_key_handler(int keycode, t_cub3d *data);
 void	render_main_menu(t_cub3d *data);
+void	render_difficulty_menu(t_cub3d *data);
+void	render_credits(t_cub3d *data);
 
 //			TESTER				//
 void	print_rgb(int color);
