@@ -6,28 +6,20 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:21:01 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 22:52:25 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/09 00:22:21 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	parse_texture(char *s, char **dest, char *texture, int flag, t_cub3d *data)
+int	parse_texture(char *s, char **dest)
 {
 	while (*s && is_space(*s))
 		s++;
 	if (!*s)
-	{
-		ft_putstr_fd("cub3d: '", 2);
-		ft_putstr_fd(texture, 2);
-		ft_putendl_fd("' path to texture is required.", 2);
-		if (flag == 4)
-		{
-			ft_putendl_fd(TEXTURES, 2);
-			exit_error(data, EXAMPLE);
-		}
-	}
-	*dest = ft_strdup(s);
+		*dest = ft_strdup("1");
+	else
+		*dest = ft_strdup(s);
 	return (*dest != NULL);
 }
 
@@ -90,10 +82,8 @@ int	parse_identifiers(t_cub3d *data)
 {
 	int		i;
 	char	*line;
-	int		flag;
 
 	i = 0;
-	flag = 0;
 	if (!data->map.map)
 		return (0);
 	while (data->map.map[i] && is_empty_line(data->map.map[i]))
@@ -115,29 +105,25 @@ int	parse_identifiers(t_cub3d *data)
 		}
 		if (!ft_strncmp(line, "NO", 2) && is_space(line[2]))
 		{
-			flag = flag + 1;
-			if (data->textures.no || !parse_texture(&line[2], &data->textures.no, "NO", flag, data))
+			if (data->textures.no || !parse_texture(&line[2], &data->textures.no))
 				exit_error(data, DUP_NO);
 		}
 			
 		else if (!ft_strncmp(line, "SO", 2) && is_space(line[2]))
 		{
-			flag = flag + 1;
-			if (data->textures.so || !parse_texture(&line[2], &data->textures.so, "SO", flag, data))
+			if (data->textures.so || !parse_texture(&line[2], &data->textures.so))
 				exit_error(data, DUP_SO);
 			
 		}
 		else if (!ft_strncmp(line, "EA", 2) && is_space(line[2]))
 		{
-			flag = flag + 1;
-			if (data->textures.ea || !parse_texture(&line[2], &data->textures.ea, "EA", flag, data))
+			if (data->textures.ea || !parse_texture(&line[2], &data->textures.ea))
 				exit_error(data, DUP_EA);
 		}
 			
 		else if (!ft_strncmp(line, "WE", 2) && is_space(line[2]))
 		{
-			flag = flag + 1;
-			if (data->textures.we || !parse_texture(&line[2], &data->textures.we, "WE", flag, data))
+			if (data->textures.we || !parse_texture(&line[2], &data->textures.we))
 				exit_error(data, DUP_WE);
 		}
 			

@@ -38,7 +38,7 @@ void    init_data(t_cub3d *data);
 
 //			PARSER			//
 int		parse_map(t_cub3d *data);
-int		parse_texture(char *s, char **dest, char *texture, int flag, t_cub3d *data);
+int		parse_texture(char *s, char **dest);
 int		parse_colour(char *s, int *dest, t_cub3d *data);
 int		parse_identifiers(t_cub3d *data);
 
