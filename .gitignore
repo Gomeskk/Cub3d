@@ -1,5 +1,5 @@
 # Ignore build artifacts
-objs
+obj
 
 # Ignore cub3d
 cub3d
