@@ -19,7 +19,7 @@ CFLAGS 			= -Wall -Wextra -Werror -g
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) cub3d.c exit_error.c init.c test.c utils.c
+SRCS 			= $(PARSER_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c
 SRC_DIR 		= src/
 
 PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
@@ -44,7 +44,7 @@ PERSONAL_LIBS   = -lft -lgnl -lftprintf
 LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 
 ### MLX COMPILE FLAGS ###
-MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -lm -lz
 MLX_INC			= -I/usr/include -Imlx_linux -O3 
 
 

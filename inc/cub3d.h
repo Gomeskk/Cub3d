@@ -8,6 +8,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <time.h>
 # include "defines.h"
 # include "structs.h"
 
@@ -24,6 +25,7 @@ typedef struct s_cub3d
 {
 	void		*mlx;
 	void		*window;
+	t_img		img;
 	t_textures	textures;
 	t_status	status;
 	t_tiles		tiles;
@@ -61,10 +63,17 @@ char	**build_grid(t_cub3d *data);
 int		is_map_line(char c);
 int 	has_space_neighbor(char **g, int r, int c);
 
+//			2DGAME			//
+void	pixel_put(t_img *img, int y, int x, int color);
+void	draw_minimap(t_cub3d *data);
+void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
+void	game_start(t_cub3d *data);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
 void	exit_error(t_cub3d *data, char *message);
+int		x_window(t_cub3d *data);
+void	exit_game(char *end_game, t_cub3d *data);
 
 //			TESTER				//
 void	print_rgb(int color);

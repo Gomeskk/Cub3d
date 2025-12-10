@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:12:33 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/06 22:53:01 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/09 03:09:04 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,8 @@ int	main(int argc, char **argv)
 		return (free_all(&data), ft_putendl_fd(NO_IDENTIFIERS, 2), 1);
 	if (!parse_map(&data))
 		return (free_all(&data), ft_putendl_fd(WRONG_MAP, 2), 1);
-	printf("Ceiling Hexa: %x\nCeiling RGB = ", data.textures.ceiling);
-	print_rgb(data.textures.ceiling);
-
-	printf("Floor Hexa: %x\nFloor RGB = ", data.textures.floor);
-	print_rgb(data.textures.floor);
-	print_grid(data.map.grid);
-	//free function create
+	game_start(&data);
 	free_all(&data);
-	//free_ar((void **)data.map.map);
 }
 
 /*
