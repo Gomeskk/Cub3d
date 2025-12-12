@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/10 18:02:13 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:03:59 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,7 @@ static int	render_game(t_cub3d *data)
 
 void	game_start(t_cub3d *data)
 {
-	data->mlx = mlx_init();
-	data->window = mlx_new_window(data->mlx, WIDTH, HEIGHT, "CUBO MUITO FIXE");
-	data->img.image = mlx_new_image(data->mlx, 1920, 1080);
-	data->img.data = mlx_get_data_addr(data->img.image, &data->img.bpp, &data->img.size_line, &data->img.type);
-	data->img.width = 1920;
-    data->img.height = 1080;
+	init_mlx(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 	mlx_hook(data->window, 2, 1L << 0, key_pressed, data);

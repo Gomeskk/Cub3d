@@ -37,6 +37,7 @@ typedef struct s_cub3d
 
 //			INIT			//
 void    init_data(t_cub3d *data);
+void	init_mlx(t_cub3d *data);
 
 //			PARSER			//
 int		parse_map(t_cub3d *data);

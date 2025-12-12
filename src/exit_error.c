@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:14:59 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/10 17:47:19 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:09:34 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	free_all(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->img.image);
 	if (data->window)
 		mlx_destroy_window(data->mlx, data->window);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 }
 
 void	exit_error(t_cub3d *data, char *message)
