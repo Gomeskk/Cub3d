@@ -35,6 +35,8 @@ void	render_credits(t_cub3d *data)
 	mlx_clear_window(data->mlx, data->window);
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.sensibility[0].image, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->window,
+		data->menu.volume[data->menu.volume_level].image, 203, 392);
 }
 
 /* int	render_game_handler(t_cub3d *data)

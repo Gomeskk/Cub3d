@@ -77,6 +77,22 @@ int	menu_key_handler(int keycode, t_cub3d *data)
 			data->status = MENU;
 			render_main_menu(data);
 		}
+		else if (keycode == KEY_LEFT || keycode == KEY_A)
+		{
+			if (data->menu.volume_level > 0)
+			{
+				data->menu.volume_level--;
+				render_credits(data);
+			}
+		}
+		else if (keycode == KEY_RIGHT || keycode == KEY_D)
+		{
+			if (data->menu.volume_level < 14)
+			{
+				data->menu.volume_level++;
+				render_credits(data);
+			}
+		}
 		return (0);
 	}
 	return (0);

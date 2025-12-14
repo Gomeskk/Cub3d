@@ -46,6 +46,40 @@ static int	init_difficulty_images(t_cub3d *data)
 	return (0);
 }
 
+static int	init_volume_images(t_cub3d *data)
+{
+	const char	*paths[15] = {
+		"Png_images/VolumePNG/Volume Cub3D (-7).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-6).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-5).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-4).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-3).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-2).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (-1).xpm",
+		"Png_images/VolumePNG/Volume Cub3D.xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+1).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+2).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+3).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+4).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+5).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+6).xpm",
+		"Png_images/VolumePNG/Volume Cub3D (+7).xpm"
+	};
+	int	i;
+
+	i = 0;
+	while (i < 15)
+	{
+		data->menu.volume[i].image = mlx_xpm_file_to_image(data->mlx,
+			(char *)paths[i], &data->menu.volume[i].width,
+			&data->menu.volume[i].height);
+		if (!data->menu.volume[i].image)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 static int	init_options_images(t_cub3d *data)
 {
 	data->menu.sensibility[0].image = mlx_xpm_file_to_image(data->mlx,
@@ -53,6 +87,8 @@ static int	init_options_images(t_cub3d *data)
 		&data->menu.sensibility[0].width,
 		&data->menu.sensibility[0].height);
 	if (!data->menu.sensibility[0].image)
+		return (-1);
+	if (init_volume_images(data) == -1)
 		return (-1);
 	return (0);
 }
@@ -73,11 +109,14 @@ void	init_menu_state(t_cub3d *data)
 	data->menu.menu_choice = 0;
 	data->menu.difficulty_choice = 1;
 	data->menu.sensibility_level = 0;
+	data->menu.volume_level = 7;
 	data->status = MENU;
 }
 
 void	cleanup_menu(t_cub3d *data)
 {
+	int	i;
+
 	if (data->menu.start_normal.image)
 		mlx_destroy_image(data->mlx, data->menu.start_normal.image);
 	if (data->menu.start_hover.image)
@@ -92,4 +131,11 @@ void	cleanup_menu(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->menu.diff_hard.image);
 	if (data->menu.sensibility[0].image)
 		mlx_destroy_image(data->mlx, data->menu.sensibility[0].image);
+	i = 0;
+	while (i < 15)
+	{
+		if (data->menu.volume[i].image)
+			mlx_destroy_image(data->mlx, data->menu.volume[i].image);
+		i++;
+	}
 }
