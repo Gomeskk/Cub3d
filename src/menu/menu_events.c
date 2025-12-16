@@ -58,7 +58,10 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 		render_main_menu(data);
 	}
 	else if (keycode == KEY_ESC)
-		exit(0);
+	{
+		data->status = MENU;
+		render_main_menu(data);
+	}
 	return (0);
 }
 
@@ -71,8 +74,6 @@ int	menu_key_handler(int keycode, t_cub3d *data)
 	else if (data->status == CREDITS)
 	{
 		if (keycode == KEY_ESC)
-			exit(0);
-		else if (keycode == KEY_BACKSPACE)
 		{
 			data->status = MENU;
 			data->menu.options_section = 0;
