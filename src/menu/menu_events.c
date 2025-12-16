@@ -75,22 +75,55 @@ int	menu_key_handler(int keycode, t_cub3d *data)
 		else if (keycode == KEY_BACKSPACE)
 		{
 			data->status = MENU;
+			data->menu.options_section = 0;
 			render_main_menu(data);
+		}
+		else if (keycode == KEY_UP || keycode == KEY_W)
+		{
+			if (data->menu.options_section > 0)
+				data->menu.options_section--;
+		}
+		else if (keycode == KEY_DOWN || keycode == KEY_S)
+		{
+			if (data->menu.options_section < 1)
+				data->menu.options_section++;
 		}
 		else if (keycode == KEY_LEFT || keycode == KEY_A)
 		{
-			if (data->menu.volume_level > 0)
+			if (data->menu.options_section == 0)
 			{
-				data->menu.volume_level--;
-				render_credits(data);
+				if (data->menu.volume_level > 0)
+				{
+					data->menu.volume_level--;
+					render_credits(data);
+				}
+			}
+			else if (data->menu.options_section == 1)
+			{
+				if (data->menu.sensibility_level > 0)
+				{
+					data->menu.sensibility_level--;
+					render_credits(data);
+				}
 			}
 		}
 		else if (keycode == KEY_RIGHT || keycode == KEY_D)
 		{
-			if (data->menu.volume_level < 14)
+			if (data->menu.options_section == 0)
 			{
-				data->menu.volume_level++;
-				render_credits(data);
+				if (data->menu.volume_level < 14)
+				{
+					data->menu.volume_level++;
+					render_credits(data);
+				}
+			}
+			else if (data->menu.options_section == 1)
+			{
+				if (data->menu.sensibility_level < 4)
+				{
+					data->menu.sensibility_level++;
+					render_credits(data);
+				}
 			}
 		}
 		return (0);

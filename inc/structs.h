@@ -78,13 +78,15 @@ typedef struct s_menu
 	t_menu_img	diff_hard;
 	t_menu_img	arrow_up;
 	t_menu_img	arrow_down;
-	t_menu_img	sensibility[4];
+	t_menu_img	options_screen;
 	t_menu_img	credits_screen;
 	t_menu_img	volume[15];
+	t_menu_img	sensibility[5];
 	int			menu_choice;
 	int			difficulty_choice;
 	int			sensibility_level;
 	int			volume_level;
+	int			options_section;
 }				t_menu;
 
 typedef struct s_game_settings

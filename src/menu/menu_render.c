@@ -34,7 +34,9 @@ void	render_credits(t_cub3d *data)
 {
 	mlx_clear_window(data->mlx, data->window);
 	mlx_put_image_to_window(data->mlx, data->window,
-		data->menu.sensibility[0].image, 0, 0);
+		data->menu.options_screen.image, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->window,
+		data->menu.sensibility[data->menu.sensibility_level].image, 197, 876);
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.volume[data->menu.volume_level].image, 203, 392);
 }
