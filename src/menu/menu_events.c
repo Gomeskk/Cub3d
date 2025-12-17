@@ -5,30 +5,30 @@ int	handle_main_menu_keys(int keycode, t_cub3d *data)
 	if (keycode == KEY_UP || keycode == KEY_W)
 	{
 		data->menu.menu_choice--;
-		if (data->menu.menu_choice < 0)
-			data->menu.menu_choice = 2;
+		if (data->menu.menu_choice < MENU_START)
+			data->menu.menu_choice = MENU_EXIT;
 		render_main_menu(data);
 	}
 	else if (keycode == KEY_DOWN || keycode == KEY_S)
 	{
 		data->menu.menu_choice++;
-		if (data->menu.menu_choice > 2)
-			data->menu.menu_choice = 0;
+		if (data->menu.menu_choice > MENU_EXIT)
+			data->menu.menu_choice = MENU_START;
 		render_main_menu(data);
 	}
 	else if (keycode == KEY_RETURN || keycode == KEY_SPACE)
 	{
-		if (data->menu.menu_choice == 0)
+		if (data->menu.menu_choice == MENU_START)
 		{
-			data->status = DIFFICULTY_LEVEL;
+			data->status = DIFFICULTY_SCREEN;
 			render_difficulty_menu(data);
 		}
-		else if (data->menu.menu_choice == 1)
+		else if (data->menu.menu_choice == MENU_OPTIONS)
 		{
 			data->status = CREDITS;
 			render_credits(data);
 		}
-		else if (data->menu.menu_choice == 2)
+		else if (data->menu.menu_choice == MENU_EXIT)
 			data->status = GAME;
 	}
 	else if (keycode == KEY_ESC)
@@ -41,25 +41,30 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 	if (keycode == KEY_UP || keycode == KEY_W)
 	{
 		data->menu.difficulty_choice--;
-		if (data->menu.difficulty_choice < 0)
-			data->menu.difficulty_choice = 2;
+		if (data->menu.difficulty_choice < DIFF_EASY)
+			data->menu.difficulty_choice = DIFF_HARD;
 		render_difficulty_menu(data);
 	}
 	else if (keycode == KEY_DOWN || keycode == KEY_S)
 	{
 		data->menu.difficulty_choice++;
-		if (data->menu.difficulty_choice > 2)
-			data->menu.difficulty_choice = 0;
+		if (data->menu.difficulty_choice > DIFF_HARD)
+			data->menu.difficulty_choice = DIFF_EASY;
 		render_difficulty_menu(data);
 	}
-	else if (keycode == KEY_RETURN || keycode == KEY_SPACE)
+	else if (keycode == KEY_RETURN)
 	{
-		data->status = MENU;
+		printf("Starting game with difficulty: %d\n", data->menu.difficulty_choice);
+		// TODO: Start actual game here
+		// For now, return to main menu
+		data->menu.menu_choice = MENU_START;
+		data->status = MAIN_MENU_SCREEN;
 		render_main_menu(data);
 	}
 	else if (keycode == KEY_ESC)
 	{
-		data->status = MENU;
+		data->menu.menu_choice = MENU_START;
+		data->status = MAIN_MENU_SCREEN;
 		render_main_menu(data);
 	}
 	return (0);
@@ -67,15 +72,16 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 
 int	menu_key_handler(int keycode, t_cub3d *data)
 {
-	if (data->status == MENU)
+	if (data->status == MAIN_MENU_SCREEN)
 		return (handle_main_menu_keys(keycode, data));
-	else if (data->status == DIFFICULTY_LEVEL)
+	else if (data->status == DIFFICULTY_SCREEN)
 		return (handle_difficulty_keys(keycode, data));
 	else if (data->status == CREDITS)
 	{
 		if (keycode == KEY_ESC)
 		{
-			data->status = MENU;
+			data->menu.menu_choice = MENU_START;
+			data->status = MAIN_MENU_SCREEN;
 			data->menu.options_section = 0;
 			render_main_menu(data);
 		}

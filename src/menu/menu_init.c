@@ -132,12 +132,12 @@ int	init_menu_images(t_cub3d *data)
 
 void	init_menu_state(t_cub3d *data)
 {
-	data->menu.menu_choice = 0;
-	data->menu.difficulty_choice = 1;
+	data->menu.menu_choice = MENU_START;
+	data->menu.difficulty_choice = DIFF_MEDIUM;
 	data->menu.sensibility_level = 2;
 	data->menu.volume_level = 7;
 	data->menu.options_section = 0;
-	data->status = MENU;
+	data->status = MAIN_MENU_SCREEN;
 }
 
 void	cleanup_menu(t_cub3d *data)

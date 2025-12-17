@@ -1,16 +1,20 @@
 #include "../../inc/cub3d.h"
+#include <stdio.h>
 
 void	render_main_menu(t_cub3d *data)
 {
 	mlx_clear_window(data->mlx, data->window);
 	
-	if (data->menu.menu_choice == 0)
+	if (data->menu.menu_choice == MENU_START)
+	{
+		printf("DEBUG: Rendering start_normal.image (from Cub3D0.xpm)\n");
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_normal.image, 0, 0);
-	else if (data->menu.menu_choice == 1)
+	}
+	else if (data->menu.menu_choice == MENU_OPTIONS)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_hover.image, 0, 0);
-	else if (data->menu.menu_choice == 2)
+	else if (data->menu.menu_choice == MENU_EXIT)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_selected.image, 0, 0);
 }
@@ -19,13 +23,13 @@ void	render_difficulty_menu(t_cub3d *data)
 {
 	mlx_clear_window(data->mlx, data->window);
 	
-	if (data->menu.difficulty_choice == 0)
+	if (data->menu.difficulty_choice == DIFF_EASY)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.diff_easy.image, 0, 0);
-	else if (data->menu.difficulty_choice == 1)
+	else if (data->menu.difficulty_choice == DIFF_MEDIUM)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.diff_medium.image, 0, 0);
-	else if (data->menu.difficulty_choice == 2)
+	else if (data->menu.difficulty_choice == DIFF_HARD)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.diff_hard.image, 0, 0);
 }

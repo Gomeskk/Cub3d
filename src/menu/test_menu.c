@@ -29,6 +29,8 @@ int	close_window(t_cub3d *data)
 int	main(void)
 {
 	t_cub3d	data;
+
+	ft_memset(&data, 0, sizeof(t_cub3d));
 	data.mlx = mlx_init();
 	if (!data.mlx)
 	{
@@ -57,11 +59,10 @@ int	main(void)
 	printf("  - menu_choice: %d\n", data.menu.menu_choice);
 	printf("  - difficulty_choice: %d\n", data.menu.difficulty_choice);
 	printf("  - sensibility_level: %d\n", data.menu.sensibility_level);
-	printf("  - status: %d (MENU=%d)\n", data.status, MENU);
-	printf("\nDisplaying menu (use UP/DOWN or W/S to navigate)...\n");// Display the first menu image (start_normal)
-	mlx_put_image_to_window(data.mlx, data.window,
-		data.menu.start_normal.image, 0, 0);
-	printf("✓ Image displayed at (0, 0)\n");
+	printf("  - status: %d (MAIN_MENU_SCREEN=%d)\n", data.status, MAIN_MENU_SCREEN);
+	printf("\nDisplaying menu (use UP/DOWN or W/S to navigate)...\n");
+	render_main_menu(&data);
+	printf("✓ Menu rendered\n");
 	printf("  - Image dimensions: %dx%d\n",
 		data.menu.start_normal.width, data.menu.start_normal.height);
 	mlx_hook(data.window, 17, 0, close_window, &data); 	// Setup hooks
