@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:25:34 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/10 17:27:47 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/16 15:16:49 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	check_spawn(t_cub3d *data, char c, int x, int y)
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		data->map.start_point++;
-		data->player.pos_x = x * TILE_SIZE + TILE_SIZE / 2;
-		data->player.pos_y = y * TILE_SIZE + TILE_SIZE / 2;
+		data->player.pos_x = x;
+		data->player.pos_y = y;
 		data->map.grid[y][x] = '0';
 	}
 }

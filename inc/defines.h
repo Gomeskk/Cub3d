@@ -4,9 +4,9 @@
 ///          GAME SETTINGS          ///
 # define HEIGHT 1080
 # define WIDTH 1920
-# define TILE_SIZE 64
-# define PLAYER_SPEED 4
 # define FPS 60
+# define DIAGONAL_FACTOR 0.70710678  // 1v2 for diagonal movement normalization
+
 
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."

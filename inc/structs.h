@@ -22,8 +22,12 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int			pos_y;
-	int			pos_x;
+	double	pos_y;
+	double	pos_x;
+	double	speed;
+	int		radius;
+	double	vel_x;
+	double	vel_y;
 }				t_player;
 
 typedef struct s_keys
