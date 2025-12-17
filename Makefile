@@ -50,7 +50,7 @@ LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 
 ### MLX COMPILE FLAGS ###
 MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -lm -lz
-MLX_INC			= -I/usr/include -Imlx_linux -O3 
+MLX_INC			= -I/usr/include -I mlx_linux -O3 
 
 
 vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR)
