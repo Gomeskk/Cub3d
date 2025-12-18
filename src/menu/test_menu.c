@@ -65,8 +65,10 @@ int	main(void)
 	printf("✓ Menu rendered\n");
 	printf("  - Image dimensions: %dx%d\n",
 		data.menu.start_normal.width, data.menu.start_normal.height);
-	mlx_hook(data.window, 17, 0, close_window, &data); 	// Setup hooks
-	mlx_key_hook(data.window, menu_key_handler, &data);
+	mlx_hook(data.window, 17, 0, close_window, &data);
+	mlx_hook(data.window, 2, 1L<<0, key_press_handler, &data);
+	mlx_hook(data.window, 3, 1L<<1, key_release_handler, &data);
+	mlx_loop_hook(data.mlx, menu_loop_handler, &data);
 	printf("\n=== Test Complete ===\n");
 	printf("Controls:\n");
 	printf("  UP/DOWN or W/S: Navigate menu\n");

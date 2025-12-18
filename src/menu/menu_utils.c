@@ -16,12 +16,13 @@ double	get_delta_time(void)
 	delta = (current_time.tv_sec - last_time.tv_sec)
 	      + (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
 	last_time = current_time;
-	return delta;
-	return (0.0); */
+	return delta; */
+	return (0.0);
 }
 
 void	apply_difficulty_settings(t_cub3d *data)
 {
+	(void)data;
 /* 	switch data->difficulty_choice:
 	    case 0: // Easy
 	        data->game_settings.player_health = 150;
@@ -42,6 +43,7 @@ void	apply_difficulty_settings(t_cub3d *data)
 
 void	apply_settings(t_cub3d *data)
 {
+	(void)data;
 /* 	Apply mouse sensibility
 	float sensibility_values[] = {0.0, 0.5, 1.5, 2.0};
 	data->mouse.sensitivity = sensibility_values[data->sensibility_level]; */

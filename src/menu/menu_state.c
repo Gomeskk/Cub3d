@@ -1,0 +1,60 @@
+#include "../../inc/cub3d.h"
+
+int	init_menu_images(t_cub3d *data)
+{
+	if (init_start_game_images(data) == -1)
+		return (-1);
+	if (init_difficulty_images(data) == -1)
+		return (-1);
+	if (init_options_images(data) == -1)
+		return (-1);
+	return (0);
+}
+
+void	init_menu_state(t_cub3d *data)
+{
+	data->menu.menu_choice = MENU_START;
+	data->menu.difficulty_choice = DIFF_MEDIUM;
+	data->menu.sensibility_level = 2;
+	data->menu.volume_level = 7;
+	data->menu.options_section = 0;
+	data->keys.w = 0;
+	data->keys.a = 0;
+	data->keys.s = 0;
+	data->keys.d = 0;
+	data->status = MAIN_MENU_SCREEN;
+}
+
+void	cleanup_menu(t_cub3d *data)
+{
+	int	i;
+
+	if (data->menu.start_normal.image)
+		mlx_destroy_image(data->mlx, data->menu.start_normal.image);
+	if (data->menu.start_hover.image)
+		mlx_destroy_image(data->mlx, data->menu.start_hover.image);
+	if (data->menu.start_selected.image)
+		mlx_destroy_image(data->mlx, data->menu.start_selected.image);
+	if (data->menu.diff_easy.image)
+		mlx_destroy_image(data->mlx, data->menu.diff_easy.image);
+	if (data->menu.diff_medium.image)
+		mlx_destroy_image(data->mlx, data->menu.diff_medium.image);
+	if (data->menu.diff_hard.image)
+		mlx_destroy_image(data->mlx, data->menu.diff_hard.image);
+	if (data->menu.options_screen.image)
+		mlx_destroy_image(data->mlx, data->menu.options_screen.image);
+	i = 0;
+	while (i < 15)
+	{
+		if (data->menu.volume[i].image)
+			mlx_destroy_image(data->mlx, data->menu.volume[i].image);
+		i++;
+	}
+	i = 0;
+	while (i < 5)
+	{
+		if (data->menu.sensibility[i].image)
+			mlx_destroy_image(data->mlx, data->menu.sensibility[i].image);
+		i++;
+	}
+}

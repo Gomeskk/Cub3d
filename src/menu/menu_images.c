@@ -1,6 +1,6 @@
 #include "../../inc/cub3d.h"
 
-static int	init_start_game_images(t_cub3d *data)
+int	init_start_game_images(t_cub3d *data)
 {
 	data->menu.start_normal.image = mlx_xpm_file_to_image(data->mlx,
 		"Png_images/StartGame/Cub3D0.xpm",
@@ -23,7 +23,7 @@ static int	init_start_game_images(t_cub3d *data)
 	return (0);
 }
 
-static int	init_difficulty_images(t_cub3d *data)
+int	init_difficulty_images(t_cub3d *data)
 {
 	data->menu.diff_easy.image = mlx_xpm_file_to_image(data->mlx,
 		"Png_images/Difficulty/Difficulty  Cub3D_00.xpm",
@@ -46,7 +46,7 @@ static int	init_difficulty_images(t_cub3d *data)
 	return (0);
 }
 
-static int	init_volume_images(t_cub3d *data)
+int	init_volume_images(t_cub3d *data)
 {
 	const char	*paths[15] = {
 		"Png_images/VolumePNG/Volume Cub3D (-7).xpm",
@@ -80,7 +80,7 @@ static int	init_volume_images(t_cub3d *data)
 	return (0);
 }
 
-static int	init_sensibility_images(t_cub3d *data)
+int	init_sensibility_images(t_cub3d *data)
 {
 	const char	*paths[5] = {
 		"Png_images/SensibilityPNG/Sensibility Cub3D (0).xpm",
@@ -104,7 +104,7 @@ static int	init_sensibility_images(t_cub3d *data)
 	return (0);
 }
 
-static int	init_options_images(t_cub3d *data)
+int	init_options_images(t_cub3d *data)
 {
 	data->menu.options_screen.image = mlx_xpm_file_to_image(data->mlx,
 		"Png_images/Options/Options Cub3D00.xpm",
@@ -117,59 +117,4 @@ static int	init_options_images(t_cub3d *data)
 	if (init_sensibility_images(data) == -1)
 		return (-1);
 	return (0);
-}
-
-int	init_menu_images(t_cub3d *data)
-{
-	if (init_start_game_images(data) == -1)
-		return (-1);
-	if (init_difficulty_images(data) == -1)
-		return (-1);
-	if (init_options_images(data) == -1)
-		return (-1);
-	return (0);
-}
-
-void	init_menu_state(t_cub3d *data)
-{
-	data->menu.menu_choice = MENU_START;
-	data->menu.difficulty_choice = DIFF_MEDIUM;
-	data->menu.sensibility_level = 2;
-	data->menu.volume_level = 7;
-	data->menu.options_section = 0;
-	data->status = MAIN_MENU_SCREEN;
-}
-
-void	cleanup_menu(t_cub3d *data)
-{
-	int	i;
-
-	if (data->menu.start_normal.image)
-		mlx_destroy_image(data->mlx, data->menu.start_normal.image);
-	if (data->menu.start_hover.image)
-		mlx_destroy_image(data->mlx, data->menu.start_hover.image);
-	if (data->menu.start_selected.image)
-		mlx_destroy_image(data->mlx, data->menu.start_selected.image);
-	if (data->menu.diff_easy.image)
-		mlx_destroy_image(data->mlx, data->menu.diff_easy.image);
-	if (data->menu.diff_medium.image)
-		mlx_destroy_image(data->mlx, data->menu.diff_medium.image);
-	if (data->menu.diff_hard.image)
-		mlx_destroy_image(data->mlx, data->menu.diff_hard.image);
-	if (data->menu.options_screen.image)
-		mlx_destroy_image(data->mlx, data->menu.options_screen.image);
-	i = 0;
-	while (i < 15)
-	{
-		if (data->menu.volume[i].image)
-			mlx_destroy_image(data->mlx, data->menu.volume[i].image);
-		i++;
-	}
-	i = 0;
-	while (i < 5)
-	{
-		if (data->menu.sensibility[i].image)
-			mlx_destroy_image(data->mlx, data->menu.sensibility[i].image);
-		i++;
-	}
 }

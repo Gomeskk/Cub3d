@@ -70,12 +70,26 @@ void	free_all(t_cub3d *data);
 void	exit_error(t_cub3d *data, char *message);
 
 //			MENU			//
+// menu_state.c
 int		init_menu_images(t_cub3d *data);
 void	init_menu_state(t_cub3d *data);
 void	cleanup_menu(t_cub3d *data);
+// menu_images.c
+int		init_start_game_images(t_cub3d *data);
+int		init_difficulty_images(t_cub3d *data);
+int		init_volume_images(t_cub3d *data);
+int		init_sensibility_images(t_cub3d *data);
+int		init_options_images(t_cub3d *data);
+// menu_navigation.c
 int		handle_main_menu_keys(int keycode, t_cub3d *data);
 int		handle_difficulty_keys(int keycode, t_cub3d *data);
+int		handle_credits_keys(int keycode, t_cub3d *data);
 int		menu_key_handler(int keycode, t_cub3d *data);
+// menu_input.c
+int		key_press_handler(int keycode, t_cub3d *data);
+int		key_release_handler(int keycode, t_cub3d *data);
+int		menu_loop_handler(t_cub3d *data);
+// menu_render.c
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
 void	render_credits(t_cub3d *data);
