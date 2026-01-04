@@ -26,6 +26,8 @@ int	key_press_handler(int keycode, t_cub3d *data)
 		data->keys.d = 1;
 	if (keycode == XK_Return || keycode == XK_space)
 		return (menu_key_handler(keycode, data));
+	if (keycode == XK_Tab || keycode == KEY_TAB)
+		return (menu_key_handler(keycode, data));
 	if (keycode == KEY_ESC)
 		return (menu_key_handler(keycode, data));
 	return (0);

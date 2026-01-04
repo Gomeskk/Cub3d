@@ -36,13 +36,31 @@ void	render_difficulty_menu(t_cub3d *data)
 
 void	render_credits(t_cub3d *data)
 {
+	t_menu_img	screen;
+
 	mlx_clear_window(data->mlx, data->window);
-	mlx_put_image_to_window(data->mlx, data->window,
-		data->menu.options_screen.image, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->window,
-		data->menu.sensibility[data->menu.sensibility_level].image, 197, 876);
-	mlx_put_image_to_window(data->mlx, data->window,
-		data->menu.volume[data->menu.volume_level].image, 203, 392);
+	screen.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	screen.data = mlx_get_data_addr(screen.image, &screen.bpp,
+			&screen.size_line, &screen.endian);
+	screen.width = WIDTH;
+	screen.height = HEIGHT;
+	put_img_to_img(&screen, data->menu.options_screen, 0, 0);
+	if (data->menu.options_section == 0)
+	{
+		put_img_to_img(&screen, data->menu.tab_sound, 0, 0);
+		put_img_to_img(&screen, data->menu.volume[data->menu.volume_level], 203, 392);
+	}
+	else if (data->menu.options_section == 1)
+	{
+		put_img_to_img(&screen, data->menu.tab_resolution, 0, 0);
+	}
+	else if (data->menu.options_section == 2)
+	{
+		put_img_to_img(&screen, data->menu.tab_sensibility, 0, 0);
+		put_img_to_img(&screen, data->menu.sensibility[data->menu.sensibility_level], 197, 876);
+	}
+	mlx_put_image_to_window(data->mlx, data->window, screen.image, 0, 0);
+	mlx_destroy_image(data->mlx, screen.image);
 }
 
 /* int	render_game_handler(t_cub3d *data)

@@ -80,52 +80,53 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 		data->menu.options_section = 0;
 		render_main_menu(data);
 	}
-	else if (keycode == XK_Up || keycode == XK_w)
+	else if (keycode == XK_Tab || keycode == KEY_TAB)
 	{
-		if (data->menu.options_section > 0)
-			data->menu.options_section--;
-	}
-	else if (keycode == XK_Down || keycode == XK_s)
-	{
-		if (data->menu.options_section < 1)
-			data->menu.options_section++;
+		data->menu.options_section = (data->menu.options_section + 1) % 3;
+		printf("DEBUG: TAB pressed - section now: %d (0=Sound, 1=Resolution, 2=Sensibility)\n", 
+			data->menu.options_section);
+		render_credits(data);
 	}
 	else if (keycode == XK_Left || keycode == XK_a)
 	{
-		if (data->menu.options_section == 0)
+		if (data->menu.options_section == 0 && data->menu.volume_level > 0)
 		{
-			if (data->menu.volume_level > 0)
-			{
-				data->menu.volume_level--;
-				render_credits(data);
-			}
+			data->menu.volume_level--;
+			render_credits(data);
 		}
-		else if (data->menu.options_section == 1)
+		else if (data->menu.options_section == 2 && data->menu.sensibility_level > 0)
 		{
-			if (data->menu.sensibility_level > 0)
-			{
-				data->menu.sensibility_level--;
-				render_credits(data);
-			}
+			data->menu.sensibility_level--;
+			render_credits(data);
 		}
 	}
 	else if (keycode == XK_Right || keycode == XK_d)
 	{
-		if (data->menu.options_section == 0)
+		if (data->menu.options_section == 0 && data->menu.volume_level < 14)
 		{
-			if (data->menu.volume_level < 14)
-			{
-				data->menu.volume_level++;
-				render_credits(data);
-			}
+			data->menu.volume_level++;
+			render_credits(data);
 		}
-		else if (data->menu.options_section == 1)
+		else if (data->menu.options_section == 2 && data->menu.sensibility_level < 4)
 		{
-			if (data->menu.sensibility_level < 4)
-			{
-				data->menu.sensibility_level++;
-				render_credits(data);
-			}
+			data->menu.sensibility_level++;
+			render_credits(data);
+		}
+	}
+	else if (keycode == XK_Up || keycode == XK_w)
+	{
+		if (data->menu.options_section == 1 && data->menu.resolution_level < 2)
+		{
+			data->menu.resolution_level++;
+			render_credits(data);
+		}
+	}
+	else if (keycode == XK_Down || keycode == XK_s)
+	{
+		if (data->menu.options_section == 1 && data->menu.resolution_level > 0)
+		{
+			data->menu.resolution_level--;
+			render_credits(data);
 		}
 	}
 	return (0);

@@ -7,8 +7,12 @@
 typedef struct s_menu_img
 {
 	void		*image;
+	char		*data;
 	int			width;
 	int			height;
+	int			bpp;
+	int			size_line;
+	int			endian;
 }				t_menu_img;
 
 typedef struct s_tiles
@@ -88,10 +92,14 @@ typedef struct s_menu
 	t_menu_img	credits_screen;
 	t_menu_img	volume[15];
 	t_menu_img	sensibility[5];
+	t_menu_img	tab_sound;
+	t_menu_img	tab_resolution;
+	t_menu_img	tab_sensibility;
 	int			menu_choice;
 	int			difficulty_choice;
 	int			sensibility_level;
 	int			volume_level;
+	int			resolution_level;
 	int			options_section;
 }				t_menu;
 

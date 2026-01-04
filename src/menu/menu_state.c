@@ -17,6 +17,7 @@ void	init_menu_state(t_cub3d *data)
 	data->menu.difficulty_choice = DIFF_MEDIUM;
 	data->menu.sensibility_level = 2;
 	data->menu.volume_level = 7;
+	data->menu.resolution_level = 0;
 	data->menu.options_section = 0;
 	data->keys.w = 0;
 	data->keys.a = 0;
@@ -43,6 +44,12 @@ void	cleanup_menu(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->menu.diff_hard.image);
 	if (data->menu.options_screen.image)
 		mlx_destroy_image(data->mlx, data->menu.options_screen.image);
+	if (data->menu.tab_sound.image)
+		mlx_destroy_image(data->mlx, data->menu.tab_sound.image);
+	if (data->menu.tab_resolution.image)
+		mlx_destroy_image(data->mlx, data->menu.tab_resolution.image);
+	if (data->menu.tab_sensibility.image)
+		mlx_destroy_image(data->mlx, data->menu.tab_sensibility.image);
 	i = 0;
 	while (i < 15)
 	{

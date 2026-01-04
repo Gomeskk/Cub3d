@@ -1,47 +1,41 @@
 #include "../../inc/cub3d.h"
 
+static int	load_xpm_with_data(void *mlx, t_menu_img *img, char *path)
+{
+	img->image = mlx_xpm_file_to_image(mlx, path, &img->width, &img->height);
+	if (!img->image)
+		return (-1);
+	img->data = mlx_get_data_addr(img->image, &img->bpp,
+			&img->size_line, &img->endian);
+	if (!img->data)
+		return (-1);
+	return (0);
+}
+
 int	init_start_game_images(t_cub3d *data)
 {
-	data->menu.start_normal.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/StartGame/StartGame.xpm",
-		&data->menu.start_normal.width,
-		&data->menu.start_normal.height);
-	if (!data->menu.start_normal.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.start_normal,
+			"Png_images/StartGame/StartGame.xpm") == -1)
 		return (-1);
-	data->menu.start_hover.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/StartGame/Options.xpm",
-		&data->menu.start_hover.width,
-		&data->menu.start_hover.height);
-	if (!data->menu.start_hover.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.start_hover,
+			"Png_images/StartGame/Options.xpm") == -1)
 		return (-1);
-	data->menu.start_selected.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/StartGame/Credits.xpm",
-		&data->menu.start_selected.width,
-		&data->menu.start_selected.height);
-	if (!data->menu.start_selected.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.start_selected,
+			"Png_images/StartGame/Credits.xpm") == -1)
 		return (-1);
 	return (0);
 }
 
 int	init_difficulty_images(t_cub3d *data)
 {
-	data->menu.diff_easy.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/Difficulty/Hard.xpm",
-		&data->menu.diff_easy.width,
-		&data->menu.diff_easy.height);
-	if (!data->menu.diff_easy.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.diff_easy,
+			"Png_images/Difficulty/Hard.xpm") == -1)
 		return (-1);
-	data->menu.diff_medium.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/Difficulty/Medium.xpm",
-		&data->menu.diff_medium.width,
-		&data->menu.diff_medium.height);
-	if (!data->menu.diff_medium.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.diff_medium,
+			"Png_images/Difficulty/Medium.xpm") == -1)
 		return (-1);
-	data->menu.diff_hard.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/Difficulty/Easy.xpm",
-		&data->menu.diff_hard.width,
-		&data->menu.diff_hard.height);
-	if (!data->menu.diff_hard.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.diff_hard,
+			"Png_images/Difficulty/Easy.xpm") == -1)
 		return (-1);
 	return (0);
 }
@@ -70,10 +64,8 @@ int	init_volume_images(t_cub3d *data)
 	i = 0;
 	while (i < 15)
 	{
-		data->menu.volume[i].image = mlx_xpm_file_to_image(data->mlx,
-			(char *)paths[i], &data->menu.volume[i].width,
-			&data->menu.volume[i].height);
-		if (!data->menu.volume[i].image)
+		if (load_xpm_with_data(data->mlx, &data->menu.volume[i],
+				(char *)paths[i]) == -1)
 			return (-1);
 		i++;
 	}
@@ -94,10 +86,8 @@ int	init_sensibility_images(t_cub3d *data)
 	i = 0;
 	while (i < 5)
 	{
-		data->menu.sensibility[i].image = mlx_xpm_file_to_image(data->mlx,
-			(char *)paths[i], &data->menu.sensibility[i].width,
-			&data->menu.sensibility[i].height);
-		if (!data->menu.sensibility[i].image)
+		if (load_xpm_with_data(data->mlx, &data->menu.sensibility[i],
+				(char *)paths[i]) == -1)
 			return (-1);
 		i++;
 	}
@@ -106,11 +96,17 @@ int	init_sensibility_images(t_cub3d *data)
 
 int	init_options_images(t_cub3d *data)
 {
-	data->menu.options_screen.image = mlx_xpm_file_to_image(data->mlx,
-		"Png_images/Options/OptionsMenu.xpm",
-		&data->menu.options_screen.width,
-		&data->menu.options_screen.height);
-	if (!data->menu.options_screen.image)
+	if (load_xpm_with_data(data->mlx, &data->menu.options_screen,
+			"Png_images/Options/OptionsMenu.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.tab_sound,
+			"Png_images/TabChoices/TabSound.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.tab_resolution,
+			"Png_images/TabChoices/TabResolution.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.tab_sensibility,
+			"Png_images/TabChoices/TabSensibility.xpm") == -1)
 		return (-1);
 	if (init_volume_images(data) == -1)
 		return (-1);

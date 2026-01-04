@@ -93,6 +93,8 @@ int		menu_loop_handler(t_cub3d *data);
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
 void	render_credits(t_cub3d *data);
+void	pixel_put(t_menu_img *img, int x, int y, int color);
+void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
 
 //			TESTER				//
 void	print_rgb(int color);
