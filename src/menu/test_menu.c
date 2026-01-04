@@ -10,7 +10,7 @@
 
 /* tor run for testing : 
 cd /home/gomes/Cub3d
-gcc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_init.c src/menu/menu_events.c src/menu/menu_render.c \
+cc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_state.c src/menu/menu_images.c src/menu/menu_navigation.c src/menu/menu_input.c src/menu/menu_render.c src/menu/menu_utils.c \
   -I./inc -I./complete_lib/minilibx-linux \
   complete_lib/minilibx-linux/libmlx.a \
   -L./complete_lib/42_Libft -lft \
