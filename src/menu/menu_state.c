@@ -8,6 +8,14 @@ int	init_menu_images(t_cub3d *data)
 		return (-1);
 	if (init_options_images(data) == -1)
 		return (-1);
+	data->menu.screen_buffer.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->menu.screen_buffer.image)
+		return (-1);
+	data->menu.screen_buffer.data = mlx_get_data_addr(
+			data->menu.screen_buffer.image, &data->menu.screen_buffer.bpp,
+			&data->menu.screen_buffer.size_line, &data->menu.screen_buffer.endian);
+	data->menu.screen_buffer.width = WIDTH;
+	data->menu.screen_buffer.height = HEIGHT;
 	return (0);
 }
 
@@ -50,6 +58,8 @@ void	cleanup_menu(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->menu.tab_resolution.image);
 	if (data->menu.tab_sensibility.image)
 		mlx_destroy_image(data->mlx, data->menu.tab_sensibility.image);
+	if (data->menu.screen_buffer.image)
+		mlx_destroy_image(data->mlx, data->menu.screen_buffer.image);
 	i = 0;
 	while (i < 15)
 	{

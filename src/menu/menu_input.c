@@ -11,7 +11,7 @@ static long	get_time_ms(void)
 
 int	key_press_handler(int keycode, t_cub3d *data)
 {
-	if (keycode == KEY_ESC)
+	if (keycode == XK_Escape)
 	{
 		if (data->status == MAIN_MENU_SCREEN)
 			exit(0);
@@ -24,11 +24,11 @@ int	key_press_handler(int keycode, t_cub3d *data)
 		data->keys.s = 1;
 	if (keycode == XK_Right || keycode == XK_d)
 		data->keys.d = 1;
-	if (keycode == XK_Return || keycode == XK_space)
+	if (keycode == XK_Return)
 		return (menu_key_handler(keycode, data));
-	if (keycode == XK_Tab || keycode == KEY_TAB)
+	if (keycode == XK_Tab)
 		return (menu_key_handler(keycode, data));
-	if (keycode == KEY_ESC)
+	if (keycode == XK_Escape)
 		return (menu_key_handler(keycode, data));
 	return (0);
 }

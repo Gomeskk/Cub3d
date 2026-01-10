@@ -95,6 +95,7 @@ typedef struct s_menu
 	t_menu_img	tab_sound;
 	t_menu_img	tab_resolution;
 	t_menu_img	tab_sensibility;
+	t_menu_img	screen_buffer;
 	int			menu_choice;
 	int			difficulty_choice;
 	int			sensibility_level;
