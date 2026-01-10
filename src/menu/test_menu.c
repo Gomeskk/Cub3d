@@ -15,6 +15,8 @@ cc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_state.c
   complete_lib/minilibx-linux/libmlx.a \
   -L./complete_lib/42_Libft -lft \
   -lXext -lX11 -lm
+
+  valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./test_menu
  */
 int	close_window(t_cub3d *data)
 {

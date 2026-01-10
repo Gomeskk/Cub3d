@@ -19,12 +19,16 @@ CFLAGS 			= -Wall -Wextra -Werror -g
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) cub3d.c exit_error.c init.c test.c utils.c
+SRCS 			= $(PARSER_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c test.c utils.c
 SRC_DIR 		= src/
 
 PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
+
+MENU_SRCS		= menu_images.c menu_input.c menu_navigation.c menu_render.c menu_state.c menu_transparency.c menu_utils.c
+MENU_DIR		= src/menu/
+MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 
 TOTAL_SRCS 		= $(words $(SRCS))
 FILES 			= 0
@@ -50,7 +54,7 @@ MLX_INC			= -I/usr/include -Imlx_linux -O3
 
 
 
-vpath %.c $(SRC_DIR) $(PARSER_DIR)
+vpath %.c $(SRC_DIR) $(PARSER_DIR) $(MENU_DIR)
 
 all: $(NAME)
 

@@ -85,6 +85,8 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 		data->menu.options_section = (data->menu.options_section + 1) % 3;
 		printf("DEBUG: TAB pressed - section now: %d (0=Sound, 1=Resolution, 2=Sensibility)\n", 
 			data->menu.options_section);
+		printf("       Current values: volume=%d, resolution=%d, sensibility=%d\n",
+			data->menu.volume_level, data->menu.resolution_level, data->menu.sensibility_level);
 		render_credits(data);
 	}
 	else if (keycode == XK_Left || keycode == XK_a)
@@ -92,6 +94,7 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 		if (data->menu.options_section == 0 && data->menu.volume_level > 0)
 		{
 			data->menu.volume_level--;
+			printf("DEBUG: Volume decreased to %d\n", data->menu.volume_level);
 			render_credits(data);
 		}
 		else if (data->menu.options_section == 2 && data->menu.sensibility_level > 0)
@@ -105,6 +108,7 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 		if (data->menu.options_section == 0 && data->menu.volume_level < 14)
 		{
 			data->menu.volume_level++;
+			printf("DEBUG: Volume increased to %d\n", data->menu.volume_level);
 			render_credits(data);
 		}
 		else if (data->menu.options_section == 2 && data->menu.sensibility_level < 4)
