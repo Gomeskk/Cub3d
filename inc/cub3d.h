@@ -95,6 +95,7 @@ void	handle_horizontal_keys(int keycode, t_cub3d *data);
 int		set_arrow_direction(t_cub3d *data, int direction);
 void	apply_resolution_change(t_cub3d *data, int dir, int threshold);
 void	handle_vertical_keys(int keycode, t_cub3d *data);
+void	handle_enter_key(t_cub3d *data);
 // menu_input.c
 int		key_press_handler(int keycode, t_cub3d *data);
 int		key_release_handler(int keycode, t_cub3d *data);

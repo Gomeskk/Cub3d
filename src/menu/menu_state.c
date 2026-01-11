@@ -29,6 +29,9 @@ void	init_menu_state(t_cub3d *data)
 	data->menu.resolution_arrow_count = 0;
 	data->menu.last_arrow_direction = ARROW_DIRECTION_DOWN;
 	data->menu.options_section = SECTION_SOUND;
+	data->menu.resolution_confirm_active = 0;
+	data->menu.resolution_confirm_choice = 0;
+	data->menu.pending_resolution_level = RESOLUTION_DEFAULT;
 	data->keys.w = 0;
 	data->keys.a = 0;
 	data->keys.s = 0;

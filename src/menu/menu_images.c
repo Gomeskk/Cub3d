@@ -60,6 +60,12 @@ int	init_options_images(t_cub3d *data)
 	if (load_xpm_with_data(data->mlx, &data->menu.tab_sensibility,
 			"Png_images/TabChoices/TabSensibility.xpm") == -1)
 		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.resolution_approve,
+			"Png_images/ScreenSize/ResolutionAprove.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.resolution_decline,
+			"Png_images/ScreenSize/ResolutionDeclined.xpm") == -1)
+		return (-1);
 	if (init_volume_images(data) == -1)
 		return (-1);
 	if (init_sensibility_images(data) == -1)

@@ -103,6 +103,8 @@ typedef struct s_menu
 	t_menu_img	tab_sound;
 	t_menu_img	tab_resolution;
 	t_menu_img	tab_sensibility;
+	t_menu_img	resolution_approve;
+	t_menu_img	resolution_decline;
 	t_menu_img	screen_buffer;
 	int				menu_choice;
 	int				difficulty_choice;
@@ -112,6 +114,9 @@ typedef struct s_menu
 	t_options_section	options_section;
 	int				resolution_arrow_count;
 	int				last_arrow_direction;
+	int				resolution_confirm_active;
+	int				resolution_confirm_choice;
+	int				pending_resolution_level;
 }				t_menu;
 
 typedef struct s_game_settings

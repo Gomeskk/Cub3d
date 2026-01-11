@@ -23,10 +23,21 @@ void	adjust_setting(t_cub3d *data, int direction)
 
 void	handle_horizontal_keys(int keycode, t_cub3d *data)
 {
-	if (keycode == XK_Left || keycode == XK_a)
-		adjust_setting(data, -1);
-	else if (keycode == XK_Right || keycode == XK_d)
-		adjust_setting(data, 1);
+	if (data->menu.resolution_confirm_active)
+	{
+		if (keycode == XK_Left || keycode == XK_a)
+			data->menu.resolution_confirm_choice = 1;
+		else if (keycode == XK_Right || keycode == XK_d)
+			data->menu.resolution_confirm_choice = 0;
+		render_credits(data);
+	}
+	else
+	{
+		if (keycode == XK_Left || keycode == XK_a)
+			adjust_setting(data, -1);
+		else if (keycode == XK_Right || keycode == XK_d)
+			adjust_setting(data, 1);
+	}
 }
 
 int	set_arrow_direction(t_cub3d *data, int direction)
@@ -49,10 +60,10 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 {
 	if (data->menu.resolution_arrow_count >= threshold)
 	{
-		if (dir == 1 && data->menu.resolution_level < RESOLUTION_MAX)
-			data->menu.resolution_level++;
-		else if (dir == -1 && data->menu.resolution_level > RESOLUTION_MIN)
-			data->menu.resolution_level--;
+		if (dir == 1 && data->menu.pending_resolution_level < RESOLUTION_MAX)
+			data->menu.pending_resolution_level++;
+		else if (dir == -1 && data->menu.pending_resolution_level > RESOLUTION_MIN)
+			data->menu.pending_resolution_level--;
 		data->menu.resolution_arrow_count = 0;
 	}
 	render_credits(data);
@@ -73,4 +84,22 @@ void	handle_vertical_keys(int keycode, t_cub3d *data)
 		return ;
 	threshold = set_arrow_direction(data, direction);
 	apply_resolution_change(data, direction, threshold);
+}
+
+void	handle_enter_key(t_cub3d *data)
+{
+	if (data->menu.resolution_confirm_active)
+	{
+		if (data->menu.resolution_confirm_choice == 1)
+			data->menu.resolution_level = data->menu.pending_resolution_level;
+		data->menu.resolution_confirm_active = 0;
+		render_credits(data);
+	}
+	else if (data->menu.options_section == SECTION_RESOLUTION
+		&& data->menu.pending_resolution_level != data->menu.resolution_level)
+	{
+		data->menu.resolution_confirm_active = 1;
+		data->menu.resolution_confirm_choice = 0;
+		render_credits(data);
+	}
 }

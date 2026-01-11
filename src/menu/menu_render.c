@@ -35,17 +35,22 @@ void	render_difficulty_menu(t_cub3d *data)
 void	render_credits(t_cub3d *data)
 {
 	put_img_to_img(&data->menu.screen_buffer, data->menu.options_screen, 0, 0);
-	// Always render all current values
 	put_img_to_img(&data->menu.screen_buffer, data->menu.volume[data->menu.volume_level], VOLUME_IMG_X, VOLUME_IMG_Y);
 	put_img_to_img(&data->menu.screen_buffer, data->menu.sensibility[data->menu.sensibility_level], SENSIBILITY_IMG_X, SENSIBILITY_IMG_Y);
-	put_img_to_img(&data->menu.screen_buffer, data->menu.resolution[data->menu.resolution_level], 0, 0);
-	// Then overlay the highlighted tab on top
+	put_img_to_img(&data->menu.screen_buffer, data->menu.resolution[data->menu.pending_resolution_level], 0, 0);
 	if (data->menu.options_section == SECTION_SOUND)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sound, 0, 0);
 	else if (data->menu.options_section == SECTION_RESOLUTION)
 	{
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_resolution, 0, 0);
-		if (data->menu.last_arrow_direction == -1)
+		if (data->menu.resolution_confirm_active)
+		{
+			if (data->menu.resolution_confirm_choice == 0)
+				put_img_to_img(&data->menu.screen_buffer, data->menu.resolution_decline, 0, 0);
+			else
+				put_img_to_img(&data->menu.screen_buffer, data->menu.resolution_approve, 0, 0);
+		}
+		else if (data->menu.last_arrow_direction == -1)
 			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_down, 0, 0);
 		else
 			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_up, 0, 0);
