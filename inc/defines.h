@@ -11,15 +11,22 @@
 # define KEY_THROTTLE_MS 200
 # define VOLUME_MIN 0
 # define VOLUME_MAX 14
+# define VOLUME_COUNT 15
+# define VOLUME_DEFAULT 7
 # define SENSIBILITY_MIN 0
 # define SENSIBILITY_MAX 4
+# define SENSIBILITY_COUNT 5
+# define SENSIBILITY_DEFAULT 2
 # define RESOLUTION_MIN 0
 # define RESOLUTION_MAX 4
+# define RESOLUTION_COUNT 5
+# define RESOLUTION_DEFAULT 4
 # define VOLUME_IMG_X 203
 # define VOLUME_IMG_Y 392
 # define SENSIBILITY_IMG_X 197
 # define SENSIBILITY_IMG_Y 876
 # define SECTION_COUNT 3
+# define ARROW_DIRECTION_DOWN -1
 
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."

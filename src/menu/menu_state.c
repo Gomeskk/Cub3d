@@ -23,11 +23,11 @@ void	init_menu_state(t_cub3d *data)
 {
 	data->menu.menu_choice = MENU_START;
 	data->menu.difficulty_choice = DIFF_MEDIUM;
-	data->menu.sensibility_level = 2;
-	data->menu.volume_level = 7;
-	data->menu.resolution_level = 4;
+	data->menu.sensibility_level = SENSIBILITY_DEFAULT;
+	data->menu.volume_level = VOLUME_DEFAULT;
+	data->menu.resolution_level = RESOLUTION_DEFAULT;
 	data->menu.resolution_arrow_count = 0;
-	data->menu.last_arrow_direction = -1;
+	data->menu.last_arrow_direction = ARROW_DIRECTION_DOWN;
 	data->menu.options_section = SECTION_SOUND;
 	data->keys.w = 0;
 	data->keys.a = 0;
@@ -63,14 +63,14 @@ void	cleanup_menu(t_cub3d *data)
 	if (data->menu.screen_buffer.image)
 		mlx_destroy_image(data->mlx, data->menu.screen_buffer.image);
 	i = 0;
-	while (i < 15)
+	while (i < VOLUME_COUNT)
 	{
 		if (data->menu.volume[i].image)
 			mlx_destroy_image(data->mlx, data->menu.volume[i].image);
 		i++;
 	}
 	i = 0;
-	while (i < 5)
+	while (i < SENSIBILITY_COUNT)
 	{
 		if (data->menu.sensibility[i].image)
 			mlx_destroy_image(data->mlx, data->menu.sensibility[i].image);
