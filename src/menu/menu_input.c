@@ -17,7 +17,7 @@ static void	handle_throttled_key(t_cub3d *data, int is_pressed,
 	if (!is_pressed)
 		return ;
 	current_time = get_time_ms();
-	if (current_time - *last_time < 200)
+	if (current_time - *last_time < KEY_THROTTLE_MS)
 		return ;
 	*last_time = current_time;
 	if (data->status == MAIN_MENU_SCREEN)

@@ -2,21 +2,21 @@
 
 void	adjust_setting(t_cub3d *data, int direction)
 {
-	if (data->menu.options_section == 0)
+	if (data->menu.options_section == SECTION_SOUND)
 	{
 		data->menu.volume_level += direction;
-		if (data->menu.volume_level < 0)
-			data->menu.volume_level = 0;
-		if (data->menu.volume_level > 14)
-			data->menu.volume_level = 14;
+		if (data->menu.volume_level < VOLUME_MIN)
+			data->menu.volume_level = VOLUME_MIN;
+		if (data->menu.volume_level > VOLUME_MAX)
+			data->menu.volume_level = VOLUME_MAX;
 	}
-	else if (data->menu.options_section == 2)
+	else if (data->menu.options_section == SECTION_SENSIBILITY)
 	{
 		data->menu.sensibility_level += direction;
-		if (data->menu.sensibility_level < 0)
-			data->menu.sensibility_level = 0;
-		if (data->menu.sensibility_level > 4)
-			data->menu.sensibility_level = 4;
+		if (data->menu.sensibility_level < SENSIBILITY_MIN)
+			data->menu.sensibility_level = SENSIBILITY_MIN;
+		if (data->menu.sensibility_level > SENSIBILITY_MAX)
+			data->menu.sensibility_level = SENSIBILITY_MAX;
 	}
 	render_credits(data);
 }
@@ -49,9 +49,9 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 {
 	if (data->menu.resolution_arrow_count >= threshold)
 	{
-		if (dir == 1 && data->menu.resolution_level < 4)
+		if (dir == 1 && data->menu.resolution_level < RESOLUTION_MAX)
 			data->menu.resolution_level++;
-		else if (dir == -1 && data->menu.resolution_level > 0)
+		else if (dir == -1 && data->menu.resolution_level > RESOLUTION_MIN)
 			data->menu.resolution_level--;
 		data->menu.resolution_arrow_count = 0;
 	}
@@ -63,7 +63,7 @@ void	handle_vertical_keys(int keycode, t_cub3d *data)
 	int	threshold;
 	int	direction;
 
-	if (data->menu.options_section != 1)
+	if (data->menu.options_section != SECTION_RESOLUTION)
 		return ;
 	if (keycode == XK_Up || keycode == XK_w)
 		direction = 1;

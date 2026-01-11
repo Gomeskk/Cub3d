@@ -70,12 +70,12 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 	{
 		data->menu.menu_choice = MENU_START;
 		data->status = MAIN_MENU_SCREEN;
-		data->menu.options_section = 0;
+		data->menu.options_section = SECTION_SOUND;
 		render_main_menu(data);
 	}
 	else if (keycode == XK_Tab)
 	{
-		data->menu.options_section = (data->menu.options_section + 1) % 3;
+		data->menu.options_section = (data->menu.options_section + 1) % SECTION_COUNT;
 		render_credits(data);
 	}
 	else if (keycode == XK_Left || keycode == XK_a

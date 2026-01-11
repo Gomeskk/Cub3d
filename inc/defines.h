@@ -7,6 +7,20 @@
 # define TILE_SIZE 64
 # define FPS 60
 
+///          MENU SETTINGS          ///
+# define KEY_THROTTLE_MS 200
+# define VOLUME_MIN 0
+# define VOLUME_MAX 14
+# define SENSIBILITY_MIN 0
+# define SENSIBILITY_MAX 4
+# define RESOLUTION_MIN 0
+# define RESOLUTION_MAX 4
+# define VOLUME_IMG_X 203
+# define VOLUME_IMG_Y 392
+# define SENSIBILITY_IMG_X 197
+# define SENSIBILITY_IMG_Y 876
+# define SECTION_COUNT 3
+
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."
 # define WRONG_MAP_NAME "\033[1;35mcub3d:\033[1;0m .cub argument extended expected."
