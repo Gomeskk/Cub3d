@@ -29,13 +29,13 @@ int	init_start_game_images(t_cub3d *data)
 int	init_difficulty_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.diff_easy,
-			"Png_images/Difficulty/Hard.xpm") == -1)
+			"Png_images/Difficulty/Easy.xpm") == -1)
 		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.diff_medium,
 			"Png_images/Difficulty/Medium.xpm") == -1)
 		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.diff_hard,
-			"Png_images/Difficulty/Easy.xpm") == -1)
+			"Png_images/Difficulty/Hard.xpm") == -1)
 		return (-1);
 	return (0);
 }

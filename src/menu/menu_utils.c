@@ -1,25 +1,6 @@
 #include "../../inc/cub3d.h"
 #include <sys/time.h>
 
-double	get_delta_time(void)
-{
-/* 	static struct timeval last_time;
-	static int first_call = 1;
-	struct timeval current_time;
-	double delta;
-	gettimeofday(&current_time, NULL);
-	if first_call:
-	    last_time = current_time;
-	    first_call = 0;
-	    return 0.0;
-	Calculate delta in seconds
-	delta = (current_time.tv_sec - last_time.tv_sec)
-	      + (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
-	last_time = current_time;
-	return delta; */
-	return (0.0);
-}
-
 void	apply_difficulty_settings(t_cub3d *data)
 {
 	(void)data;

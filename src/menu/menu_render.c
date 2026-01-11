@@ -7,14 +7,13 @@ void	render_main_menu(t_cub3d *data)
 	
 	if (data->menu.menu_choice == MENU_START)
 	{
-		printf("DEBUG: Rendering start_normal.image (from Cub3D0.xpm)\n");
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_normal.image, 0, 0);
 	}
 	else if (data->menu.menu_choice == MENU_OPTIONS)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_hover.image, 0, 0);
-	else if (data->menu.menu_choice == MENU_EXIT)
+	else if (data->menu.menu_choice == MENU_CREDITS)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->menu.start_selected.image, 0, 0);
 }

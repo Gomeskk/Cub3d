@@ -9,6 +9,25 @@ static long	get_time_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+static void	handle_throttled_key(t_cub3d *data, int is_pressed,
+			long *last_time, int keycode)
+{
+	long	current_time;
+
+	if (!is_pressed)
+		return ;
+	current_time = get_time_ms();
+	if (current_time - *last_time < 200)
+		return ;
+	*last_time = current_time;
+	if (data->status == MAIN_MENU_SCREEN)
+		handle_main_menu_keys(keycode, data);
+	else if (data->status == DIFFICULTY_SCREEN)
+		handle_difficulty_keys(keycode, data);
+	else if (data->status == CREDITS)
+		handle_credits_keys(keycode, data);
+}
+
 int	key_press_handler(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape)
@@ -48,41 +67,17 @@ int	key_release_handler(int keycode, t_cub3d *data)
 
 int	menu_loop_handler(t_cub3d *data)
 {
-	static long	last_time = 0;
-	long		current_time;
+	static long	last_w = 0;
+	static long	last_s = 0;
+	static long	last_a = 0;
+	static long	last_d = 0;
 
-	current_time = get_time_ms();
-	if (current_time - last_time < 150)
-		return (0);
-	if (data->keys.w)
+	handle_throttled_key(data, data->keys.w, &last_w, XK_w);
+	handle_throttled_key(data, data->keys.s, &last_s, XK_s);
+	if (data->status == CREDITS)
 	{
-		last_time = current_time;
-		if (data->status == MAIN_MENU_SCREEN)
-			handle_main_menu_keys(XK_w, data);
-		else if (data->status == DIFFICULTY_SCREEN)
-			handle_difficulty_keys(XK_w, data);
-		else if (data->status == CREDITS)
-			handle_credits_keys(XK_w, data);
-	}
-	else if (data->keys.s)
-	{
-		last_time = current_time;
-		if (data->status == MAIN_MENU_SCREEN)
-			handle_main_menu_keys(XK_s, data);
-		else if (data->status == DIFFICULTY_SCREEN)
-			handle_difficulty_keys(XK_s, data);
-		else if (data->status == CREDITS)
-			handle_credits_keys(XK_s, data);
-	}
-	else if (data->keys.a && data->status == CREDITS)
-	{
-		last_time = current_time;
-		handle_credits_keys(XK_a, data);
-	}
-	else if (data->keys.d && data->status == CREDITS)
-	{
-		last_time = current_time;
-		handle_credits_keys(XK_d, data);
+		handle_throttled_key(data, data->keys.a, &last_a, XK_a);
+		handle_throttled_key(data, data->keys.d, &last_d, XK_d);
 	}
 	return (0);
 }
