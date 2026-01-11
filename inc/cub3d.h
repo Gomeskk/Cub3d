@@ -10,7 +10,6 @@
 # include <unistd.h>
 # include "defines.h"
 # include "structs.h"
-# include "keys.h"
 
 /* typedef struct s_img
 {
@@ -75,16 +74,27 @@ int		init_menu_images(t_cub3d *data);
 void	init_menu_state(t_cub3d *data);
 void	cleanup_menu(t_cub3d *data);
 // menu_images.c
+int		load_xpm_with_data(void *mlx, t_menu_img *img, char *path);
 int		init_start_game_images(t_cub3d *data);
 int		init_difficulty_images(t_cub3d *data);
+int		init_options_images(t_cub3d *data);
+// menu_images_arrays.c
+int		load_image_array(void *mlx, t_menu_img *imgs,
+			const char **paths, int count);
 int		init_volume_images(t_cub3d *data);
 int		init_sensibility_images(t_cub3d *data);
-int		init_options_images(t_cub3d *data);
+int		init_resolution_images(t_cub3d *data);
 // menu_navigation.c
 int		handle_main_menu_keys(int keycode, t_cub3d *data);
 int		handle_difficulty_keys(int keycode, t_cub3d *data);
 int		handle_credits_keys(int keycode, t_cub3d *data);
 int		menu_key_handler(int keycode, t_cub3d *data);
+// menu_navigation_options.c
+void	adjust_setting(t_cub3d *data, int direction);
+void	handle_horizontal_keys(int keycode, t_cub3d *data);
+int		set_arrow_direction(t_cub3d *data, int direction);
+void	apply_resolution_change(t_cub3d *data, int dir, int threshold);
+void	handle_vertical_keys(int keycode, t_cub3d *data);
 // menu_input.c
 int		key_press_handler(int keycode, t_cub3d *data);
 int		key_release_handler(int keycode, t_cub3d *data);

@@ -92,6 +92,7 @@ typedef struct s_menu
 	t_menu_img	credits_screen;
 	t_menu_img	volume[15];
 	t_menu_img	sensibility[5];
+	t_menu_img	resolution[5];
 	t_menu_img	tab_sound;
 	t_menu_img	tab_resolution;
 	t_menu_img	tab_sensibility;
@@ -102,6 +103,8 @@ typedef struct s_menu
 	int			volume_level;
 	int			resolution_level;
 	int			options_section;
+	int			resolution_arrow_count;
+	int			last_arrow_direction;
 }				t_menu;
 
 typedef struct s_game_settings

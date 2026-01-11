@@ -36,25 +36,23 @@ void	render_difficulty_menu(t_cub3d *data)
 void	render_credits(t_cub3d *data)
 {
 	put_img_to_img(&data->menu.screen_buffer, data->menu.options_screen, 0, 0);
-	
 	// Always render all current values
 	put_img_to_img(&data->menu.screen_buffer, data->menu.volume[data->menu.volume_level], 203, 392);
 	put_img_to_img(&data->menu.screen_buffer, data->menu.sensibility[data->menu.sensibility_level], 197, 876);
-	
+	put_img_to_img(&data->menu.screen_buffer, data->menu.resolution[data->menu.resolution_level], 0, 0);
 	// Then overlay the highlighted tab on top
 	if (data->menu.options_section == 0)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sound, 0, 0);
 	else if (data->menu.options_section == 1)
 	{
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_resolution, 0, 0);
-		if (data->menu.resolution_level == 0)
+		if (data->menu.last_arrow_direction == -1)
 			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_down, 0, 0);
 		else
 			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_up, 0, 0);
 	}
 	else if (data->menu.options_section == 2)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sensibility, 0, 0);
-	
 	mlx_put_image_to_window(data->mlx, data->window, data->menu.screen_buffer.image, 0, 0);
 }
 

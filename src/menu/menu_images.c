@@ -1,6 +1,6 @@
 #include "../../inc/cub3d.h"
 
-static int	load_xpm_with_data(void *mlx, t_menu_img *img, char *path)
+int	load_xpm_with_data(void *mlx, t_menu_img *img, char *path)
 {
 	img->image = mlx_xpm_file_to_image(mlx, path, &img->width, &img->height);
 	if (!img->image)
@@ -40,60 +40,6 @@ int	init_difficulty_images(t_cub3d *data)
 	return (0);
 }
 
-int	init_volume_images(t_cub3d *data)
-{
-	const char	*paths[15] = {
-		"Png_images/Volume/(-7).xpm",
-		"Png_images/Volume/(-6).xpm",
-		"Png_images/Volume/(-5).xpm",
-		"Png_images/Volume/(-4).xpm",
-		"Png_images/Volume/(-3).xpm",
-		"Png_images/Volume/(-2).xpm",
-		"Png_images/Volume/(-1).xpm",
-		"Png_images/Volume/(0).xpm",
-		"Png_images/Volume/(+1).xpm",
-		"Png_images/Volume/(+2).xpm",
-		"Png_images/Volume/(+3).xpm",
-		"Png_images/Volume/(+4).xpm",
-		"Png_images/Volume/(+5).xpm",
-		"Png_images/Volume/(+6).xpm",
-		"Png_images/Volume/(+7).xpm"
-	};
-	int	i;
-
-	i = 0;
-	while (i < 15)
-	{
-		if (load_xpm_with_data(data->mlx, &data->menu.volume[i],
-				(char *)paths[i]) == -1)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
-int	init_sensibility_images(t_cub3d *data)
-{
-	const char	*paths[5] = {
-		"Png_images/Sensibility/(0).xpm",
-		"Png_images/Sensibility/(0.5).xpm",
-		"Png_images/Sensibility/(1).xpm",
-		"Png_images/Sensibility/(1.5).xpm",
-		"Png_images/Sensibility/(2).xpm"
-	};
-	int	i;
-
-	i = 0;
-	while (i < 5)
-	{
-		if (load_xpm_with_data(data->mlx, &data->menu.sensibility[i],
-				(char *)paths[i]) == -1)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
 int	init_options_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.options_screen,
@@ -117,6 +63,8 @@ int	init_options_images(t_cub3d *data)
 	if (init_volume_images(data) == -1)
 		return (-1);
 	if (init_sensibility_images(data) == -1)
+		return (-1);
+	if (init_resolution_images(data) == -1)
 		return (-1);
 	return (0);
 }

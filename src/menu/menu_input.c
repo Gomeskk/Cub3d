@@ -28,40 +28,31 @@ static void	handle_throttled_key(t_cub3d *data, int is_pressed,
 		handle_credits_keys(keycode, data);
 }
 
+static void	set_key_state(int keycode, t_cub3d *data, int state)
+{
+	if (keycode == XK_Up || keycode == XK_w)
+		data->keys.w = state;
+	else if (keycode == XK_Left || keycode == XK_a)
+		data->keys.a = state;
+	else if (keycode == XK_Down || keycode == XK_s)
+		data->keys.s = state;
+	else if (keycode == XK_Right || keycode == XK_d)
+		data->keys.d = state;
+}
+
 int	key_press_handler(int keycode, t_cub3d *data)
 {
-	if (keycode == XK_Escape)
-	{
-		if (data->status == MAIN_MENU_SCREEN)
-			exit(0);
-	}
-	if (keycode == XK_Up || keycode == XK_w)
-		data->keys.w = 1;
-	if (keycode == XK_Left || keycode == XK_a)
-		data->keys.a = 1;
-	if (keycode == XK_Down || keycode == XK_s)
-		data->keys.s = 1;
-	if (keycode == XK_Right || keycode == XK_d)
-		data->keys.d = 1;
-	if (keycode == XK_Return)
-		return (menu_key_handler(keycode, data));
-	if (keycode == XK_Tab)
-		return (menu_key_handler(keycode, data));
-	if (keycode == XK_Escape)
+	if (keycode == XK_Escape && data->status == MAIN_MENU_SCREEN)
+		exit(0);
+	set_key_state(keycode, data, 1);
+	if (keycode == XK_Return || keycode == XK_Tab || keycode == XK_Escape)
 		return (menu_key_handler(keycode, data));
 	return (0);
 }
 
 int	key_release_handler(int keycode, t_cub3d *data)
 {
-	if (keycode == XK_Up || keycode == XK_w)
-		data->keys.w = 0;
-	if (keycode == XK_Left || keycode == XK_a)
-		data->keys.a = 0;
-	if (keycode == XK_Down || keycode == XK_s)
-		data->keys.s = 0;
-	if (keycode == XK_Right || keycode == XK_d)
-		data->keys.d = 0;
+	set_key_state(keycode, data, 0);
 	return (0);
 }
 

@@ -26,7 +26,7 @@ PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
 
-MENU_SRCS		= menu_images.c menu_input.c menu_navigation.c menu_render.c menu_state.c menu_transparency.c menu_utils.c
+MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_render.c menu_state.c menu_transparency.c menu_utils.c
 MENU_DIR		= src/menu/
 MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 

@@ -25,7 +25,9 @@ void	init_menu_state(t_cub3d *data)
 	data->menu.difficulty_choice = DIFF_MEDIUM;
 	data->menu.sensibility_level = 2;
 	data->menu.volume_level = 7;
-	data->menu.resolution_level = 0;
+	data->menu.resolution_level = 4;
+	data->menu.resolution_arrow_count = 0;
+	data->menu.last_arrow_direction = -1;
 	data->menu.options_section = 0;
 	data->keys.w = 0;
 	data->keys.a = 0;

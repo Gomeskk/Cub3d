@@ -39,22 +39,22 @@ int	handle_main_menu_keys(int keycode, t_cub3d *data)
 	return (0);
 }
 
+static void	change_difficulty(t_cub3d *data, int direction)
+{
+	data->menu.difficulty_choice += direction;
+	if (data->menu.difficulty_choice > DIFF_HARD)
+		data->menu.difficulty_choice = DIFF_EASY;
+	else if (data->menu.difficulty_choice < DIFF_EASY)
+		data->menu.difficulty_choice = DIFF_HARD;
+	render_difficulty_menu(data);
+}
+
 int	handle_difficulty_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Up || keycode == XK_w)
-	{
-		data->menu.difficulty_choice++;
-		if (data->menu.difficulty_choice > DIFF_HARD)
-			data->menu.difficulty_choice = DIFF_EASY;
-		render_difficulty_menu(data);
-	}
+		change_difficulty(data, 1);
 	else if (keycode == XK_Down || keycode == XK_s)
-	{
-		data->menu.difficulty_choice--;
-		if (data->menu.difficulty_choice < DIFF_EASY)
-			data->menu.difficulty_choice = DIFF_HARD;
-		render_difficulty_menu(data);
-	}
+		change_difficulty(data, -1);
 	else if (keycode == XK_Return || keycode == XK_Escape)
 	{
 		data->menu.menu_choice = MENU_START;
@@ -62,46 +62,6 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 		render_main_menu(data);
 	}
 	return (0);
-}
-
-static void	handle_horizontal_keys(int keycode, t_cub3d *data)
-{
-	if (keycode == XK_Left || keycode == XK_a)
-	{
-		if (data->menu.options_section == 0 && data->menu.volume_level > 0)
-			data->menu.volume_level--;
-		else if (data->menu.options_section == 2
-			&& data->menu.sensibility_level > 0)
-			data->menu.sensibility_level--;
-		render_credits(data);
-	}
-	else if (keycode == XK_Right || keycode == XK_d)
-	{
-		if (data->menu.options_section == 0 && data->menu.volume_level < 14)
-			data->menu.volume_level++;
-		else if (data->menu.options_section == 2
-			&& data->menu.sensibility_level < 4)
-			data->menu.sensibility_level++;
-		render_credits(data);
-	}
-}
-
-static void	handle_vertical_keys(int keycode, t_cub3d *data)
-{
-	if (data->menu.options_section != 1)
-		return ;
-	if (keycode == XK_Up || keycode == XK_w)
-	{
-		if (data->menu.resolution_level < 2)
-			data->menu.resolution_level++;
-		render_credits(data);
-	}
-	else if (keycode == XK_Down || keycode == XK_s)
-	{
-		if (data->menu.resolution_level > 0)
-			data->menu.resolution_level--;
-		render_credits(data);
-	}
 }
 
 int	handle_credits_keys(int keycode, t_cub3d *data)
@@ -113,7 +73,7 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 		data->menu.options_section = 0;
 		render_main_menu(data);
 	}
-	else if (keycode == XK_Tab || keycode == KEY_TAB)
+	else if (keycode == XK_Tab)
 	{
 		data->menu.options_section = (data->menu.options_section + 1) % 3;
 		render_credits(data);
