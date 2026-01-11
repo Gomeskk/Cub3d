@@ -15,6 +15,14 @@ typedef struct s_menu_img
 	int			endian;
 }				t_menu_img;
 
+typedef struct s_scale_data
+{
+	float		scale;
+	int			scaled_w;
+	int			scaled_h;
+	int			bpp;
+}				t_scale_data;
+
 typedef struct s_tiles
 {
 	t_img		wall;

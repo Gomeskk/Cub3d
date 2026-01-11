@@ -24,6 +24,8 @@ typedef struct s_cub3d
 {
 	void			*mlx;
 	void			*window;
+	int				current_width;
+	int				current_height;
 	t_textures		textures;
 	t_status		status;
 	t_tiles			tiles;
@@ -96,6 +98,8 @@ int		set_arrow_direction(t_cub3d *data, int direction);
 void	apply_resolution_change(t_cub3d *data, int dir, int threshold);
 void	handle_vertical_keys(int keycode, t_cub3d *data);
 void	handle_enter_key(t_cub3d *data);
+// menu_resolution.c
+void	apply_resolution(t_cub3d *data, int new_level);
 // menu_input.c
 int		key_press_handler(int keycode, t_cub3d *data);
 int		key_release_handler(int keycode, t_cub3d *data);
@@ -106,6 +110,8 @@ void	render_difficulty_menu(t_cub3d *data);
 void	render_credits(t_cub3d *data);
 void	pixel_put(t_menu_img *img, int x, int y, int color);
 void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
+void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
+			int screen_x, int screen_y, float scale);
 
 //			TESTER				//
 void	print_rgb(int color);

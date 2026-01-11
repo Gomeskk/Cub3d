@@ -91,7 +91,9 @@ void	handle_enter_key(t_cub3d *data)
 	if (data->menu.resolution_confirm_active)
 	{
 		if (data->menu.resolution_confirm_choice == 1)
-			data->menu.resolution_level = data->menu.pending_resolution_level;
+		{
+			apply_resolution(data, data->menu.pending_resolution_level);
+		}
 		data->menu.resolution_confirm_active = 0;
 		render_credits(data);
 	}

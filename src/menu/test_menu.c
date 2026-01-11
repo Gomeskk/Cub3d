@@ -10,11 +10,7 @@
 
 /* tor run for testing : 
 cd /home/gomes/Cub3d
-cc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_state.c src/menu/menu_images.c src/menu/menu_images_arrays.c src/menu/menu_navigation.c src/menu/menu_navigation_options.c src/menu/menu_input.c src/menu/menu_render.c src/menu/menu_utils.c src/menu/menu_transparency.c \
-  -I./inc -I./complete_lib/minilibx-linux \
-  complete_lib/minilibx-linux/libmlx.a \
-  -L./complete_lib/42_Libft -lft \
-  -lXext -lX11 -lm
+cc -Wall -Wextra -Werror -o test_menu src/menu/test_menu.c src/menu/menu_state.c src/menu/menu_images.c src/menu/menu_images_arrays.c src/menu/menu_navigation.c src/menu/menu_navigation_options.c src/menu/menu_resolution.c src/menu/menu_input.c src/menu/menu_render.c src/menu/menu_utils.c src/menu/menu_transparency.c -I./inc -I./complete_lib/minilibx-linux complete_lib/minilibx-linux/libmlx.a -L./complete_lib/42_Libft -lft -lXext -lX11 -lm
 
   valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./test_menu
  */
@@ -39,6 +35,8 @@ int	main(void)
 		printf("Error: Failed to initialize MLX\n");
 		return (1);
 	}
+	data.current_width = WIDTH;
+	data.current_height = HEIGHT;
 	data.window = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Menu Test"); // Create window
 	if (!data.window)
 	{
