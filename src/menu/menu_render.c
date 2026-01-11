@@ -45,7 +45,13 @@ void	render_credits(t_cub3d *data)
 	if (data->menu.options_section == 0)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sound, 0, 0);
 	else if (data->menu.options_section == 1)
+	{
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_resolution, 0, 0);
+		if (data->menu.resolution_level == 0)
+			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_down, 0, 0);
+		else
+			put_img_to_img(&data->menu.screen_buffer, data->menu.arrow_up, 0, 0);
+	}
 	else if (data->menu.options_section == 2)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sensibility, 0, 0);
 	

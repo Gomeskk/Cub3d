@@ -99,6 +99,12 @@ int	init_options_images(t_cub3d *data)
 	if (load_xpm_with_data(data->mlx, &data->menu.options_screen,
 			"Png_images/Options/OptionsMenu.xpm") == -1)
 		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.arrow_up,
+			"Png_images/Arrow/UP(PINK).xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.arrow_down,
+			"Png_images/Arrow/DOWN(PINK).xpm") == -1)
+		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.tab_sound,
 			"Png_images/TabChoices/TabSound.xpm") == -1)
 		return (-1);
