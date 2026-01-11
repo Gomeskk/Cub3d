@@ -38,6 +38,7 @@ void	render_credits(t_cub3d *data)
 	put_img_to_img(&data->menu.screen_buffer, data->menu.volume[data->menu.volume_level], VOLUME_IMG_X, VOLUME_IMG_Y);
 	put_img_to_img(&data->menu.screen_buffer, data->menu.sensibility[data->menu.sensibility_level], SENSIBILITY_IMG_X, SENSIBILITY_IMG_Y);
 	put_img_to_img(&data->menu.screen_buffer, data->menu.resolution[data->menu.pending_resolution_level], 0, 0);
+
 	if (data->menu.options_section == SECTION_SOUND)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sound, 0, 0);
 	else if (data->menu.options_section == SECTION_RESOLUTION)
@@ -59,25 +60,3 @@ void	render_credits(t_cub3d *data)
 		put_img_to_img(&data->menu.screen_buffer, data->menu.tab_sensibility, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->window, data->menu.screen_buffer.image, 0, 0);
 }
-
-/* int	render_game_handler(t_cub3d *data)
-{
-	static double time = 0;
-	time += get_delta_time(); // You need to implement this
-	if time >= 1.0 / FPS:
-	    switch data->status:
-	        case MENU:
-	            render_main_menu(data);
-	            break;
-	        case DIFFICULTY_LEVEL:
-	            render_difficulty_menu(data);
-	            break;
-	        case CREDITS:
-	            render_credits(data);
-	            break;
-	        case GAME:
-	            render_gameplay(data); // Your actual game rendering
-	            break;
-	    time = 0;
-	return 0;
-} */
