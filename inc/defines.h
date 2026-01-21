@@ -4,8 +4,9 @@
 ///          GAME SETTINGS          ///
 # define HEIGHT 1080
 # define WIDTH 1920
-# define TILE_SIZE 64
 # define FPS 60
+# define DIAGONAL_FACTOR 0.70710678  // 1v2 for diagonal movement normalization
+
 
 ///          MENU SETTINGS          ///
 # define KEY_THROTTLE_MS 200
@@ -62,7 +63,7 @@
 \033[1;37mHere's an Example:\033[1;0m\n\
 F 220,100,0 \n\
 C 255,0,30"
-# define CF_OVERFLOW "\033[1;35mcub3d:\033[1;0m C's && F's parameters should be 3 ints, representing RGB, in a range of 0-255 separated by one comma each.\n\n\
+# define CF_OVERFLOW "\033[1;35mcub3d:\033[1;0m C's && F's parameters should be 3 unsigned char, representing RGB, in a range of 0-255 separated by one comma each.\n\n\
 \033[1;37mHere's an Example:\033[1;0m\n\
 \033[1;31mR:\033[1;0m 220\n\
 \033[1;32mG:\033[1;0m 100\n\

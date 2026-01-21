@@ -19,12 +19,17 @@ CFLAGS 			= -Wall -Wextra -Werror -g
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c test.c utils.c
+SRCS 			= $(PARSER_SRCS) $(RAYC_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c
 SRC_DIR 		= src/
 
 PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
+
+RAYC_SRCS		= draw.c movement.c move_utils.c
+RAYC_DIR		= src/raycaster/
+RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
+
 
 MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_render.c menu_state.c menu_transparency.c menu_utils.c
 MENU_DIR		= src/menu/
@@ -48,13 +53,11 @@ PERSONAL_LIBS   = -lft -lgnl -lftprintf
 LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
 
 ### MLX COMPILE FLAGS ###
-MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-MLX_INC			= -I/usr/include -Imlx_linux -O3 
+MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -lm -lz
+MLX_INC			= -I/usr/include -I mlx_linux -O3 
 
 
-
-
-vpath %.c $(SRC_DIR) $(PARSER_DIR) $(MENU_DIR)
+vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR)
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:25:39 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/02 19:38:54 by bpires-r         ###   ########.fr       */
+/*   Updated: 2025/12/16 19:36:07 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,18 @@ void	skip_sp_tb(char *s, int *i)
 {
 	while (s[*i] && is_space(s[*i]))
 		(*i)++;
+}
+
+int	get_tile_size(t_cub3d *data)
+{
+	int	size;
+
+	if (data->map.row_count <= 0 || data->map.col_count <= 0)
+		return (1);
+	size = data->img.width / data->map.col_count;
+	if (size > data->img.height / data->map.row_count)
+		size = data->img.height / data->map.row_count;
+	if (size < 1)
+		size = 1;
+	return (size);
 }
