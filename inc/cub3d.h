@@ -9,9 +9,9 @@
 # include <string.h>
 # include <unistd.h>
 # include <time.h>
+# include <math.h>
 # include "defines.h"
 # include "structs.h"
-# include <math.h>
 
 /* typedef struct s_img
 {

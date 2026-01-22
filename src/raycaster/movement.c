@@ -6,18 +6,11 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/17 02:40:27 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/04 21:03:35 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	get_floor(double value)
-{
-	if (value >= 0)
-		return ((int)value);
-	return ((int)value - 1);
-}
 
 static int	circle_intersects_rectangle(t_cub3d *data, double cx, double cy, int row, int col)
 {
@@ -53,8 +46,8 @@ static int	check_collision_range(t_cub3d *data, double cx, double cy, int start_
 	int	start_col;
 	int	end_col;
 
-	start_col = get_floor((cx - data->player.radius) / (double)data->tile);
-	end_col = get_floor((cx + data->player.radius) / (double)data->tile);
+	start_col = (int)floor((cx - data->player.radius) / (double)data->tile);
+	end_col = floor((cx + data->player.radius) / (double)data->tile);
 	if (start_col < 0)
 		start_col = 0;
 	if (end_col >= data->map.col_count)
@@ -81,8 +74,8 @@ int	circle_collides_wall(t_cub3d *data, double cx, double cy)
 	int	start_row;
 	int	end_row;
 
-	start_row = get_floor((cy - data->player.radius) / (double)data->tile);
-	end_row = get_floor((cy + data->player.radius) / (double)data->tile);
+	start_row = (int)floor((cy - data->player.radius) / (double)data->tile);
+	end_row = (int)floor((cy + data->player.radius) / (double)data->tile);
 	if (start_row < 0)
 		start_row = 0;
 	if (end_row >= data->map.row_count)
