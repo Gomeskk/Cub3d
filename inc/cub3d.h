@@ -26,8 +26,10 @@ typedef struct s_cub3d
 {
 	void			*mlx;
 	void			*window;
+	int				tile;
 	int				current_width;
 	int				current_height;
+	t_img			img;
 	t_textures		textures;
 	t_status		status;
 	t_tiles			tiles;
@@ -36,7 +38,6 @@ typedef struct s_cub3d
 	t_keys			keys;
 	t_mouse			mouse;
 	t_menu			menu;
-	t_game_settings	game_settings;
 }				t_cub3d;
 
 //			INIT			//
@@ -77,6 +78,7 @@ void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_minimap(t_cub3d *data);
 void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
 void	game_start(t_cub3d *data);
+void	start_gameplay(t_cub3d *data);
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);
 void    player_movement(t_cub3d *data, double dt);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
@@ -127,7 +129,7 @@ int		menu_loop_handler(t_cub3d *data);
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
 void	render_credits(t_cub3d *data);
-void	pixel_put(t_menu_img *img, int x, int y, int color);
+void	menu_pixel_put(t_menu_img *img, int x, int y, int color);
 void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
 void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
 			int screen_x, int screen_y, float scale);

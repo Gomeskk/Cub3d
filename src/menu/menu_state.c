@@ -79,4 +79,11 @@ void	cleanup_menu(t_cub3d *data)
 			mlx_destroy_image(data->mlx, data->menu.sensibility[i].image);
 		i++;
 	}
+	i = 0;
+	while (i < RESOLUTION_COUNT)
+	{
+		if (data->menu.resolution[i].image)
+			mlx_destroy_image(data->mlx, data->menu.resolution[i].image);
+		i++;
+	}
 }

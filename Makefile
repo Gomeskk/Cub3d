@@ -19,7 +19,7 @@ CFLAGS 			= -Wall -Wextra -Werror -g
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) $(RAYC_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c
+SRCS 			= $(PARSER_SRCS) $(RAYC_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c menu_resolution.c
 SRC_DIR 		= src/
 
 PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
@@ -57,7 +57,7 @@ MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -l
 MLX_INC			= -I/usr/include -I mlx_linux -O3 
 
 
-vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR)
+vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR) $(MENU_DIR)
 
 all: $(NAME)
 
