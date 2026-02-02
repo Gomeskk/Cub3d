@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:25:34 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/16 15:16:49 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:56:56 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	check_spawn(t_cub3d *data, char c, int x, int y)
 		data->map.start_point++;
 		data->player.pos_x = x;
 		data->player.pos_y = y;
+		data->map.direction = c;
 		data->map.grid[y][x] = '0';
 	}
 }

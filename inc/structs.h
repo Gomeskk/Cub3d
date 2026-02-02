@@ -37,6 +37,7 @@ typedef struct s_map
 	int			row_count;
 	int			col_count;
 	int			start_point;
+	char		direction;
 }				t_map;
 
 typedef struct s_player
@@ -47,6 +48,12 @@ typedef struct s_player
 	int		radius;
 	double	vel_x;
 	double	vel_y;
+	// Direction vector (where the player is facing)
+	double dir_x;
+	double dir_y;
+	// Camera plane (perpendicular to direction vector)
+	double	plane_x;
+	double	plane_y;
 }				t_player;
 
 typedef struct s_keys

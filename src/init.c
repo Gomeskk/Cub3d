@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/16 19:50:50 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/29 17:39:31 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,17 @@ void	init_game(t_cub3d *data)
 	data->player.radius = data->tile / 4;
 	data->player.pos_x = data->player.pos_x * data->tile + data->tile / 2.0;
 	data->player.pos_y = data->player.pos_y * data->tile + data->tile / 2.0;
+	init_player_direction(&data->player, data->map.direction);
 	printf("x doubled -> %f    y doubled -> %f\n", data->player.pos_x, data->player.pos_y);
 	data->keys.a = 0;
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
+	data->keys.w = 0;
+	data->mouse.x = WIDTH / 2;
+	data->mouse.y = HEIGHT / 2;
+	data->mouse.prev_x = WIDTH / 2;
+	data->mouse.prev_y = HEIGHT / 2;
+	//mlx_mouse_hide(data->mlx, data->window);
+	mlx_mouse_move(data->mlx, data->window, WIDTH / 2, HEIGHT / 2);
 }

@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/01/04 21:03:35 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/29 17:35:57 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,29 @@ int	circle_collides_wall(t_cub3d *data, double cx, double cy)
 
 static void	calculate_movement_direction(t_cub3d *data, double *dx, double *dy)
 {
-	*dx = 0.0;
-	*dy = 0.0;
-
-	if (data->keys.w)
-		*dy -= 1.0;
-	if (data->keys.s)
-		*dy += 1.0;
-	if (data->keys.a)
-		*dx -= 1.0;
-	if (data->keys.d)
-		*dx += 1.0;
-	if (*dx != 0.0 && *dy != 0.0)
-	{
-		*dx *= DIAGONAL_FACTOR;
-		*dy *= DIAGONAL_FACTOR;
-	}
+	double forward = 0.0;
+    double strafe = 0.0;
+    
+    // Get input for forward/backward and left/right
+    if (data->keys.w)
+        forward += 1.0;   // Move forward
+    if (data->keys.s)
+        forward -= 1.0;   // Move backward
+    if (data->keys.d)
+        strafe += 1.0;    // Strafe right
+    if (data->keys.a)
+        strafe -= 1.0;    // Strafe left
+    
+    // Convert to world coordinates using direction vectors
+    *dx = data->player.dir_x * forward + data->player.plane_x * strafe;
+    *dy = data->player.dir_y * forward + data->player.plane_y * strafe;
+    
+    // Apply diagonal factor if moving diagonally
+    if (*dx != 0.0 && *dy != 0.0)
+    {
+        *dx *= DIAGONAL_FACTOR;
+        *dy *= DIAGONAL_FACTOR;
+    }
 }
 
 static void	attempt_movement_with_collision(t_cub3d *data, double nx, double ny)

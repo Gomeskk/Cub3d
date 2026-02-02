@@ -76,6 +76,8 @@ int 	has_space_neighbor(char **g, int r, int c);
 //			2DGAME			//
 void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_minimap(t_cub3d *data);
+void    init_player_direction(t_player *player, char start_pos);
+void    rotate_player(t_player *player, double rot_angle);
 void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
 void	game_start(t_cub3d *data);
 void	start_gameplay(t_cub3d *data);
@@ -84,6 +86,8 @@ void    player_movement(t_cub3d *data, double dt);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
 int		key_released(int keycode, t_cub3d *data);
 int		key_pressed(int keycode, t_cub3d *data);
+int		mouse_move(int x, int y, t_cub3d *data);
+void    draw_direction_line(t_img *img, t_player *player, int length);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);

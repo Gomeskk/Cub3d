@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/17 02:40:32 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/29 17:02:05 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,26 @@ double get_delta_time(void)
     double dt = now - last;
     last = now;
     return dt;
+}
+
+int mouse_move(int x, int y, t_cub3d *data)
+{
+	//pesquisar why x and why y are inverted also why call x and y in this function as parameters?
+    int dx;
+    double rot_speed = 0.002; // Adjust sensitivity
+    
+    // Calculate mouse movement
+    dx = x - data->mouse.prev_x;
+    
+    // Rotate player based on horizontal mouse movement
+    if (dx != 0)
+        rotate_player(&data->player, dx * rot_speed);
+    
+    // Update mouse position
+    data->mouse.prev_x = x;
+    data->mouse.prev_y = y;
+    data->mouse.x = x;
+    data->mouse.y = y;
+    
+    return (0);
 }

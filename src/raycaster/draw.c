@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:26:51 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/16 19:45:02 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:52:36 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ void	put_player_dot(t_img *img, int cx, int cy, int radius, int color)
         y++;
     }
 }
+void	draw_direction_line(t_img *img, t_player *player, int length)
+{
+    int i;
+	int cx = (int)player->pos_x;
+	int cy = (int)player->pos_y;
+	int x;
+	int y;
+    // Draw direction line (20 pixels long)
+    if (length <= 0)
+	{
+    	length = 20;
+	}
+	for (i = 1; i <= length; i++)
+	{
+	    x = cx + (int)round(player->dir_x * i);
+	    y = cy + (int)round(player->dir_y * i);
+	    if (x >= 0 && y >= 0 && x < img->width && y < img->height)
+	        pixel_put(img, x, y, 0xFF0000); // red = direction
+	}
+}
 
 void	draw_minimap(t_cub3d *data)
 {
@@ -56,6 +76,7 @@ void	draw_minimap(t_cub3d *data)
 		y++;
 	}
 	put_player_dot(&data->img, data->player.pos_x, data->player.pos_y,data->player.radius, 0x00FF00);
+	draw_direction_line(&data->img, &data->player, 100);
 }
 
 void	pixel_put(t_img *img, int x, int y, int color)
