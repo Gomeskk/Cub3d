@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/01/29 17:02:05 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:04:11 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ double get_delta_time(void)
 
 int mouse_move(int x, int y, t_cub3d *data)
 {
-	//pesquisar why x and why y are inverted also why call x and y in this function as parameters?
+    printf("Mouse move called: x=%d, y=%d\n", x, y);
+    //pesquisar why x and why y are inverted also why call x and y in this function as parameters?
     int dx;
     double rot_speed = 0.002; // Adjust sensitivity
     
@@ -79,6 +80,6 @@ int mouse_move(int x, int y, t_cub3d *data)
     data->mouse.prev_y = y;
     data->mouse.x = x;
     data->mouse.y = y;
-    
+    printf("Mouse moved dx=%d, rotating by %.4f\n", x, dx * rot_speed);
     return (0);
 }

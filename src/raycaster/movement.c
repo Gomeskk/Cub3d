@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/01/29 17:35:57 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:03:34 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static void	calculate_movement_direction(t_cub3d *data, double *dx, double *dy)
         *dx *= DIAGONAL_FACTOR;
         *dy *= DIAGONAL_FACTOR;
     }
+	//printf("Movement: forward=%.2f, strafe=%.2f, result dx=%.2f, dy=%.2f\n", 
+    //   forward, strafe, *dx, *dy);
 }
 
 static void	attempt_movement_with_collision(t_cub3d *data, double nx, double ny)

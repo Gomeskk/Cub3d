@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/01/29 17:39:31 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:07:19 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ void	init_game(t_cub3d *data)
 	data->player.radius = data->tile / 4;
 	data->player.pos_x = data->player.pos_x * data->tile + data->tile / 2.0;
 	data->player.pos_y = data->player.pos_y * data->tile + data->tile / 2.0;
+	//printf("Starting direction character: '%c'\n", data->map.direction);
 	init_player_direction(&data->player, data->map.direction);
-	printf("x doubled -> %f    y doubled -> %f\n", data->player.pos_x, data->player.pos_y);
+	//printf("Direction vectors: dir_x=%.2f, dir_y=%.2f, plane_x=%.2f, plane_y=%.2f\n", 
+    //   data->player.dir_x, data->player.dir_y, data->player.plane_x, data->player.plane_y);
+	//printf("x doubled -> %f    y doubled -> %f\n", data->player.pos_x, data->player.pos_y);
 	data->keys.a = 0;
 	data->keys.d = 0;
 	data->keys.s = 0;
@@ -56,6 +59,6 @@ void	init_game(t_cub3d *data)
 	data->mouse.y = HEIGHT / 2;
 	data->mouse.prev_x = WIDTH / 2;
 	data->mouse.prev_y = HEIGHT / 2;
-	//mlx_mouse_hide(data->mlx, data->window);
+	mlx_mouse_hide(data->mlx, data->window);
 	mlx_mouse_move(data->mlx, data->window, WIDTH / 2, HEIGHT / 2);
 }
