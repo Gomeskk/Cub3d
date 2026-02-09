@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/06 16:07:19 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:59:53 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	init_game(t_cub3d *data)
 	data->keys.s = 0;
 	data->keys.w = 0;
 	data->keys.w = 0;
-	data->mouse.x = WIDTH / 2;
-	data->mouse.y = HEIGHT / 2;
-	data->mouse.prev_x = WIDTH / 2;
-	data->mouse.prev_y = HEIGHT / 2;
+	data->mouse.x = data->current_width / 2;
+	data->mouse.y = data->current_height / 2;
+	data->mouse.prev_x = data->current_width / 2;
+	data->mouse.prev_y = data->current_height / 2;
 	mlx_mouse_hide(data->mlx, data->window);
-	mlx_mouse_move(data->mlx, data->window, WIDTH / 2, HEIGHT / 2);
+	mlx_mouse_move(data->mlx, data->window, data->current_width / 2, data->current_height / 2);
 }

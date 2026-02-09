@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/06 16:04:11 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:06:16 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,29 @@ double get_delta_time(void)
 
 int mouse_move(int x, int y, t_cub3d *data)
 {
-    printf("Mouse move called: x=%d, y=%d\n", x, y);
-    //pesquisar why x and why y are inverted also why call x and y in this function as parameters?
+    (void)y; // We only care about horizontal movement for rotation
     int dx;
-    double rot_speed = 0.002; // Adjust sensitivity
+    double sens = 0.0001; // Adjust sensitivity as needed
+    int center_x = data->current_width / 2;   // Use actual window width
+    int center_y = data->current_height / 2;  // Use actual window height
     
-    // Calculate mouse movement
-    dx = x - data->mouse.prev_x;
+    // Calculate mouse movement from center
+    dx = x - center_x;
     
-    // Rotate player based on horizontal mouse movement
+    // Only rotate if there's actual movement
     if (dx != 0)
-        rotate_player(&data->player, dx * rot_speed);
+    {
+        rotate_player(&data->player, dx * sens);
+        
+        // Reset mouse to center of window to prevent it from leaving
+        mlx_mouse_move(data->mlx, data->window, center_x, center_y);
+        
+        // Update our tracking variables to the center
+        data->mouse.prev_x = center_x;
+        data->mouse.prev_y = center_y;
+        data->mouse.x = center_x;
+        data->mouse.y = center_y;
+    }
     
-    // Update mouse position
-    data->mouse.prev_x = x;
-    data->mouse.prev_y = y;
-    data->mouse.x = x;
-    data->mouse.y = y;
-    printf("Mouse moved dx=%d, rotating by %.4f\n", x, dx * rot_speed);
     return (0);
 }
