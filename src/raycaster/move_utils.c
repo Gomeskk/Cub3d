@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/09 15:06:16 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 02:14:09 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,50 +42,32 @@ int	key_released(int keycode, t_cub3d *data)
 
 double get_time_in_seconds(void)
 {
-    struct timespec ts;
-    clock_gettime(1, &ts);
-    return (ts.tv_sec + ts.tv_nsec / 1e9);
+	struct timespec ts;
+	clock_gettime(1, &ts);
+	return (ts.tv_sec + ts.tv_nsec / 1e9);
 }
 
 double get_delta_time(void)
 {
-    static double last = 0.0;
-    double now = get_time_in_seconds();
+	static double last = 0.0;
+	double now = get_time_in_seconds();
 
-    if (last == 0.0) {
-        last = now;
-        return 0.0;
-    }
-    double dt = now - last;
-    last = now;
-    return dt;
+	if (last == 0.0) {
+		last = now;
+		return 0.0;
+	}
+	double dt = now - last;
+	last = now;
+	return dt;
 }
 
-int mouse_move(int x, int y, t_cub3d *data)
+void	handle_mouse_rotation(t_cub3d *data, int x)
 {
-    (void)y; // We only care about horizontal movement for rotation
-    int dx;
-    double sens = 0.0001; // Adjust sensitivity as needed
-    int center_x = data->current_width / 2;   // Use actual window width
-    int center_y = data->current_height / 2;  // Use actual window height
-    
-    // Calculate mouse movement from center
-    dx = x - center_x;
-    
-    // Only rotate if there's actual movement
-    if (dx != 0)
-    {
-        rotate_player(&data->player, dx * sens);
-        
-        // Reset mouse to center of window to prevent it from leaving
-        mlx_mouse_move(data->mlx, data->window, center_x, center_y);
-        
-        // Update our tracking variables to the center
-        data->mouse.prev_x = center_x;
-        data->mouse.prev_y = center_y;
-        data->mouse.x = center_x;
-        data->mouse.y = center_y;
-    }
-    
-    return (0);
+	int center_x = data->current_width / 2;
+	int center_y = data->current_height / 2;
+	double sens = 0.002;
+	int dx = x - center_x;
+	rotate_player(&data->player, dx * sens);
+
+	mlx_mouse_move(data->mlx, data->window, center_x, center_y);
 }

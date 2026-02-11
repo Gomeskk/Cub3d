@@ -86,7 +86,7 @@ void    player_movement(t_cub3d *data, double dt);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
 int		key_released(int keycode, t_cub3d *data);
 int		key_pressed(int keycode, t_cub3d *data);
-int		mouse_move(int x, int y, t_cub3d *data);
+void	handle_mouse_rotation(t_cub3d *data, int x);
 void    draw_direction_line(t_img *img, t_player *player, int length);
 
 //			FREE/ERROR			//

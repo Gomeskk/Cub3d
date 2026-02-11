@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/06 16:03:34 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:03:33 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ void	player_movement(t_cub3d *data, double dt)
 	
 	if (dt <= 0.0)
 		return ;
-	move_distance = data->player.speed * dt;
+	move_distance = fmin(data->player.speed * dt, data->tile * 0.8);
+	//move_distance = data->player.speed * dt;
 	calculate_movement_direction(data, &direction_x, &direction_y);
 	new_x = data->player.pos_x + direction_x * move_distance;
 	new_y = data->player.pos_y + direction_y * move_distance;

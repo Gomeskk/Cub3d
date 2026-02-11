@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/06 16:11:19 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 02:17:02 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ static int	render_game(t_cub3d *data)
 	printf("render_game called\n");
 	static double	time;
 	
+	// Poll mouse position a cada frame
+	int mouse_x, mouse_y;
+	mlx_mouse_move(data->mlx, data->window, data->current_width / 2, data->current_height / 2);
+	mlx_mouse_get_pos(data->mlx, data->window, &mouse_x, &mouse_y);
+	handle_mouse_rotation(data, mouse_x);
+	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
 	{
@@ -56,7 +62,6 @@ void	start_gameplay(t_cub3d *data)
 	mlx_hook(data->window, 2, 1L << 0, key_pressed, data);
 	mlx_hook(data->window, 3, 1L << 1, key_released, data);
 	mlx_hook(data->window, 17, 0, x_window, data);
-	mlx_hook(data->window, 6, 1L << 6, mouse_move, data);
 	mlx_loop_hook(data->mlx, render_game, data);
 	mlx_loop(data->mlx);
 }
