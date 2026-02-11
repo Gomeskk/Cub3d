@@ -6,7 +6,9 @@
 # define WIDTH 1920
 # define FPS 60
 # define DIAGONAL_FACTOR 0.70710678  // 1v2 for diagonal movement normalization
-
+# define MOUSE_SENSITIVITY 0.002
+# define MOUSE_HIDE 1
+# define M_PI           3.14159265358979323846  /* pi */
 
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."

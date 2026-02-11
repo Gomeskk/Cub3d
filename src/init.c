@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/11 21:46:44 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 23:08:50 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,60 @@ void    init_data(t_cub3d *data)
 	data->player.vel_y = 0.0;
 }
 
+void	init_player_direction(t_cub3d *data, char spawn)
+{
+	printf("Initializing player direction with spawn character: '%c'\n", spawn);
+	
+	if (spawn == 'N')
+	{
+		data->player.angle = 3 * M_PI / 2;
+		data->player.dir_x = 0;
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.66;
+		data->player.plane_y = 0;
+		printf("Set direction: North (dir_x=0, dir_y=-1)\n");
+	}
+	else if (spawn == 'S')
+	{
+		data->player.angle = M_PI / 2;
+		data->player.dir_x = 0;
+		data->player.dir_y = 1;
+		data->player.plane_x = -0.66;
+		data->player.plane_y = 0;
+		printf("Set direction: South (dir_x=0, dir_y=1)\n");
+	}
+	else if (spawn == 'E')
+	{
+		data->player.angle = 0;
+		data->player.dir_x = 1;
+		data->player.dir_y = 0;
+		data->player.plane_x = 0;
+		data->player.plane_y = 0.66;
+		printf("Set direction: East (dir_x=1, dir_y=0)\n");
+	}
+	else if (spawn == 'W')
+	{
+		data->player.angle = M_PI;
+		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+		data->player.plane_x = 0;
+		data->player.plane_y = -0.66;
+		printf("Set direction: West (dir_x=-1, dir_y=0)\n");
+	}
+	else
+	{
+		printf("WARNING: Unknown spawn character '%c', using default North direction\n", spawn);
+		data->player.angle = 3 * M_PI / 2;
+		data->player.dir_x = 0;
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.66;
+		data->player.plane_y = 0;
+	}
+	
+	printf("Final direction values: dir_x=%.3f, dir_y=%.3f, angle=%.3f\n", 
+		   data->player.dir_x, data->player.dir_y, data->player.angle);
+}
+
 void	init_game(t_cub3d *data)
 {
 	data->mlx = mlx_init();
@@ -52,4 +106,9 @@ void	init_game(t_cub3d *data)
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
+	init_player_direction(data, data->map.grid[(int)(data->player.pos_y / data->tile)][(int)(data->player.pos_x / data->tile)]);
+	data->mouse.x = WIDTH / 2;
+    data->mouse.y = HEIGHT / 2;
+    data->mouse.prev_x = WIDTH / 2;
+    data->mouse.prev_y = HEIGHT / 2;
 }

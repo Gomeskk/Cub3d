@@ -53,6 +53,9 @@ void	check_spawn(t_cub3d *data, char c, int x, int y);
 int		is_closed(t_cub3d *data);
 void	indetifier_checker(t_cub3d *data);
 
+//			MOUSE ROTATE 	//
+void	handle_mouse_rotation(t_cub3d *data);
+int		mouse_motion_hook(int x, int y, t_cub3d *data);
 
 //			UTILS			//
 int		is_ident_line(char *line);
@@ -74,6 +77,7 @@ int 	has_space_neighbor(char **g, int r, int c);
 //			2DGAME			//
 void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_minimap(t_cub3d *data);
+void	draw_direction_line(t_img *img, t_cub3d *data, int color);
 void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
 void	game_start(t_cub3d *data);
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);

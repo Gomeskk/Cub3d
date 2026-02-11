@@ -28,6 +28,11 @@ typedef struct s_player
 	int		radius;
 	double	vel_x;
 	double	vel_y;
+	double	angle; //current viewing dir in radians
+	double	dir_x; // direction vector
+	double	dir_y;
+	double	plane_x; // camera plane (for raycast lol)
+	double	plane_y;
 }				t_player;
 
 typedef struct s_keys

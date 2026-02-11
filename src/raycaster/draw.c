@@ -6,11 +6,44 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:26:51 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/16 19:45:02 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 23:41:39 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	draw_direction_line(t_img *img, t_cub3d *data, int color)
+{
+	int	line_length;
+	int	end_x;
+	int	end_y;
+	int	i;
+	double	step_x;
+	double	step_y;
+	int	current_x;
+	int	current_y;
+
+	// Make direction line visible (length = player radius * 6)
+	line_length = data->player.radius * 6;
+	
+	// Calculate end point using direction vectors
+	end_x = (int)(data->player.pos_x + data->player.dir_x * line_length);
+	end_y = (int)(data->player.pos_y + data->player.dir_y * line_length);
+	
+	// Simple line drawing using linear interpolation
+	step_x = (double)(end_x - (int)data->player.pos_x) / line_length;
+	step_y = (double)(end_y - (int)data->player.pos_y) / line_length;
+	
+	// Draw line by plotting points along the direction
+	i = 0;
+	while (i <= line_length)
+	{
+		current_x = (int)(data->player.pos_x + step_x * i);
+		current_y = (int)(data->player.pos_y + step_y * i);
+		pixel_put(img, current_x, current_y, color);
+		i++;
+	}
+}
 
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color)
 {
@@ -56,6 +89,9 @@ void	draw_minimap(t_cub3d *data)
 		y++;
 	}
 	put_player_dot(&data->img, data->player.pos_x, data->player.pos_y,data->player.radius, 0x00FF00);
+	
+	// Draw direction line to show where player is facing (red line)
+	draw_direction_line(&data->img, data, 0xFF0000);
 }
 
 void	pixel_put(t_img *img, int x, int y, int color)
