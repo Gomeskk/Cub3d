@@ -10,6 +10,7 @@
 # include <unistd.h>
 # include <time.h>
 # include <math.h>
+# include <X11/keysym.h>
 # include "defines.h"
 # include "structs.h"
 

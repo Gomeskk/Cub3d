@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/16 19:50:50 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:46:44 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_game(t_cub3d *data)
 	data->tile = get_tile_size(data);
 	printf("tile -> %i\n", data->tile);
 	printf("x -> %f    y -> %f\n", data->player.pos_x, data->player.pos_y);
-	data->player.speed = 180.0;
+	data->player.speed = data->tile * 2.5;
 	data->player.radius = data->tile / 4;
 	data->player.pos_x = data->player.pos_x * data->tile + data->tile / 2.0;
 	data->player.pos_y = data->player.pos_y * data->tile + data->tile / 2.0;

@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/01/04 21:03:35 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/11 22:08:40 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,23 @@ static int	check_collision_range(t_cub3d *data, double cx, double cy, int start_
 		start_col = 0;
 	if (end_col >= data->map.col_count)
 		end_col = data->map.col_count - 1;
+	
+	// Performance optimization: early exit if no tiles to check
+	if (start_row > end_row || start_col > end_col)
+		return (0);
+
 	row = start_row;
 	while (row <= end_row)
 	{
 		col = start_col;
 		while (col <= end_col)
 		{
-			if (data->map.grid[row][col] == '1' && 
-				circle_intersects_rectangle(data, cx, cy, row, col))
-				return (1);
+			// Check wall tile first (cheaper than intersection calc)
+			if (data->map.grid[row][col] == '1')
+			{
+				if (circle_intersects_rectangle(data, cx, cy, row, col))
+					return (1);
+			}
 			col++;
 		}
 		row++;
@@ -73,6 +81,13 @@ int	circle_collides_wall(t_cub3d *data, double cx, double cy)
 {
 	int	start_row;
 	int	end_row;
+
+	// Early bounds checking optimization - avoid collision calculation if completely outside map
+	if (cx + data->player.radius < 0 || 
+		cx - data->player.radius >= data->map.col_count * data->tile ||
+		cy + data->player.radius < 0 || 
+		cy - data->player.radius >= data->map.row_count * data->tile)
+		return (1); // Treat outside bounds as collision
 
 	start_row = (int)floor((cy - data->player.radius) / (double)data->tile);
 	end_row = (int)floor((cy + data->player.radius) / (double)data->tile);
@@ -128,10 +143,32 @@ void	player_movement(t_cub3d *data, double dt)
 	
 	if (dt <= 0.0)
 		return ;
-	move_distance = data->player.speed * dt;
+	
 	calculate_movement_direction(data, &direction_x, &direction_y);
+	
+	// Early exit optimization: no movement input detected
+	if (direction_x == 0.0 && direction_y == 0.0)
+		return ;
+	
+	move_distance = data->player.speed * dt;
 	new_x = data->player.pos_x + direction_x * move_distance;
 	new_y = data->player.pos_y + direction_y * move_distance;
+	
+	// Early bounds checking optimization: avoid collision calc if clearly outside map
+	double map_width = data->map.col_count * data->tile;
+	double map_height = data->map.row_count * data->tile;
+	double radius = data->player.radius;
+	
+	// Clamp new position to stay within valid bounds (with radius buffer)
+	if (new_x - radius < 0)
+		new_x = radius;
+	else if (new_x + radius > map_width)
+		new_x = map_width - radius;
+	
+	if (new_y - radius < 0)
+		new_y = radius;
+	else if (new_y + radius > map_height)
+		new_y = map_height - radius;
 
 	attempt_movement_with_collision(data, new_x, new_y);
 }
