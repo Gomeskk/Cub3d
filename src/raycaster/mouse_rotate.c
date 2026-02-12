@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 02:27:47 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/12 02:47:30 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     {
         // Calculate rotation speed: distance * sensitivity * delta_time
         rotation_speed = distance_from_center * MOUSE_SENSITIVITY * dt;
-
+		mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
         rotate_player(data, rotation_speed);
     }
 }

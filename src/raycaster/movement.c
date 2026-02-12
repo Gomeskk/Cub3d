@@ -101,17 +101,46 @@ int	circle_collides_wall(t_cub3d *data, double cx, double cy)
 
 static void	calculate_movement_direction(t_cub3d *data, double *dx, double *dy)
 {
+	double forward_x, forward_y, right_x, right_y;
+	
+	// Get player's current direction (where the red line points)
+	forward_x = data->player.dir_x;
+	forward_y = data->player.dir_y;
+	
+	// Calculate perpendicular direction for strafing
+	// Right vector is 90 degrees clockwise from forward
+	right_x = forward_y;   // perpendicular right
+	right_y = -forward_x;
+	
+	// Initialize movement
 	*dx = 0.0;
 	*dy = 0.0;
 
+	// Forward/Backward movement (in direction of red line)
 	if (data->keys.w)
-		*dy -= 1.0;
+	{
+		*dx += forward_x;
+		*dy += forward_y;
+	}
 	if (data->keys.s)
-		*dy += 1.0;
+	{
+		*dx -= forward_x;  // opposite direction
+		*dy -= forward_y;
+	}
+	
+	// Strafe left/right (perpendicular to red line)
 	if (data->keys.a)
-		*dx -= 1.0;
+	{
+		*dx -= right_x;  // strafe left
+		*dy -= right_y;
+	}
 	if (data->keys.d)
-		*dx += 1.0;
+	{
+		*dx += right_x;  // strafe right
+		*dy += right_y;
+	}
+	
+	// Normalize diagonal movement
 	if (*dx != 0.0 && *dy != 0.0)
 	{
 		*dx *= DIAGONAL_FACTOR;
