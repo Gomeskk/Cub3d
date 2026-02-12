@@ -35,6 +35,7 @@ void	check_spawn(t_cub3d *data, char c, int x, int y)
 		data->map.start_point++;
 		data->player.pos_x = x;
 		data->player.pos_y = y;
+		data->player.spawn_dir = c;
 		data->map.grid[y][x] = '0';
 	}
 }

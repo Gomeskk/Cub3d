@@ -33,6 +33,7 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x; // camera plane (for raycast lol)
 	double	plane_y;
+	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
 
 typedef struct s_keys
@@ -47,10 +48,9 @@ typedef struct s_mouse
 {
 	int			x;
 	int			y;
-	int			prev_x;
-	int			prev_y;
-	int			recentering;
-	int			window_focused;
+	int			cx;
+	int			cy;
+	int			ignore;
 } t_mouse; // mouse rotation
 
 typedef enum e_status

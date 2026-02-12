@@ -55,11 +55,10 @@ int		is_closed(t_cub3d *data);
 void	indetifier_checker(t_cub3d *data);
 
 //			MOUSE ROTATE 	//
-void	handle_mouse_rotation(t_cub3d *data, int mouse_x, int mouse_y);
-int		mouse_motion_hook(int x, int y, t_cub3d *data);
-int		focus_in_hook(t_cub3d *data);
-int		focus_out_hook(t_cub3d *data);
-void	init_mouse_center(t_cub3d *data);
+int mouse_moved(int x, int y, t_cub3d *data);
+void update_mouse_rotation(t_cub3d *data, double dt);
+void update_mouse_rotation(t_cub3d *data, double dt);
+
 
 //			UTILS			//
 int		is_ident_line(char *line);

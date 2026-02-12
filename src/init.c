@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 00:29:38 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/12 01:32:09 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void    init_data(t_cub3d *data)
 	data->img.image = NULL;
 	data->player.vel_x = 0.0;
 	data->player.vel_y = 0.0;
+	data->player.spawn_dir = '\0';
 }
 
 void	init_player_direction(t_cub3d *data, char spawn)
@@ -106,4 +107,9 @@ void	init_game(t_cub3d *data)
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
+	data->mouse.cx = WIDTH / 2;
+	data->mouse.cy = HEIGHT / 2;
+	data->mouse.x = data->mouse.cx;  // Initialize current position to center
+	data->mouse.y = data->mouse.cy;
+	init_player_direction(data, data->player.spawn_dir);
 }
