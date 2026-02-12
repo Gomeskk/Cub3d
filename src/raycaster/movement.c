@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/11 22:08:40 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/12 03:04:27 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ static void	calculate_movement_direction(t_cub3d *data, double *dx, double *dy)
 	// Strafe left/right (perpendicular to red line)
 	if (data->keys.a)
 	{
-		*dx -= right_x;  // strafe left
-		*dy -= right_y;
+		*dx += right_x;  // strafe left
+		*dy += right_y;
 	}
 	if (data->keys.d)
 	{
-		*dx += right_x;  // strafe right
-		*dy += right_y;
+		*dx -= right_x;  // strafe right
+		*dy -= right_y;
 	}
 	
 	// Normalize diagonal movement
