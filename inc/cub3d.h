@@ -6,6 +6,7 @@
 # include "../complete_lib/42_Libft/libft.h"
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <string.h>
 # include <unistd.h>
 # include <time.h>
@@ -54,8 +55,11 @@ int		is_closed(t_cub3d *data);
 void	indetifier_checker(t_cub3d *data);
 
 //			MOUSE ROTATE 	//
-void	handle_mouse_rotation(t_cub3d *data);
+void	handle_mouse_rotation(t_cub3d *data, int mouse_x, int mouse_y);
 int		mouse_motion_hook(int x, int y, t_cub3d *data);
+int		focus_in_hook(t_cub3d *data);
+int		focus_out_hook(t_cub3d *data);
+void	init_mouse_center(t_cub3d *data);
 
 //			UTILS			//
 int		is_ident_line(char *line);

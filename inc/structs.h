@@ -49,6 +49,8 @@ typedef struct s_mouse
 	int			y;
 	int			prev_x;
 	int			prev_y;
+	int			recentering;
+	int			window_focused;
 } t_mouse; // mouse rotation
 
 typedef enum e_status

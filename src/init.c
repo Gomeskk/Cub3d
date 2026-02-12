@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/11 23:08:50 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/12 00:29:38 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,4 @@ void	init_game(t_cub3d *data)
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
-	init_player_direction(data, data->map.grid[(int)(data->player.pos_y / data->tile)][(int)(data->player.pos_x / data->tile)]);
-	data->mouse.x = WIDTH / 2;
-    data->mouse.y = HEIGHT / 2;
-    data->mouse.prev_x = WIDTH / 2;
-    data->mouse.prev_y = HEIGHT / 2;
 }
