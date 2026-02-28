@@ -54,7 +54,7 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     // Handle vertical pitch (looking up/down)
     if (distance_from_center_y != 0.0)
     {
-        pitch_speed = distance_from_center_y * MOUSE_SENSITIVITY * dt * 1000.0; // Scale for pixel offset
+        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * dt * 1000.0; // Scale for pixel offset
         data->player.pitch += pitch_speed;
         
         // Constrain pitch to prevent over-rotation

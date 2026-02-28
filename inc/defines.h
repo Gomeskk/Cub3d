@@ -6,7 +6,7 @@
 # define WIDTH 1920
 # define FPS 60
 # define DIAGONAL_FACTOR 0.70710678  // 1v2 for diagonal movement normalization
-# define MOUSE_SENSITIVITY 0.001
+# define MOUSE_SENSITIVITY 0.01
 # define MOUSE_HIDE 1
 # define MAX_PITCH 1000.0  // Maximum pitch in pixels (looking up/down)
 # define M_PI           3.14159265358979323846  /* pi */
