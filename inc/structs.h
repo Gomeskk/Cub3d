@@ -93,18 +93,27 @@ typedef	struct s_textures
 	char		*ea;
 }				t_textures;
 
-typedef struct s_menu
+typedef struct s_menu_screens
 {
 	t_menu_img	start_normal;
 	t_menu_img	start_hover;
 	t_menu_img	start_selected;
-	t_menu_img	diff_easy;
-	t_menu_img	diff_medium;
-	t_menu_img	diff_hard;
-	t_menu_img	arrow_up;
-	t_menu_img	arrow_down;
 	t_menu_img	options_screen;
 	t_menu_img	credits_screen;
+	t_menu_img	screen_buffer;
+	t_menu_img	arrow_up;
+	t_menu_img	arrow_down;
+}				t_menu_screens;
+
+typedef struct s_difficulty_imgs
+{
+	t_menu_img	easy;
+	t_menu_img	medium;
+	t_menu_img	hard;
+}				t_difficulty_imgs;
+
+typedef struct s_options_imgs
+{
 	t_menu_img	volume[15];
 	t_menu_img	sensibility[5];
 	t_menu_img	resolution[5];
@@ -113,18 +122,29 @@ typedef struct s_menu
 	t_menu_img	tab_sensibility;
 	t_menu_img	resolution_approve;
 	t_menu_img	resolution_decline;
-	t_menu_img	screen_buffer;
-	int				menu_choice;
-	int				difficulty_choice;
-	int				sensibility_level;
-	int				volume_level;
-	int				resolution_level;
-	t_options_section	options_section;
-	int				resolution_arrow_count;
-	int				last_arrow_direction;
-	int				resolution_confirm_active;
-	int				resolution_confirm_choice;
-	int				pending_resolution_level;
+}				t_options_imgs;
+
+typedef struct s_options_state
+{
+	t_options_section	section;
+	int					volume_level;
+	int					sensibility_level;
+	int					resolution_level;
+	int					resolution_arrow_count;
+	int					last_arrow_direction;
+	int					resolution_confirm_active;
+	int					resolution_confirm_choice;
+	int					pending_resolution_level;
+}				t_options_state;
+
+typedef struct s_menu
+{
+	t_menu_screens		screens;
+	t_difficulty_imgs	difficulty;
+	t_options_imgs		options_imgs;
+	t_options_state		options;
+	int					menu_choice;
+	int					difficulty_choice;
 }				t_menu;
 
 typedef struct s_game_settings

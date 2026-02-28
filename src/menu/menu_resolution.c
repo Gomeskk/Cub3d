@@ -24,8 +24,8 @@ void	apply_resolution(t_cub3d *data, int new_level)
 	int	new_height;
 
 	get_resolution_dimensions(new_level, &new_width, &new_height);
-	if (data->menu.screen_buffer.image)
-		mlx_destroy_image(data->mlx, data->menu.screen_buffer.image);
+	if (data->menu.screens.screen_buffer.image)
+		mlx_destroy_image(data->mlx, data->menu.screens.screen_buffer.image);
 	mlx_destroy_window(data->mlx, data->window);
 	data->window = mlx_new_window(data->mlx, new_width, new_height,
 			"Cub3D");
@@ -33,17 +33,18 @@ void	apply_resolution(t_cub3d *data, int new_level)
 		return ;
 	data->current_width = new_width;
 	data->current_height = new_height;
-	data->menu.screen_buffer.image = mlx_new_image(data->mlx, new_width,
+	data->menu.screens.screen_buffer.image = mlx_new_image(data->mlx, new_width,
 			new_height);
-	if (!data->menu.screen_buffer.image)
+	if (!data->menu.screens.screen_buffer.image)
 		return ;
-	data->menu.screen_buffer.data = mlx_get_data_addr(
-			data->menu.screen_buffer.image, &data->menu.screen_buffer.bpp,
-			&data->menu.screen_buffer.size_line,
-			&data->menu.screen_buffer.endian);
-	data->menu.screen_buffer.width = new_width;
-	data->menu.screen_buffer.height = new_height;
-	data->menu.resolution_level = new_level;
+	data->menu.screens.screen_buffer.data = mlx_get_data_addr(
+			data->menu.screens.screen_buffer.image,
+			&data->menu.screens.screen_buffer.bpp,
+			&data->menu.screens.screen_buffer.size_line,
+			&data->menu.screens.screen_buffer.endian);
+	data->menu.screens.screen_buffer.width = new_width;
+	data->menu.screens.screen_buffer.height = new_height;
+	data->menu.options.resolution_level = new_level;
 	mlx_hook(data->window, 17, 0, close_window_handler, data);
 	mlx_hook(data->window, 2, 1L << 0, key_press_handler, data);
 	mlx_hook(data->window, 3, 1L << 1, key_release_handler, data);

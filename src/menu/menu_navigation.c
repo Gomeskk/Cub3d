@@ -68,22 +68,22 @@ int	handle_credits_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape)
 	{
-		if (data->menu.resolution_confirm_active)
+		if (data->menu.options.resolution_confirm_active)
 		{
-			data->menu.resolution_confirm_active = 0;
+			data->menu.options.resolution_confirm_active = 0;
 			render_credits(data);
 			return (0);
 		}
 		data->menu.menu_choice = MENU_START;
 		data->status = MAIN_MENU_SCREEN;
-		data->menu.options_section = SECTION_SOUND;
+		data->menu.options.section = SECTION_SOUND;
 		render_main_menu(data);
 	}
 	else if (keycode == XK_Return)
 		handle_enter_key(data);
 	else if (keycode == XK_Tab)
 	{
-		data->menu.options_section = (data->menu.options_section + 1) % SECTION_COUNT;
+		data->menu.options.section = (data->menu.options.section + 1) % SECTION_COUNT;
 		render_credits(data);
 	}
 	else if (keycode == XK_Left || keycode == XK_a

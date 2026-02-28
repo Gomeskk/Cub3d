@@ -58,13 +58,13 @@ int	main(void)
 	printf("✓ Menu state initialized\n");
 	printf("  - menu_choice: %d\n", data.menu.menu_choice);
 	printf("  - difficulty_choice: %d\n", data.menu.difficulty_choice);
-	printf("  - sensibility_level: %d\n", data.menu.sensibility_level);
+	printf("  - sensibility_level: %d\n", data.menu.options.sensibility_level);
 	printf("  - status: %d (MAIN_MENU_SCREEN=%d)\n", data.status, MAIN_MENU_SCREEN);
 	printf("\nDisplaying menu (use UP/DOWN or W/S to navigate)...\n");
 	render_main_menu(&data);
 	printf("✓ Menu rendered\n");
 	printf("  - Image dimensions: %dx%d\n",
-		data.menu.start_normal.width, data.menu.start_normal.height);
+		data.menu.screens.start_normal.width, data.menu.screens.start_normal.height);
 	mlx_hook(data.window, 17, 0, close_window, &data);
 	mlx_hook(data.window, 2, 1L<<0, key_press_handler, &data);
 	mlx_hook(data.window, 3, 1L<<1, key_release_handler, &data);

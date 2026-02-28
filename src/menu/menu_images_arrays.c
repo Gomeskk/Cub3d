@@ -26,7 +26,7 @@ int	init_volume_images(t_cub3d *data)
 		"Png_images/Volume/(+4).xpm", "Png_images/Volume/(+5).xpm",
 		"Png_images/Volume/(+6).xpm", "Png_images/Volume/(+7).xpm"};
 
-	return (load_image_array(data->mlx, data->menu.volume, paths,
+	return (load_image_array(data->mlx, data->menu.options_imgs.volume, paths,
 			VOLUME_COUNT));
 }
 
@@ -36,7 +36,7 @@ int	init_sensibility_images(t_cub3d *data)
 		"Png_images/Sensibility/(0.5).xpm", "Png_images/Sensibility/(1).xpm",
 		"Png_images/Sensibility/(1.5).xpm", "Png_images/Sensibility/(2).xpm"};
 
-	return (load_image_array(data->mlx, data->menu.sensibility, paths,
+	return (load_image_array(data->mlx, data->menu.options_imgs.sensibility, paths,
 			SENSIBILITY_COUNT));
 }
 
@@ -48,6 +48,6 @@ int	init_resolution_images(t_cub3d *data)
 		"Png_images/ScreenSize/1600x900.xpm",
 		"Png_images/ScreenSize/1920x1080.xpm"};
 
-	return (load_image_array(data->mlx, data->menu.resolution, paths,
+	return (load_image_array(data->mlx, data->menu.options_imgs.resolution, paths,
 			RESOLUTION_COUNT));
 }
