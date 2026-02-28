@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 02:13:48 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:31:03 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	render_game(t_cub3d *data)
 	{
 		player_movement(data, time);
 		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
-		draw_minimap(data);
+		raycast_render(data);
 		mlx_clear_window(data->mlx, data->window);
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 		time = 0;
@@ -53,7 +53,7 @@ void	game_start(t_cub3d *data)
 	// Initialize mouse at center (no forced reset)
 	data->mouse.x = data->mouse.cx;
 	data->mouse.y = data->mouse.cy;
-	draw_minimap(data);
+	raycast_render(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 	mlx_hook(data->window, 2, 1L << 0, key_pressed, data);
 	mlx_hook(data->window, 3, 1L << 1, key_released, data);

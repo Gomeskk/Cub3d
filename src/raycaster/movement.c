@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 03:04:27 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:22:57 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ static void	calculate_movement_direction(t_cub3d *data, double *dx, double *dy)
 	// Right vector is 90 degrees clockwise from forward
 	right_x = forward_y;   // perpendicular right
 	right_y = -forward_x;
+	
 	
 	// Initialize movement
 	*dx = 0.0;

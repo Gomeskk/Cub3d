@@ -30,6 +30,7 @@ void    init_data(t_cub3d *data)
 	data->img.image = NULL;
 	data->player.vel_x = 0.0;
 	data->player.vel_y = 0.0;
+	data->player.pitch = 0.0;
 	data->player.spawn_dir = '\0';
 }
 
@@ -111,6 +112,7 @@ void	init_game(t_cub3d *data)
 	data->mouse.cy = HEIGHT / 2;
 	data->mouse.x = data->mouse.cx;  // Initialize current position to center
 	data->mouse.y = data->mouse.cy;
+	data->player.pitch = 0.0;  // Initialize pitch to center (no vertical offset)
 	init_player_direction(data, data->player.spawn_dir);
 	mlx_mouse_hide(data->mlx, data->window);
 }

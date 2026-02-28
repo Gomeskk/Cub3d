@@ -37,6 +37,7 @@ typedef struct s_cub3d
 	t_player	player;
 	t_keys		keys;
 	t_mouse		mouse;
+	t_ray		ray;
 }				t_cub3d;
 
 //			INIT			//
@@ -55,10 +56,16 @@ int		is_closed(t_cub3d *data);
 void	indetifier_checker(t_cub3d *data);
 
 //			MOUSE ROTATE 	//
-int mouse_moved(int x, int y, t_cub3d *data);
-void update_mouse_rotation(t_cub3d *data, double dt);
-void update_mouse_rotation(t_cub3d *data, double dt);
+int		mouse_moved(int x, int y, t_cub3d *data);
+void	update_mouse_rotation(t_cub3d *data, double dt);
+void	update_mouse_rotation(t_cub3d *data, double dt);
 
+//        RAYCASTER		    //
+void	raycast_render(t_cub3d *data);
+void	init_ray(t_cub3d *data, t_ray *ray, int screen_x);
+void	setup_dda(t_cub3d *data, t_ray *ray);
+void	perform_dda(t_cub3d *data, t_ray *ray);
+void	draw_wall_column(t_cub3d *data, t_ray *ray, int x);
 
 //			UTILS			//
 int		is_ident_line(char *line);
@@ -82,6 +89,13 @@ void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_minimap(t_cub3d *data);
 void	draw_direction_line(t_img *img, t_cub3d *data, int color);
 void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
+
+//			RAYCASTING			//
+void	raycast_render(t_cub3d *data);
+void	init_ray(t_cub3d *data, t_ray *ray, int screen_x);
+void	setup_dda(t_cub3d *data, t_ray *ray);
+void	perform_dda(t_cub3d *data, t_ray *ray);
+void	draw_wall_column(t_cub3d *data, t_ray *ray, int x);
 void	game_start(t_cub3d *data);
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);
 void    player_movement(t_cub3d *data, double dt);

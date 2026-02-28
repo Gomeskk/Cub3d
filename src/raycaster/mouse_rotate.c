@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 02:47:30 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/02/19 17:37:02 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,58 @@ static void rotate_player(t_cub3d *data, double angle)
 {
     double old_dirx;
     double old_diry;
-    //double old_planex;
+    double old_planex;
 
     old_dirx = data->player.dir_x;
     old_diry = data->player.dir_y;
-    //old_planex = data->player.plane_x;
+    old_planex = data->player.plane_x;
     
     data->player.dir_x = old_dirx * cos(angle) - old_diry * sin(angle);
     data->player.dir_y = old_dirx * sin(angle) + old_diry * cos(angle);
 
-    //if theres a camera plane rotate it too this is later for raycast btw
-    //data->player.plane_x = old_planex * cos(angle) - data->player.plane_y * sin(angle);
-    //data->player.plane_y = old_planex * sin(angle) + data->player.plane_y * cos(angle);
+    // CRITICAL: Camera plane MUST rotate with direction for raycasting to work
+    data->player.plane_x = old_planex * cos(angle) - data->player.plane_y * sin(angle);
+    data->player.plane_y = old_planex * sin(angle) + data->player.plane_y * cos(angle);
 }
 
 // Continuous rotation based on mouse distance from center
 void update_mouse_rotation(t_cub3d *data, double dt)
 {
-    double distance_from_center;
+    double distance_from_center_x;
+    double distance_from_center_y;
     double rotation_speed;
+    double pitch_speed;
     
-    // Calculate horizontal distance from center
-    distance_from_center = (double)(data->mouse.x - data->mouse.cx);
+    // Calculate horizontal distance from center (left/right rotation)
+    distance_from_center_x = (double)(data->mouse.x - data->mouse.cx);
     
-    // Only rotate if mouse is not at center
-    if (distance_from_center != 0.0)
+    // Calculate vertical distance from center (up/down pitch)
+    distance_from_center_y = (double)(data->mouse.y - data->mouse.cy);
+    
+    // Handle horizontal rotation (yaw)
+    if (distance_from_center_x != 0.0)
     {
-        // Calculate rotation speed: distance * sensitivity * delta_time
-        rotation_speed = distance_from_center * MOUSE_SENSITIVITY * dt;
-		mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
+        rotation_speed = distance_from_center_x * MOUSE_SENSITIVITY * dt;
         rotate_player(data, rotation_speed);
+    }
+    
+    // Handle vertical pitch (looking up/down)
+    if (distance_from_center_y != 0.0)
+    {
+        pitch_speed = distance_from_center_y * MOUSE_SENSITIVITY * dt * 1000.0; // Scale for pixel offset
+        data->player.pitch += pitch_speed;
+        
+        // Constrain pitch to prevent over-rotation
+        if (data->player.pitch > MAX_PITCH)
+            data->player.pitch = MAX_PITCH;
+        if (data->player.pitch < -MAX_PITCH)
+            data->player.pitch = -MAX_PITCH;
+    }
+    
+    // Reset mouse to center if it moved
+    if (distance_from_center_x != 0.0 || distance_from_center_y != 0.0)
+    {
+        mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
     }
 }
 

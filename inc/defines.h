@@ -8,12 +8,9 @@
 # define DIAGONAL_FACTOR 0.70710678  // 1v2 for diagonal movement normalization
 # define MOUSE_SENSITIVITY 0.001
 # define MOUSE_HIDE 1
+# define MAX_PITCH 1000.0  // Maximum pitch in pixels (looking up/down)
 # define M_PI           3.14159265358979323846  /* pi */
 
-///          X11 FOCUS EVENTS        ///
-# define FocusIn 9
-# define FocusOut 10
-# define FocusChangeMask (1L<<21)
 
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."
