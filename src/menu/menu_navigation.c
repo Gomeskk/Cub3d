@@ -55,7 +55,9 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 		change_difficulty(data, 1);
 	else if (keycode == XK_Down || keycode == XK_s)
 		change_difficulty(data, -1);
-	else if (keycode == XK_Return || keycode == XK_Escape)
+	else if (keycode == XK_Return)
+		data->status = GAME;
+	else if (keycode == XK_Escape)
 	{
 		data->menu.menu_choice = MENU_START;
 		data->status = MAIN_MENU_SCREEN;

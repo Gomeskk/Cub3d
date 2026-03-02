@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/23 17:31:03 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:03:06 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,68 @@ void	game_start(t_cub3d *data)
 	mlx_hook(data->window, 17, 0, x_window, data);
 	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
 	mlx_loop_hook(data->mlx, render_game, data);
+	mlx_loop(data->mlx);
+}
+// adicionei
+static int	unified_key_press(int keycode, t_cub3d *data)
+{
+	if (data->status != GAME)
+		return (key_press_handler(keycode, data));
+	return (key_pressed(keycode, data));
+}
+
+static int	unified_key_release(int keycode, t_cub3d *data)
+{
+	if (data->status != GAME)
+		return (key_release_handler(keycode, data));
+	return (key_released(keycode, data));
+}
+
+static int	unified_loop(t_cub3d *data)
+{
+	static int	game_started = 0;
+
+	if (data->status != GAME)
+		return (menu_loop_handler(data));
+	if (!game_started)
+	{
+		game_started = 1;
+		cleanup_menu(data);
+		data->mouse.cx = data->current_width / 2;
+		data->mouse.cy = data->current_height / 2;
+		mlx_mouse_hide(data->mlx, data->window);
+		data->mouse.x = data->mouse.cx;
+		data->mouse.y = data->mouse.cy;
+		raycast_render(data);
+		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
+	}
+	return (render_game(data));
+}
+
+void	reattach_hooks(t_cub3d *data)
+{
+	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);
+	mlx_hook(data->window, 3, 1L << 1, unified_key_release, data);
+	mlx_hook(data->window, 17, 0, x_window, data);
+	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
+	mlx_loop_hook(data->mlx, unified_loop, data);
+}
+
+void	run_with_menu(t_cub3d *data)
+{
+	init_game(data);
+	data->current_width = WIDTH;
+	data->current_height = HEIGHT;
+	mlx_mouse_show(data->mlx, data->window);
+	if (init_menu_images(data) == -1)
+		exit_error(data, "Failed to load menu images");
+	init_menu_state(data);
+	render_main_menu(data);
+	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);
+	mlx_hook(data->window, 3, 1L << 1, unified_key_release, data);
+	mlx_hook(data->window, 17, 0, x_window, data);
+	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
+	mlx_loop_hook(data->mlx, unified_loop, data);
 	mlx_loop(data->mlx);
 }
 

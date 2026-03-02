@@ -1,6 +1,6 @@
 #include "../../inc/cub3d.h"
 
-void	pixel_put(t_menu_img *img, int x, int y, int color)
+void	pixel_put_menu(t_menu_img *img, int x, int y, int color)
 {
 	char	*pixel;
 	int		offset;

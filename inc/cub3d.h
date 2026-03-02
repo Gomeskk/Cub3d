@@ -30,8 +30,8 @@ typedef struct s_cub3d
 	void			*window;
 	int				current_width;
 	int				current_height;
-	int			tile;
-	t_img		img;
+	int				tile;
+	t_img			img;
 	t_textures		textures;
 	t_status		status;
 	t_tiles			tiles;
@@ -41,8 +41,8 @@ typedef struct s_cub3d
 	t_mouse			mouse;
 	t_menu			menu;
 	t_game_settings	game_settings;
-	t_ray		ray;
-}				t_cub3d;
+	t_ray			ray;
+}					t_cub3d;
 
 //			INIT			//
 void    init_data(t_cub3d *data);
@@ -101,6 +101,8 @@ void	setup_dda(t_cub3d *data, t_ray *ray);
 void	perform_dda(t_cub3d *data, t_ray *ray);
 void	draw_wall_column(t_cub3d *data, t_ray *ray, int x);
 void	game_start(t_cub3d *data);
+void	run_with_menu(t_cub3d *data); // adicionei
+void	reattach_hooks(t_cub3d *data); //size scale resolution of the game // adicionei
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);
 void    player_movement(t_cub3d *data, double dt);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
@@ -151,7 +153,7 @@ int		menu_loop_handler(t_cub3d *data);
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
 void	render_credits(t_cub3d *data);
-void	pixel_put(t_menu_img *img, int x, int y, int color);
+void	pixel_put_menu(t_menu_img *img, int x, int y, int color);
 void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
 void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
 			int screen_x, int screen_y, float scale);

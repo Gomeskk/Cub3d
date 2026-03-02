@@ -1,12 +1,5 @@
 #include "../../inc/cub3d.h"
 
-static int	close_window_handler(void *param)
-{
-	(void)param;
-	exit(0);
-	return (0);
-}
-
 static void	get_resolution_dimensions(int level, int *width, int *height)
 {
 	const int	widths[5] = {RES_0_WIDTH, RES_1_WIDTH, RES_2_WIDTH,
@@ -45,7 +38,7 @@ void	apply_resolution(t_cub3d *data, int new_level)
 	data->menu.screens.screen_buffer.width = new_width;
 	data->menu.screens.screen_buffer.height = new_height;
 	data->menu.options.resolution_level = new_level;
-	mlx_hook(data->window, 17, 0, close_window_handler, data);
-	mlx_hook(data->window, 2, 1L << 0, key_press_handler, data);
-	mlx_hook(data->window, 3, 1L << 1, key_release_handler, data);
+	data->mouse.cx = new_width / 2;
+	data->mouse.cy = new_height / 2;
+	reattach_hooks(data);
 }

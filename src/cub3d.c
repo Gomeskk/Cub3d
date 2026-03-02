@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:12:33 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/15 18:46:43 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:03:12 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 		return (free_all(&data), ft_putendl_fd(NO_IDENTIFIERS, 2), 1);
 	if (!parse_map(&data))
 		return (free_all(&data), ft_putendl_fd(WRONG_MAP, 2), 1);
-	game_start(&data);
+	run_with_menu(&data); // adicionei
 	free_all(&data);
 }
 
