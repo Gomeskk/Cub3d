@@ -1,0 +1,31 @@
+{
+   X11_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+}
+
+{
+   Xext_Reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+}
+
+{
+   MLX_All_Leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_*
+}
+
+{
+   MLX_Writev_Uninit
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   fun:mlx_*
+}

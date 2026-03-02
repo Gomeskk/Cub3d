@@ -1,9 +1,9 @@
 # Ignore build artifacts
-objs
+obj
 
 # Ignore cub3d
 cub3d
-
+test_menu
 # Ignore all object files in complete-lib
 complete_lib/*/*.o
 

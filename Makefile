@@ -31,6 +31,11 @@ RAYC_DIR		= src/raycaster/
 RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
 
 
+MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_render.c menu_resolution.c menu_state.c menu_transparency.c menu_utils.c
+MENU_DIR		= src/menu/
+MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
+
+
 TOTAL_SRCS 		= $(words $(SRCS))
 FILES 			= 0
 
@@ -53,7 +58,7 @@ MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -l
 MLX_INC			= -I/usr/include -I mlx_linux -O3 
 
 
-vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR)
+vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR) $(MENU_DIR)
 
 all: $(NAME)
 

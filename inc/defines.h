@@ -12,6 +12,37 @@
 # define M_PI           3.14159265358979323846  /* pi */
 
 
+///          MENU SETTINGS          ///
+# define KEY_THROTTLE_MS 200
+# define VOLUME_MIN 0
+# define VOLUME_MAX 14
+# define VOLUME_COUNT 15
+# define VOLUME_DEFAULT 7
+# define SENSIBILITY_MIN 0
+# define SENSIBILITY_MAX 4
+# define SENSIBILITY_COUNT 5
+# define SENSIBILITY_DEFAULT 2
+# define RESOLUTION_MIN 0
+# define RESOLUTION_MAX 4
+# define RESOLUTION_COUNT 5
+# define RESOLUTION_DEFAULT 4
+# define RES_0_WIDTH 960
+# define RES_0_HEIGHT 540
+# define RES_1_WIDTH 1280
+# define RES_1_HEIGHT 720
+# define RES_2_WIDTH 1440
+# define RES_2_HEIGHT 810
+# define RES_3_WIDTH 1600
+# define RES_3_HEIGHT 900
+# define RES_4_WIDTH 1920
+# define RES_4_HEIGHT 1080
+# define VOLUME_IMG_X 203
+# define VOLUME_IMG_Y 392
+# define SENSIBILITY_IMG_X 197
+# define SENSIBILITY_IMG_Y 876
+# define SECTION_COUNT 3
+# define ARROW_DIRECTION_DOWN -1
+
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."
 # define WRONG_MAP_NAME "\033[1;35mcub3d:\033[1;0m .cub argument extended expected."
