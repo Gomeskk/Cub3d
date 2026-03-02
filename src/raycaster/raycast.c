@@ -16,7 +16,7 @@ void raycast_render(t_cub3d *data)
 {
     clear_image(&data->img, 0x000000);
     int x = 0;
-    while (x < WIDTH)
+    while (x < data->current_width)
     {
         init_ray(data, &data->ray, x);
         perform_dda(data, &data->ray);
@@ -28,7 +28,7 @@ void raycast_render(t_cub3d *data)
 void init_ray(t_cub3d *data, t_ray *ray, int screen_x)
 {
     // Calculate camera X coordinate (-1 to 1)
-    ray->camera_x = 2 * screen_x / (double)WIDTH - 1;
+    ray->camera_x = 2 * screen_x / (double)data->current_width - 1;
     
     // Calculate ray direction using player direction + camera plane
     ray->ray_dir_x = data->player.dir_x + data->player.plane_x * ray->camera_x;
@@ -128,17 +128,17 @@ void perform_dda(t_cub3d *data, t_ray *ray)
 void draw_wall_column(t_cub3d *data, t_ray *ray, int x)
 {
     // Calculate height of line to draw on screen
-    ray->line_height = (int)(HEIGHT / ray->perp_wall_dist);
+    ray->line_height = (int)(data->current_height / ray->perp_wall_dist);
     
     // Calculate lowest and highest pixel to fill in current stripe
     // Apply pitch offset for looking up/down
-    ray->draw_start = -ray->line_height / 2 + HEIGHT / 2 + (int)data->player.pitch;
+    ray->draw_start = -ray->line_height / 2 + data->current_height / 2 + (int)data->player.pitch;
     if (ray->draw_start < 0)
         ray->draw_start = 0;
         
-    ray->draw_end = ray->line_height / 2 + HEIGHT / 2 + (int)data->player.pitch;
-    if (ray->draw_end >= HEIGHT)
-        ray->draw_end = HEIGHT - 1;
+    ray->draw_end = ray->line_height / 2 + data->current_height / 2 + (int)data->player.pitch;
+    if (ray->draw_end >= data->current_height)
+        ray->draw_end = data->current_height - 1;
     
     // Choose wall color based on side (darker for y-sides)
     int color;
@@ -156,6 +156,6 @@ void draw_wall_column(t_cub3d *data, t_ray *ray, int x)
         pixel_put(&data->img, x, y, color);
     
     // Draw floor (below wall) - using .cub file color
-    for (int y = ray->draw_end; y < HEIGHT; y++)
+    for (int y = ray->draw_end; y < data->current_height; y++)
         pixel_put(&data->img, x, y, data->textures.floor);
 }

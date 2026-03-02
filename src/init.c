@@ -92,6 +92,8 @@ void	init_game(t_cub3d *data)
 {
 	data->mlx = mlx_init();
 	data->window = mlx_new_window(data->mlx, WIDTH, HEIGHT, "CUBO MUITO FIXE");
+	data->current_width = WIDTH;
+	data->current_height = HEIGHT;
 	data->img.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->img.data = mlx_get_data_addr(data->img.image, &data->img.bpp, &data->img.size_line, &data->img.type);
 	data->img.width = WIDTH;
