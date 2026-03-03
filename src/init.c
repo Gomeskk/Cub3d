@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/12 02:47:57 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	init_game(t_cub3d *data)
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
+	data->keys.shift = 0;
+	data->keys.space = 0;
 	data->keys.arrow_up = 0;
 	data->keys.arrow_down = 0;
 	data->keys.arrow_left = 0;
@@ -119,6 +121,9 @@ void	init_game(t_cub3d *data)
 	data->mouse.x = data->mouse.cx;  // Initialize current position to center
 	data->mouse.y = data->mouse.cy;
 	data->player.pitch = 0.0;  // Initialize pitch to center (no vertical offset)
+	data->player.z_offset = 0.0;  // Initialize on ground
+	data->player.vertical_velocity = 0.0;  // Initialize with no vertical movement
+	data->player.is_jumping = 0;  // Initialize on ground
 	init_player_direction(data, data->player.spawn_dir);
 	mlx_mouse_hide(data->mlx, data->window);
 }

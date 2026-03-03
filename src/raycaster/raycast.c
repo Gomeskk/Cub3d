@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:12:53 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/28 12:56:16 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,13 @@ void draw_wall_column(t_cub3d *data, t_ray *ray, int x)
     ray->line_height = (int)(data->current_height / ray->perp_wall_dist);
     
     // Calculate lowest and highest pixel to fill in current stripe
-    // Apply pitch offset for looking up/down
-    ray->draw_start = -ray->line_height / 2 + data->current_height / 2 + (int)data->player.pitch;
+    // Apply pitch offset for looking up/down and z_offset for jumping
+    int vertical_offset = (int)data->player.pitch + (int)data->player.z_offset;
+    ray->draw_start = -ray->line_height / 2 + data->current_height / 2 + vertical_offset;
     if (ray->draw_start < 0)
         ray->draw_start = 0;
         
-    ray->draw_end = ray->line_height / 2 + data->current_height / 2 + (int)data->player.pitch;
+    ray->draw_end = ray->line_height / 2 + data->current_height / 2 + vertical_offset;
     if (ray->draw_end >= data->current_height)
         ray->draw_end = data->current_height - 1;
     

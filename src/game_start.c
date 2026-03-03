@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/02 17:03:06 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	render_game(t_cub3d *data)
 	if (time >= 1.0 / FPS)
 	{
 		player_movement(data, time);
+		player_jump(data, time);
 		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
 		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
 		raycast_render(data);

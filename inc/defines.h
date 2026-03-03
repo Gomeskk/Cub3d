@@ -9,6 +9,10 @@
 # define MOUSE_SENSITIVITY 0.01
 # define MOUSE_HIDE 1
 # define MAX_PITCH 1000.0  // Maximum pitch in pixels (looking up/down)
+# define SPRINT_MULTIPLIER 1.8  // Sprint speed multiplier when Shift is held
+# define JUMP_VELOCITY 350.0  // Initial upward velocity when jumping
+# define GRAVITY 900.0  // Gravity acceleration (pulls player down)
+# define MAX_JUMP_HEIGHT 200.0  // Maximum vertical offset from ground
 # define M_PI           3.14159265358979323846  /* pi */
 
 

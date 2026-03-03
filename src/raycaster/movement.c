@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/23 17:22:57 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void	player_movement(t_cub3d *data, double dt)
 	double	new_y;
 	double	direction_x;
 	double	direction_y;
+	double	current_speed;
 	
 	if (dt <= 0.0)
 		return ;
@@ -180,7 +181,12 @@ void	player_movement(t_cub3d *data, double dt)
 	if (direction_x == 0.0 && direction_y == 0.0)
 		return ;
 	
-	move_distance = data->player.speed * dt;
+	// Apply sprint multiplier when Shift is held
+	current_speed = data->player.speed;
+	if (data->keys.shift)
+		current_speed *= SPRINT_MULTIPLIER;
+	
+	move_distance = current_speed * dt;
 	new_x = data->player.pos_x + direction_x * move_distance;
 	new_y = data->player.pos_y + direction_y * move_distance;
 	
@@ -201,4 +207,39 @@ void	player_movement(t_cub3d *data, double dt)
 		new_y = map_height - radius;
 
 	attempt_movement_with_collision(data, new_x, new_y);
+}
+
+void	player_jump(t_cub3d *data, double dt)
+{
+	if (dt <= 0.0)
+		return ;
+	
+	// Initiate jump if space pressed and player is on ground
+	if (data->keys.space && !data->player.is_jumping && data->player.z_offset <= 0.0)
+	{
+		data->player.vertical_velocity = JUMP_VELOCITY;
+		data->player.is_jumping = 1;
+	}
+	
+	// Apply gravity to vertical velocity
+	if (data->player.is_jumping || data->player.z_offset > 0.0)
+	{
+		data->player.vertical_velocity -= GRAVITY * dt;
+		data->player.z_offset += data->player.vertical_velocity * dt;
+		
+		// Clamp to max jump height
+		if (data->player.z_offset > MAX_JUMP_HEIGHT)
+		{
+			data->player.z_offset = MAX_JUMP_HEIGHT;
+			data->player.vertical_velocity = 0.0;
+		}
+		
+		// Land on ground
+		if (data->player.z_offset <= 0.0)
+		{
+			data->player.z_offset = 0.0;
+			data->player.vertical_velocity = 0.0;
+			data->player.is_jumping = 0;
+		}
+	}
 }

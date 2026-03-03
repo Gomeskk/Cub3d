@@ -53,6 +53,9 @@ typedef struct s_player
 	double	plane_x; // camera plane (for raycast lol)
 	double	plane_y;
 	double	pitch; // vertical look angle for up/down
+	double	z_offset; // vertical position for jumping
+	double	vertical_velocity; // current upward/downward velocity
+	int		is_jumping; // 1 if in air, 0 if on ground
 	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
 
@@ -62,6 +65,8 @@ typedef struct s_keys
 	int			a;
 	int			s;
 	int			d;
+	int			shift;
+	int			space;
 	int			arrow_up;
 	int			arrow_down;
 	int			arrow_left;
