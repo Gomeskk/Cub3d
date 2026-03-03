@@ -33,6 +33,7 @@ typedef struct s_cub3d
 	int				tile;
 	t_img			img;
 	t_textures		textures;
+	t_wall_textures	wall_textures;
 	t_status		status;
 	t_tiles			tiles;
 	t_map			map;
@@ -113,6 +114,10 @@ void	cycle_fov(t_cub3d *data);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
 int		key_released(int keycode, t_cub3d *data);
 int		key_pressed(int keycode, t_cub3d *data);
+
+//			TEXTURES			//
+int		load_wall_textures(t_cub3d *data);
+void	draw_textured_wall(t_cub3d *data, t_ray *ray, int x);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);

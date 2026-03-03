@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 15:16:19 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:47:11 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ void	init_game(t_cub3d *data)
 	data->img.data = mlx_get_data_addr(data->img.image, &data->img.bpp, &data->img.size_line, &data->img.type);
 	data->img.width = WIDTH;
     data->img.height = HEIGHT;
+	
+	// Load wall textures
+	if (!load_wall_textures(data))
+		exit_error(data, "Failed to load wall textures");
+	
 	data->tile = get_tile_size(data);
 	printf("tile -> %i\n", data->tile);
 	printf("x -> %f    y -> %f\n", data->player.pos_x, data->player.pos_y);

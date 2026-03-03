@@ -116,6 +116,14 @@ typedef	struct s_textures
 	char		*ea;
 }				t_textures;
 
+typedef struct s_wall_textures
+{
+	t_img		north;
+	t_img		south;
+	t_img		east;
+	t_img		west;
+}				t_wall_textures;
+
 typedef struct s_ray
 {
 	double camera_x;       // x-coordinate in camera space (-1 to +1)

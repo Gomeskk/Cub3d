@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:12:53 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 15:39:08 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:47:11 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,20 +145,12 @@ void draw_wall_column(t_cub3d *data, t_ray *ray, int x)
     if (ray->draw_end >= data->current_height)
         ray->draw_end = data->current_height - 1;
     
-    // Choose wall color based on side (darker for y-sides)
-    int color;
-    if (ray->side == 0) // X-side walls (North/South faces)
-        color = 0x00FF00;
-    else                // Y-side walls (East/West faces)
-        color = 0x008000;
-    
     // Draw ceiling (above wall) - using .cub file color
     for (int y = 0; y < ray->draw_start; y++)
         pixel_put(&data->img, x, y, data->textures.ceiling);
     
-    // Draw wall
-    for (int y = ray->draw_start; y < ray->draw_end; y++)
-        pixel_put(&data->img, x, y, color);
+    // Draw textured wall
+    draw_textured_wall(data, ray, x);
     
     // Draw floor (below wall) - using .cub file color
     for (int y = ray->draw_end; y < data->current_height; y++)

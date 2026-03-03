@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 15:33:38 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:43:45 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,6 @@ void	cycle_fov(t_cub3d *data)
 	
 	// Cycle to next FOV level: normal(0) -> narrow(1) -> wide(2) -> normal(0)
 	data->player.fov_level = (data->player.fov_level + 1) % 3;
-	printf("level: %d\n", data->player.fov_level);
 	// Get FOV value for current level
 	if (data->player.fov_level == 0)
 		fov_value = FOV_NORMAL;
