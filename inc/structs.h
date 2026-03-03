@@ -145,6 +145,14 @@ typedef struct s_ray
 	int draw_end;          // highest pixel to fill
 }				t_ray;
 
+typedef struct s_tex_draw
+{
+	t_ray	*ray;
+	double	step;
+	double	tex_pos;
+	int		tex_x;
+}				t_tex_draw;
+
 typedef struct s_menu_screens
 {
 	t_menu_img	start_normal;

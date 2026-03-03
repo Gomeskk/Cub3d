@@ -118,6 +118,12 @@ int		key_pressed(int keycode, t_cub3d *data);
 //			TEXTURES			//
 int		load_wall_textures(t_cub3d *data);
 void	draw_textured_wall(t_cub3d *data, t_ray *ray, int x);
+int		get_texture_pixel(t_img *texture, int x, int y);
+int		get_tex_x(t_img *texture, double wall_x, t_ray *ray);
+void	init_texture_step(t_img *texture, t_ray *ray,
+			t_cub3d *data, t_tex_draw *td);
+void	draw_texture_column(t_cub3d *data, t_tex_draw *td,
+			t_img *texture, int x);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
