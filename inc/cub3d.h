@@ -109,6 +109,7 @@ void	reattach_hooks(t_cub3d *data); //size scale resolution of the game // adici
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);
 void    player_movement(t_cub3d *data, double dt);
 void	player_jump(t_cub3d *data, double dt);
+void	cycle_fov(t_cub3d *data);
 void	put_player_dot(t_img *img, int cx, int cy, int radius, int color);
 int		key_released(int keycode, t_cub3d *data);
 int		key_pressed(int keycode, t_cub3d *data);

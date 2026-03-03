@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:33:38 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,4 +242,37 @@ void	player_jump(t_cub3d *data, double dt)
 			data->player.is_jumping = 0;
 		}
 	}
+}
+
+void	cycle_fov(t_cub3d *data)
+{
+	double	fov_value;
+	double	plane_magnitude;
+	double	old_plane_x;
+	double	old_plane_y;
+	
+	// Calculate current plane magnitude to preserve direction
+	old_plane_x = data->player.plane_x;
+	old_plane_y = data->player.plane_y;
+	plane_magnitude = sqrt(old_plane_x * old_plane_x + old_plane_y * old_plane_y);
+	
+	// If plane magnitude is zero, can't determine direction
+	if (plane_magnitude < 0.001)
+		return ;
+	
+	// Cycle to next FOV level: normal(0) -> narrow(1) -> wide(2) -> normal(0)
+	data->player.fov_level = (data->player.fov_level + 1) % 3;
+	printf("level: %d\n", data->player.fov_level);
+	// Get FOV value for current level
+	if (data->player.fov_level == 0)
+		fov_value = FOV_NORMAL;
+	else if (data->player.fov_level == 1)
+		fov_value = FOV_NARROW;
+	else
+		fov_value = FOV_WIDE;
+	
+	// Update plane vectors maintaining perpendicular direction
+	// Normalize old plane and scale by new FOV
+	data->player.plane_x = (old_plane_x / plane_magnitude) * fov_value;
+	data->player.plane_y = (old_plane_y / plane_magnitude) * fov_value;
 }

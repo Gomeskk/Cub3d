@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:16:19 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@ void	clear_image(t_img *img, int color)
 static int	render_game(t_cub3d *data)
 {
 	static double	time;
+	static int		last_v_state = 0;
 	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
 	{
+		// Handle FOV cycling with debounce (only on press, not hold)
+		if (data->keys.v && !last_v_state)
+			cycle_fov(data);
+		last_v_state = data->keys.v;
+		
 		player_movement(data, time);
 		player_jump(data, time);
 		update_mouse_rotation(data, time); // Continuous rotation based on distance from center

@@ -13,6 +13,9 @@
 # define JUMP_VELOCITY 350.0  // Initial upward velocity when jumping
 # define GRAVITY 900.0  // Gravity acceleration (pulls player down)
 # define MAX_JUMP_HEIGHT 200.0  // Maximum vertical offset from ground
+# define FOV_NORMAL 0.66  // Standard field of view
+# define FOV_NARROW 0.33  // Zoomed in (narrow FOV)
+# define FOV_WIDE 0.90  // Zoomed out (wide FOV)
 # define M_PI           3.14159265358979323846  /* pi */
 
 

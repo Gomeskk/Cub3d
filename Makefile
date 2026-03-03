@@ -15,7 +15,7 @@ DEFAULT 		= \e[0m
 # Variables
 NAME 			= cub3d
 CC 				= cc
-CFLAGS 			= -Wall -Wextra -Werror -g
+CFLAGS 			= -Wall -Wextra -Werror -g -O3
 INCLUDES 		= -I inc/
 
 ### CUB3D SRCS ###

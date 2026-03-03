@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:12:53 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 13:06:39 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:39:08 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,11 @@ void perform_dda(t_cub3d *data, t_ray *ray)
 void draw_wall_column(t_cub3d *data, t_ray *ray, int x)
 {
     // Calculate height of line to draw on screen
-    ray->line_height = (int)(data->current_height / ray->perp_wall_dist);
+    // Scale by FOV to make walls taller when zoomed in (smaller plane), shorter when zoomed out (larger plane)
+    double current_plane_mag = sqrt(data->player.plane_x * data->player.plane_x + 
+                                    data->player.plane_y * data->player.plane_y);
+    double fov_scale = FOV_NORMAL / current_plane_mag;
+    ray->line_height = (int)(data->current_height / ray->perp_wall_dist * fov_scale);
     
     // Calculate lowest and highest pixel to fill in current stripe
     // Apply pitch offset for looking up/down and z_offset for jumping
