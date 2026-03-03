@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/11 19:21:49 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/03 10:07:55 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,43 @@ int	key_pressed(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape)
 		x_window(data);
-	if (keycode == XK_Up || keycode == XK_w)
+	if (keycode == XK_w)
 		data->keys.w = 1;
-	if (keycode == XK_Left || keycode == XK_a)
+	if (keycode == XK_a)
 		data->keys.a = 1;
-	if (keycode == XK_Down || keycode == XK_s)
+	if (keycode == XK_s)
 		data->keys.s = 1;
-	if (keycode == XK_Right || keycode == XK_d)
+	if (keycode == XK_d)
 		data->keys.d = 1;
+	if (keycode == XK_Up)
+		data->keys.arrow_up = 1;
+	if (keycode == XK_Down)
+		data->keys.arrow_down = 1;
+	if (keycode == XK_Left)
+		data->keys.arrow_left = 1;
+	if (keycode == XK_Right)
+		data->keys.arrow_right = 1;
 	return (0);
 }
 
 int	key_released(int keycode, t_cub3d *data)
 {
-	if (keycode == XK_Up || keycode == XK_w)
+	if (keycode == XK_w)
 		data->keys.w = 0;
-	if (keycode == XK_Left || keycode == XK_a)
+	if (keycode == XK_a)
 		data->keys.a = 0;
-	if (keycode == XK_Down || keycode == XK_s)
+	if (keycode == XK_s)
 		data->keys.s = 0;
-	if (keycode == XK_Right || keycode == XK_d)
+	if (keycode == XK_d)
 		data->keys.d = 0;
+	if (keycode == XK_Up)
+		data->keys.arrow_up = 0;
+	if (keycode == XK_Down)
+		data->keys.arrow_down = 0;
+	if (keycode == XK_Left)
+		data->keys.arrow_left = 0;
+	if (keycode == XK_Right)
+		data->keys.arrow_right = 0;
 	return (0);
 }
 

@@ -110,6 +110,10 @@ void	init_game(t_cub3d *data)
 	data->keys.d = 0;
 	data->keys.s = 0;
 	data->keys.w = 0;
+	data->keys.arrow_up = 0;
+	data->keys.arrow_down = 0;
+	data->keys.arrow_left = 0;
+	data->keys.arrow_right = 0;
 	data->mouse.cx = WIDTH / 2;
 	data->mouse.cy = HEIGHT / 2;
 	data->mouse.x = data->mouse.cx;  // Initialize current position to center

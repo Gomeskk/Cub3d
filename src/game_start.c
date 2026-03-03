@@ -39,6 +39,7 @@ static int	render_game(t_cub3d *data)
 	{
 		player_movement(data, time);
 		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
+		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
 		raycast_render(data);
 		mlx_clear_window(data->mlx, data->window);
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);

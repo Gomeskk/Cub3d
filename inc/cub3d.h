@@ -64,6 +64,9 @@ int		mouse_moved(int x, int y, t_cub3d *data);
 void	update_mouse_rotation(t_cub3d *data, double dt);
 void	update_mouse_rotation(t_cub3d *data, double dt);
 
+//			KEYBOARD ROTATE //
+void	update_keyboard_rotation(t_cub3d *data, double dt);
+
 //        RAYCASTER		    //
 void	raycast_render(t_cub3d *data);
 void	init_ray(t_cub3d *data, t_ray *ray, int screen_x);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_rotate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/02/19 17:37:02 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/03 10:00:37 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -62,6 +62,10 @@ typedef struct s_keys
 	int			a;
 	int			s;
 	int			d;
+	int			arrow_up;
+	int			arrow_down;
+	int			arrow_left;
+	int			arrow_right;
 }				t_keys;
 
 typedef struct s_mouse
