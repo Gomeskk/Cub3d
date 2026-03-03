@@ -150,6 +150,8 @@ void	handle_vertical_keys(int keycode, t_cub3d *data);
 void	handle_enter_key(t_cub3d *data);
 // menu_resolution.c
 void	apply_resolution(t_cub3d *data, int new_level);
+// menu_utils.c
+double	get_sensibility_multiplier(int level);
 // menu_input.c
 int		key_press_handler(int keycode, t_cub3d *data);
 int		key_release_handler(int keycode, t_cub3d *data);

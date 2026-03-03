@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 10:00:37 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:04:38 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     double pitch_speed;
     double sensitivity_scale;
     double max_pitch_scaled;
+    double sensibility_mult;
+    
+    // Get menu sensibility multiplier (0.5x to 2.0x)
+    sensibility_mult = get_sensibility_multiplier(data->menu.options.sensibility_level);
     
     // Scale sensitivity to maintain consistent feel across resolutions
     // Standard resolution is 1920x1080 (RES_4)
@@ -53,14 +57,14 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     // Handle horizontal rotation (yaw)
     if (distance_from_center_x != 0.0)
     {
-        rotation_speed = distance_from_center_x * MOUSE_SENSITIVITY * sensitivity_scale * dt;
+        rotation_speed = distance_from_center_x * MOUSE_SENSITIVITY * sensitivity_scale * sensibility_mult * dt;
         rotate_player(data, rotation_speed);
     }
     
     // Handle vertical pitch (looking up/down)
     if (distance_from_center_y != 0.0)
     {
-        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensitivity_scale * dt * 1000.0; // Scale for pixel offset
+        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensitivity_scale * sensibility_mult * dt * 1000.0; // Scale for pixel offset
         data->player.pitch += pitch_speed;
         
         // Scale MAX_PITCH based on current resolution height

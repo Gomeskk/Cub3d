@@ -1,6 +1,16 @@
 #include "../../inc/cub3d.h"
 #include <sys/time.h>
 
+// Convert menu sensibility level (0-4) to multiplier
+double	get_sensibility_multiplier(int level)
+{
+	static const double multipliers[] = {0.0, 0.5, 1.0, 1.5, 2.0};
+	
+	if (level < 0 || level > 4)
+		return (1.0);
+	return (multipliers[level]);
+}
+
 void	apply_difficulty_settings(t_cub3d *data)
 {
 	(void)data;
@@ -22,10 +32,3 @@ void	apply_difficulty_settings(t_cub3d *data)
 	        break; */
 }
 
-void	apply_settings(t_cub3d *data)
-{
-	(void)data;
-/* 	Apply mouse sensibility
-	float sensibility_values[] = {0.0, 0.5, 1.5, 2.0};
-	data->mouse.sensitivity = sensibility_values[data->sensibility_level]; */
-}
