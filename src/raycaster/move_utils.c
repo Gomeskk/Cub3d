@@ -30,6 +30,8 @@ int	key_pressed(int keycode, t_cub3d *data)
 		data->keys.space = 1;
 	if (keycode == XK_v)
 		data->keys.v = 1;
+	if (keycode == XK_e)
+		data->keys.e = 1;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 1;
 	if (keycode == XK_Down)
@@ -57,6 +59,8 @@ int	key_released(int keycode, t_cub3d *data)
 		data->keys.space = 0;
 	if (keycode == XK_v)
 		data->keys.v = 0;
+	if (keycode == XK_e)
+		data->keys.e = 0;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 0;
 	if (keycode == XK_Down)

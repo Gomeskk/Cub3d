@@ -29,6 +29,7 @@ void init_ray(t_cub3d *data, t_ray *ray, int screen_x)
 {
     // Calculate camera X coordinate (-1 to 1)
     ray->camera_x = 2 * screen_x / (double)data->current_width - 1;
+    ray->hit_door = 0;
     
     // Calculate ray direction using player direction + camera plane
     ray->ray_dir_x = data->player.dir_x + data->player.plane_x * ray->camera_x;
@@ -114,6 +115,16 @@ void perform_dda(t_cub3d *data, t_ray *ray)
         // Check if ray has hit a wall
         if (data->map.grid[ray->map_y][ray->map_x] == '1')
             ray->hit = 1;
+        
+        // Check if ray has hit a closed door
+        if (data->map.grid[ray->map_y][ray->map_x] == 'D')
+        {
+            if (!is_door_open(data, ray->map_x, ray->map_y))
+            {
+                ray->hit = 1;
+                ray->hit_door = 1;
+            }
+        }
     }
     
     // Calculate perpendicular wall distance

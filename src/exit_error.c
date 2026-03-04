@@ -26,6 +26,8 @@ void	free_all(t_cub3d *data)
 		free_ar((void **)data->map.map);
 	if (data->map.grid)
 		free_ar((void **)data->map.grid);
+	if (data->map.doors)
+		free(data->map.doors);
 	if (data->img.image)
 		mlx_destroy_image(data->mlx, data->img.image);
 	if (data->window)

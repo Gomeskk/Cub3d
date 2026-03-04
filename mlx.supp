@@ -29,3 +29,51 @@
    ...
    fun:mlx_*
 }
+
+{
+   DynamicLinker_dlopen
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlopen*
+}
+
+{
+   DynamicLinker_dl_open
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+}
+
+{
+   DynamicLinker_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_load_cache_lookup
+}
+
+{
+   DynamicLinker_new_object
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_new_object
+}
+
+{
+   DynamicLinker_map_object
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_map_object
+}
+
+{
+   DynamicLinker_check_versions
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_check_map_versions
+}

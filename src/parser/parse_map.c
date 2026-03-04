@@ -101,5 +101,11 @@ int	parse_map(t_cub3d *data)
 		|| !is_closed(data)
 		|| data->map.start_point != 1)
 		return (exit_error(data, PLAYER_POINT), 0);
+	
+	// Initialize doors after map is validated
+	init_doors(data);
+	if (data->map.doors)
+		store_door_positions(data);
+	
 	return (1);
 }

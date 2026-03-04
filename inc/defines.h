@@ -69,7 +69,7 @@
 # define C_MISSING "\033[1;35mcub3d:\033[1;0m 'C' path to texture is required."
 # define F_MISSING "\033[1;35mcub3d:\033[1;0m 'F' path to texture is required."
 # define TEXTURES "\033[1;37mPlease make sure to add all the textures and place them at the top of the file.\033[1;0m\n"
-# define WRONG_CHAR "\033[1;35mcub3d:\033[1;0m map should contain only 'NSEW01' and spaces/tabs."
+# define WRONG_CHAR "\033[1;35mcub3d:\033[1;0m map should contain only 'NSEW01D' and spaces/tabs."
 # define NON_DIGIT "\033[1;35mcub3d:\033[1;0m C's && F's parameters should contain only digits.\n\
 \033[1;37mHere's an Example:\033[1;0m\n\
 F 220,100,0 \n\

@@ -34,6 +34,7 @@ static int	render_game(t_cub3d *data)
 {
 	static double	time;
 	static int		last_v_state = 0;
+	static int		last_e_state = 0;
 	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
@@ -42,6 +43,11 @@ static int	render_game(t_cub3d *data)
 		if (data->keys.v && !last_v_state)
 			cycle_fov(data);
 		last_v_state = data->keys.v;
+		
+		// Handle door toggling with debounce (only on press, not hold)
+		if (data->keys.e && !last_e_state)
+			toggle_door(data);
+		last_e_state = data->keys.e;
 		
 		player_movement(data, time);
 		player_jump(data, time);

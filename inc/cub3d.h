@@ -125,6 +125,12 @@ void	init_texture_step(t_img *texture, t_ray *ray,
 void	draw_texture_column(t_cub3d *data, t_tex_draw *td,
 			t_img *texture, int x);
 
+//			DOORS				//
+void	init_doors(t_cub3d *data);
+void	store_door_positions(t_cub3d *data);
+int		is_door_open(t_cub3d *data, int x, int y);
+void	toggle_door(t_cub3d *data);
+
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
 void	exit_error(t_cub3d *data, char *message);

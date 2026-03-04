@@ -69,6 +69,15 @@ static int	check_collision_range(t_cub3d *data, double cx, double cy, int start_
 				if (circle_intersects_rectangle(data, cx, cy, row, col))
 					return (1);
 			}
+			// Check for closed doors
+			if (data->map.grid[row][col] == 'D')
+			{
+				if (!is_door_open(data, col, row))
+				{
+					if (circle_intersects_rectangle(data, cx, cy, row, col))
+						return (1);
+				}
+			}
 			col++;
 		}
 		row++;

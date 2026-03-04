@@ -14,24 +14,9 @@
 
 void    init_data(t_cub3d *data)
 {
-    data->map.grid = NULL;
-    data->map.map = NULL;
-    data->map.start_point = 0;
-    data->map.row_count = 0;
-	data->map.col_count = 0;
-    data->textures.no = NULL;
-	data->textures.so = NULL;
-	data->textures.ea = NULL;
-	data->textures.we = NULL;
+	ft_bzero(data, sizeof(t_cub3d));
 	data->textures.floor = -1;
 	data->textures.ceiling = -1;
-	data->window = NULL;
-	data->mlx = NULL;
-	data->img.image = NULL;
-	data->player.vel_x = 0.0;
-	data->player.vel_y = 0.0;
-	data->player.pitch = 0.0;
-	data->player.spawn_dir = '\0';
 }
 
 void	init_player_direction(t_cub3d *data, char spawn)
@@ -118,6 +103,7 @@ void	init_game(t_cub3d *data)
 	data->keys.shift = 0;
 	data->keys.space = 0;
 	data->keys.v = 0;
+	data->keys.e = 0;
 	data->keys.arrow_up = 0;
 	data->keys.arrow_down = 0;
 	data->keys.arrow_left = 0;

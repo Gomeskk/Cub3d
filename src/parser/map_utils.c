@@ -86,5 +86,5 @@ int	is_map_line(char c)
 {
 	if (c == ' ')
 		return (1);
-	return (ft_strchr("NSEW01", c) != NULL);
+	return (ft_strchr("NSEW01D", c) != NULL);
 }

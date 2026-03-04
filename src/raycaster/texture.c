@@ -27,12 +27,19 @@ int	load_wall_textures(t_cub3d *data)
 	if (!load_single_texture(data->mlx, &data->wall_textures.west,
 			"Png_images/Walls/Wall_W.xpm"))
 		return (0);
+	if (!load_single_texture(data->mlx, &data->wall_textures.door,
+			"Png_images/Walls/Door.xpm"))
+		return (0);
 	return (1);
 }
 
 // Select the appropriate texture based on wall direction
 static t_img	*select_wall_texture(t_cub3d *data, t_ray *ray)
 {
+	// Check if we hit a door
+	if (ray->hit_door)
+		return (&data->wall_textures.door);
+	
 	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
