@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO Png_images/Walls/Wall_N.xpm
+SO Png_images/Walls/Wall_S.xpm
+WE Png_images/Walls/Wall_W.xpm
+EA Png_images/Walls/Wall_E.xpm
 F 0,0,0
 C 255,19,195
 

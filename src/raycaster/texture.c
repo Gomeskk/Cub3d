@@ -12,21 +12,23 @@ static int	load_single_texture(void *mlx, t_img *tex, char *path)
 	return (1);
 }
 
-// Load all wall textures including door texture
+// Load all wall textures from map file paths
 int	load_wall_textures(t_cub3d *data)
 {
+	// Load textures using paths from .cub file
 	if (!load_single_texture(data->mlx, &data->wall_textures.north,
-			"Png_images/Walls/Wall_N.xpm"))
+			data->textures.no))
 		return (0);
 	if (!load_single_texture(data->mlx, &data->wall_textures.south,
-			"Png_images/Walls/Wall_S.xpm"))
+			data->textures.so))
 		return (0);
 	if (!load_single_texture(data->mlx, &data->wall_textures.east,
-			"Png_images/Walls/Wall_E.xpm"))
+			data->textures.ea))
 		return (0);
 	if (!load_single_texture(data->mlx, &data->wall_textures.west,
-			"Png_images/Walls/Wall_W.xpm"))
+			data->textures.we))
 		return (0);
+	// Door texture remains hardcoded (not specified in .cub file)
 	if (!load_single_texture(data->mlx, &data->wall_textures.door,
 			"Png_images/Walls/Door.xpm"))
 		return (0);
