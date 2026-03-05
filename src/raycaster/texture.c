@@ -12,7 +12,7 @@ static int	load_single_texture(void *mlx, t_img *tex, char *path)
 	return (1);
 }
 
-// Load all wall textures
+// Load all wall textures including door texture
 int	load_wall_textures(t_cub3d *data)
 {
 	if (!load_single_texture(data->mlx, &data->wall_textures.north,
@@ -36,11 +36,12 @@ int	load_wall_textures(t_cub3d *data)
 // Select the appropriate texture based on wall direction
 static t_img	*select_wall_texture(t_cub3d *data, t_ray *ray)
 {
-	// Check if we hit a door
+	// DOOR CHECK: If ray hit a door, use door texture regardless of direction
 	if (ray->hit_door)
 		return (&data->wall_textures.door);
 	
-	if (ray->side == 0)
+	// Determine wall orientation for texture selection
+	if (ray->side == 0)	// Vertical wall (X-side hit)
 	{
 		if (ray->step_x > 0)
 			return (&data->wall_textures.west);
@@ -62,11 +63,9 @@ static double	calculate_wall_x(t_cub3d *data, t_ray *ray)
 	double	wall_x;
 
 	if (ray->side == 0)	// X-side hit (vertical wall)
-		wall_x = data->player.pos_y / data->tile
-			+ ray->perp_wall_dist * ray->ray_dir_y;
+		wall_x = data->player.pos_y / data->tile + ray->perp_wall_dist * ray->ray_dir_y;
 	else	// Y-side hit (horizontal wall)
-		wall_x = data->player.pos_x / data->tile
-			+ ray->perp_wall_dist * ray->ray_dir_x;
+		wall_x = data->player.pos_x / data->tile + ray->perp_wall_dist * ray->ray_dir_x;
 	wall_x -= floor(wall_x);	// Get fractional part (0.0 to 1.0)
 	return (wall_x);
 }

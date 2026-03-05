@@ -69,9 +69,12 @@ static int	check_collision_range(t_cub3d *data, double cx, double cy, int start_
 				if (circle_intersects_rectangle(data, cx, cy, row, col))
 					return (1);
 			}
-			// Check for closed doors
+			// DOOR COLLISION: Check for closed doors during movement
+			// Closed doors block player movement like walls
+			// Open doors allow player to pass through
 			if (data->map.grid[row][col] == 'D')
 			{
+				// Only collide with closed doors
 				if (!is_door_open(data, col, row))
 				{
 					if (circle_intersects_rectangle(data, cx, cy, row, col))

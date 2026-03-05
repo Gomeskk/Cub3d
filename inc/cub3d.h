@@ -105,8 +105,7 @@ void	setup_dda(t_cub3d *data, t_ray *ray);
 void	perform_dda(t_cub3d *data, t_ray *ray);
 void	draw_wall_column(t_cub3d *data, t_ray *ray, int x);
 void	game_start(t_cub3d *data);
-void	run_with_menu(t_cub3d *data); // adicionei
-void	reattach_hooks(t_cub3d *data); //size scale resolution of the game // adicionei
+void	reattach_hooks(t_cub3d *data);
 int		circle_collides_wall(t_cub3d *data, double cx, double cy);
 void    player_movement(t_cub3d *data, double dt);
 void	player_jump(t_cub3d *data, double dt);
@@ -156,17 +155,24 @@ int		init_resolution_images(t_cub3d *data);
 // menu_navigation.c
 int		handle_main_menu_keys(int keycode, t_cub3d *data);
 int		handle_difficulty_keys(int keycode, t_cub3d *data);
-int		handle_credits_keys(int keycode, t_cub3d *data);
-int		menu_key_handler(int keycode, t_cub3d *data);
+int		handle_credits_screen_keys(int keycode, t_cub3d *data);
 // menu_navigation_options.c
-void	adjust_setting(t_cub3d *data, int direction);
+int		menu_key_handler(int keycode, t_cub3d *data);
 void	handle_horizontal_keys(int keycode, t_cub3d *data);
-int		set_arrow_direction(t_cub3d *data, int direction);
-void	apply_resolution_change(t_cub3d *data, int dir, int threshold);
 void	handle_vertical_keys(int keycode, t_cub3d *data);
 void	handle_enter_key(t_cub3d *data);
+int		handle_options_screen_keys(int keycode, t_cub3d *data);
+// menu_options_settings.c
+void	adjust_setting(t_cub3d *data, int direction);
+int		set_arrow_direction(t_cub3d *data, int direction);
+void	apply_resolution_change(t_cub3d *data, int dir, int threshold);
 // menu_resolution.c
 void	apply_resolution(t_cub3d *data, int new_level);
+// menu_resolution_init.c
+int		create_new_window(t_cub3d *data, int width, int height);
+int		create_menu_buffer(t_cub3d *data, int width, int height);
+int		create_game_image(t_cub3d *data, int width, int height);
+void	update_resolution_settings(t_cub3d *data, int level, int w, int h);
 // menu_utils.c
 double	get_sensibility_multiplier(int level);
 // menu_input.c
@@ -176,7 +182,10 @@ int		menu_loop_handler(t_cub3d *data);
 // menu_render.c
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
-void	render_credits(t_cub3d *data);
+void	render_credits_screen(t_cub3d *data);
+void	render_volume_sensibility(t_cub3d *data, float scale);
+// menu_render_options.c
+void	render_options_menu(t_cub3d *data);
 void	pixel_put_menu(t_menu_img *img, int x, int y, int color);
 void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
 void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,

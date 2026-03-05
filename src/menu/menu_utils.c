@@ -31,4 +31,3 @@ void	apply_difficulty_settings(t_cub3d *data)
 	        data->game_settings.enemy_damage_mult = 1.5;
 	        break; */
 }
-

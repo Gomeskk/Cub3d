@@ -23,6 +23,9 @@ int	init_start_game_images(t_cub3d *data)
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.start_selected,
 			"Png_images/StartGame/Credits.xpm") == -1)
 		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.screens.credits_screen,
+			"Png_images/Difficulty/Easy.xpm") == -1)
+		return (-1);
 	return (0);
 }
 
@@ -40,7 +43,7 @@ int	init_difficulty_images(t_cub3d *data)
 	return (0);
 }
 
-int	init_options_images(t_cub3d *data)
+static int	init_options_base_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.options_screen,
 			"Png_images/Options/OptionsMenu.xpm") == -1)
@@ -60,6 +63,11 @@ int	init_options_images(t_cub3d *data)
 	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.tab_sensibility,
 			"Png_images/TabChoices/TabSensibility.xpm") == -1)
 		return (-1);
+	return (0);
+}
+
+static int	init_options_resolution_images(t_cub3d *data)
+{
 	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.resolution_approve,
 			"Png_images/ScreenSize/ResolutionAprove.xpm") == -1)
 		return (-1);
@@ -71,6 +79,15 @@ int	init_options_images(t_cub3d *data)
 	if (init_sensibility_images(data) == -1)
 		return (-1);
 	if (init_resolution_images(data) == -1)
+		return (-1);
+	return (0);
+}
+
+int	init_options_images(t_cub3d *data)
+{
+	if (init_options_base_images(data) == -1)
+		return (-1);
+	if (init_options_resolution_images(data) == -1)
 		return (-1);
 	return (0);
 }

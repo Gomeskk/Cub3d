@@ -31,7 +31,7 @@ RAYC_DIR		= src/raycaster/
 RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
 
 
-MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_render.c menu_resolution.c menu_state.c menu_transparency.c menu_utils.c
+MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_options_settings.c menu_render.c menu_render_options.c menu_resolution.c menu_resolution_init.c menu_state.c menu_transparency.c menu_utils.c
 MENU_DIR		= src/menu/
 MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 

@@ -1,10 +1,18 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Calculate scale factor for current resolution
+** Scales menu images to maintain proper aspect ratio on different resolutions
+*/
 static float	get_scale(t_cub3d *data)
 {
 	return ((float)data->current_width / (float)RES_4_WIDTH);
 }
 
+/*
+** Render main menu screen
+** Shows start/options/exit with appropriate highlighting based on selection
+*/
 void	render_main_menu(t_cub3d *data)
 {
 	t_menu_img	*img;
@@ -23,6 +31,10 @@ void	render_main_menu(t_cub3d *data)
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
 
+/*
+** Render difficulty selection screen
+** Shows easy/medium/hard difficulty options with current selection highlighted
+*/
 void	render_difficulty_menu(t_cub3d *data)
 {
 	t_menu_img	*img;
@@ -41,43 +53,11 @@ void	render_difficulty_menu(t_cub3d *data)
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
 
-static void	render_resolution_confirm(t_cub3d *data, float scale)
-{
-	if (data->menu.options.resolution_confirm_choice == 0)
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.options_imgs.resolution_decline, 0, 0, scale);
-	else
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.options_imgs.resolution_approve, 0, 0, scale);
-}
-
-static void	render_resolution_section(t_cub3d *data, float scale)
-{
-	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-		data->menu.options_imgs.tab_resolution, 0, 0, scale);
-	if (data->menu.options.resolution_confirm_active)
-		render_resolution_confirm(data, scale);
-	else if (data->menu.options.last_arrow_direction == -1)
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.screens.arrow_down, 0, 0, scale);
-	else
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.screens.arrow_up, 0, 0, scale);
-}
-
-static void	render_options_overlay(t_cub3d *data, float scale)
-{
-	if (data->menu.options.section == SECTION_SOUND)
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.options_imgs.tab_sound, 0, 0, scale);
-	else if (data->menu.options.section == SECTION_RESOLUTION)
-		render_resolution_section(data, scale);
-	else if (data->menu.options.section == SECTION_SENSIBILITY)
-		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.options_imgs.tab_sensibility, 0, 0, scale);
-}
-
-static void	render_volume_sensibility(t_cub3d *data, float scale)
+/*
+** Render volume and sensibility level indicators
+** Positions scaled images at specific coordinates on screen
+*/
+void	render_volume_sensibility(t_cub3d *data, float scale)
 {
 	int	vol_x;
 	int	vol_y;
@@ -96,19 +76,20 @@ static void	render_volume_sensibility(t_cub3d *data, float scale)
 		sens_x, sens_y, scale);
 }
 
-void	render_credits(t_cub3d *data)
+/*
+** Render credits screen
+** Shows game credits with instructions to start or go back
+*/
+void	render_credits_screen(t_cub3d *data)
 {
-	float	scale;
-	int		res_level;
+	t_menu_img	*img;
+	float		scale;
 
-	scale = get_scale(data);
-	res_level = data->menu.options.pending_resolution_level;
-	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-		data->menu.screens.options_screen, 0, 0, scale);
-	render_volume_sensibility(data, scale);
-	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-		data->menu.options_imgs.resolution[res_level], 0, 0, scale);
-	render_options_overlay(data, scale);
+	scale = (float)data->current_width / (float)RES_4_WIDTH;
+	mlx_clear_window(data->mlx, data->window);
+	img = &data->menu.screens.credits_screen;
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer, *img, 0, 0, scale);
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
+

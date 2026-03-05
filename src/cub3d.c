@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 		return (free_all(&data), ft_putendl_fd(NO_IDENTIFIERS, 2), 1);
 	if (!parse_map(&data))
 		return (free_all(&data), ft_putendl_fd(WRONG_MAP, 2), 1);
-	run_with_menu(&data); // adicionei
+	game_start(&data);
 	free_all(&data);
 }
 

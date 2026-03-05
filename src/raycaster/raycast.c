@@ -29,9 +29,11 @@ void init_ray(t_cub3d *data, t_ray *ray, int screen_x)
 {
     // Calculate camera X coordinate (-1 to 1)
     ray->camera_x = 2 * screen_x / (double)data->current_width - 1;
+    // Initialize door hit flag (set to 1 if ray hits closed door)
     ray->hit_door = 0;
     
     // Calculate ray direction using player direction + camera plane
+    // This creates FOV effect by interpolating across the plane
     ray->ray_dir_x = data->player.dir_x + data->player.plane_x * ray->camera_x;
     ray->ray_dir_y = data->player.dir_y + data->player.plane_y * ray->camera_x;
     
@@ -116,13 +118,14 @@ void perform_dda(t_cub3d *data, t_ray *ray)
         if (data->map.grid[ray->map_y][ray->map_x] == '1')
             ray->hit = 1;
         
-        // Check if ray has hit a closed door
+        // DOOR DETECTION: Check if ray has hit a closed door
+        // Open doors are walkthrough, closed doors block like walls
         if (data->map.grid[ray->map_y][ray->map_x] == 'D')
         {
             if (!is_door_open(data, ray->map_x, ray->map_y))
             {
-                ray->hit = 1;
-                ray->hit_door = 1;
+                ray->hit = 1;         // Stop ray here
+                ray->hit_door = 1;    // Mark as door hit for texture selection
             }
         }
     }

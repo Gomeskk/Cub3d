@@ -1,5 +1,9 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Navigate through main menu options (cycle up/down)
+** Updates menu choice and re-renders main menu
+*/
 static void	navigate_menu(t_cub3d *data, int direction)
 {
 	data->menu.menu_choice += direction;
@@ -10,6 +14,10 @@ static void	navigate_menu(t_cub3d *data, int direction)
 	render_main_menu(data);
 }
 
+/*
+** Select current menu option
+** Start: go to difficulty, Options: go to options menu, Credits: show credits
+*/
 static void	select_menu_option(t_cub3d *data)
 {
 	if (data->menu.menu_choice == MENU_START)
@@ -19,13 +27,20 @@ static void	select_menu_option(t_cub3d *data)
 	}
 	else if (data->menu.menu_choice == MENU_OPTIONS)
 	{
-		data->status = CREDITS;
-		render_credits(data);
+		data->status = OPTIONS_SCREEN;
+		render_options_menu(data);
 	}
 	else if (data->menu.menu_choice == MENU_CREDITS)
-		data->status = GAME;
+	{
+		data->status = CREDITS_SCREEN;
+		render_credits_screen(data);
+	}
 }
 
+/*
+** Handle key inputs on main menu screen
+** Up/Down: navigate menu, Enter: select option, Escape: exit game
+*/
 int	handle_main_menu_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Up || keycode == XK_w)
@@ -39,6 +54,10 @@ int	handle_main_menu_keys(int keycode, t_cub3d *data)
 	return (0);
 }
 
+/*
+** Change difficulty selection (cycle through easy/medium/hard)
+** Updates difficulty choice and re-renders difficulty menu
+*/
 static void	change_difficulty(t_cub3d *data, int direction)
 {
 	data->menu.difficulty_choice += direction;
@@ -49,6 +68,10 @@ static void	change_difficulty(t_cub3d *data, int direction)
 	render_difficulty_menu(data);
 }
 
+/*
+** Handle key inputs on difficulty selection screen
+** Up/Down: cycle difficulty, Enter: start game, Escape: back to main menu
+*/
 int	handle_difficulty_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Up || keycode == XK_w)
@@ -66,44 +89,17 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 	return (0);
 }
 
-int	handle_credits_keys(int keycode, t_cub3d *data)
+/*
+** Handle key inputs on credits screen
+** Escape: back to main menu
+*/
+int	handle_credits_screen_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape)
 	{
-		if (data->menu.options.resolution_confirm_active)
-		{
-			data->menu.options.resolution_confirm_active = 0;
-			render_credits(data);
-			return (0);
-		}
 		data->menu.menu_choice = MENU_START;
 		data->status = MAIN_MENU_SCREEN;
-		data->menu.options.section = SECTION_SOUND;
 		render_main_menu(data);
 	}
-	else if (keycode == XK_Return)
-		handle_enter_key(data);
-	else if (keycode == XK_Tab)
-	{
-		data->menu.options.section = (data->menu.options.section + 1) % SECTION_COUNT;
-		render_credits(data);
-	}
-	else if (keycode == XK_Left || keycode == XK_a
-		|| keycode == XK_Right || keycode == XK_d)
-		handle_horizontal_keys(keycode, data);
-	else if (keycode == XK_Up || keycode == XK_w
-		|| keycode == XK_Down || keycode == XK_s)
-		handle_vertical_keys(keycode, data);
-	return (0);
-}
-
-int	menu_key_handler(int keycode, t_cub3d *data)
-{
-	if (data->status == MAIN_MENU_SCREEN)
-		return (handle_main_menu_keys(keycode, data));
-	else if (data->status == DIFFICULTY_SCREEN)
-		return (handle_difficulty_keys(keycode, data));
-	else if (data->status == CREDITS)
-		return (handle_credits_keys(keycode, data));
 	return (0);
 }

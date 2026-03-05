@@ -106,7 +106,8 @@ typedef enum e_status
 	DIFF_HARD,
 	SKIN_SELECT,
 	GAME,
-	CREDITS,
+	OPTIONS_SCREEN,
+	CREDITS_SCREEN,
 }				t_status;
 
 typedef enum e_options_section
