@@ -130,6 +130,12 @@ void	store_door_positions(t_cub3d *data);
 int		is_door_open(t_cub3d *data, int x, int y);
 void	toggle_door(t_cub3d *data);
 
+//			BUTTONS				//
+void	init_buttons(t_cub3d *data);
+void	store_button_positions(t_cub3d *data);
+int		is_button(t_cub3d *data, int x, int y);
+void	activate_button(t_cub3d *data);
+
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
 void	exit_error(t_cub3d *data, char *message);

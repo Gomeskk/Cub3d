@@ -36,6 +36,13 @@ typedef struct s_door
 	int		is_open;
 }				t_door;
 
+typedef struct s_button
+{
+	int		x;
+	int		y;
+	int		is_activated;
+}				t_button;
+
 typedef struct s_map
 {
 	char		**map;
@@ -46,6 +53,8 @@ typedef struct s_map
 	int			start_point;
 	t_door		*doors;
 	int			door_count;
+	t_button	*buttons;
+	int			button_count;
 }				t_map;
 
 typedef struct s_player
@@ -125,6 +134,8 @@ typedef	struct s_textures
 	char		*so;
 	char		*we;
 	char		*ea;
+	char		*button;
+	char		*alt_texture;
 }				t_textures;
 
 typedef struct s_wall_textures
@@ -134,6 +145,12 @@ typedef struct s_wall_textures
 	t_img		east;
 	t_img		west;
 	t_img		door;
+	t_img		button;
+	t_img		alt_north;
+	t_img		alt_south;
+	t_img		alt_east;
+	t_img		alt_west;
+	int			textures_swapped;
 }				t_wall_textures;
 
 typedef struct s_ray
@@ -153,6 +170,7 @@ typedef struct s_ray
 	int hit;               // was there a wall hit?
 	int side;              // was it a NS or EW wall hit? (0=NS, 1=EW)
 	int hit_door;          // did we hit a door?
+	int hit_button;        // did we hit a button?
 	int line_height;       // height of line to draw on screen
 	int draw_start;        // lowest pixel to fill
 	int draw_end;          // highest pixel to fill

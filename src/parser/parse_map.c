@@ -106,6 +106,10 @@ int	parse_map(t_cub3d *data)
 	init_doors(data);
 	if (data->map.doors)
 		store_door_positions(data);
+	// Initialize buttons after map is validated
+	init_buttons(data);
+	if (data->map.buttons)
+		store_button_positions(data);
 	
 	return (1);
 }

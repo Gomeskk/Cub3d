@@ -32,12 +32,26 @@ int	load_wall_textures(t_cub3d *data)
 	if (!load_single_texture(data->mlx, &data->wall_textures.door,
 			"Png_images/Walls/Door.xpm"))
 		return (0);
+	// Load button texture - using Door.xpm temporarily for visibility
+	if (!load_single_texture(data->mlx, &data->wall_textures.button,
+			"Png_images/Walls/Door.xpm"))
+		return (0);
+	// Load alternate texture for button activation
+	if (!load_single_texture(data->mlx, &data->wall_textures.alt_north,
+			data->textures.we))
+		return (0);
+	// Initialize swap flag
+	data->wall_textures.textures_swapped = 0;
 	return (1);
 }
 
 // Select the appropriate texture based on wall direction
 static t_img	*select_wall_texture(t_cub3d *data, t_ray *ray)
 {
+	// BUTTON CHECK: If ray hit a button, use button texture
+	if (ray->hit_button)
+		return (&data->wall_textures.button);
+	
 	// DOOR CHECK: If ray hit a door, use door texture regardless of direction
 	if (ray->hit_door)
 		return (&data->wall_textures.door);

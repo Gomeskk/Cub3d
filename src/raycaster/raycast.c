@@ -29,8 +29,9 @@ void init_ray(t_cub3d *data, t_ray *ray, int screen_x)
 {
     // Calculate camera X coordinate (-1 to 1)
     ray->camera_x = 2 * screen_x / (double)data->current_width - 1;
-    // Initialize door hit flag (set to 1 if ray hits closed door)
+    // Initialize door and button hit flags
     ray->hit_door = 0;
+    ray->hit_button = 0;
     
     // Calculate ray direction using player direction + camera plane
     // This creates FOV effect by interpolating across the plane
@@ -127,6 +128,14 @@ void perform_dda(t_cub3d *data, t_ray *ray)
                 ray->hit = 1;         // Stop ray here
                 ray->hit_door = 1;    // Mark as door hit for texture selection
             }
+        }
+        
+        // BUTTON DETECTION: Check if ray has hit a button
+        // Buttons are always visible and block like walls
+        if (data->map.grid[ray->map_y][ray->map_x] == 'B')
+        {
+            ray->hit = 1;          // Stop ray here
+            ray->hit_button = 1;   // Mark as button hit for texture selection
         }
     }
     

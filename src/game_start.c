@@ -48,7 +48,11 @@ static int	render_game(t_cub3d *data)
 		// Door toggle with debounce - only trigger on press, not hold
 		// Prevents rapid open/close when key is held down
 		if (data->keys.e && !last_e_state)
+		{
 			toggle_door(data);
+			// Also check for button activation
+			activate_button(data);
+		}
 		last_e_state = data->keys.e;
 		
 		// Update player physics and position

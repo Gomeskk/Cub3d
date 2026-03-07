@@ -17,6 +17,8 @@ void    init_data(t_cub3d *data)
 	ft_bzero(data, sizeof(t_cub3d));
 	data->textures.floor = -1;
 	data->textures.ceiling = -1;
+	data->textures.button = NULL;
+	data->textures.alt_texture = NULL;
 }
 
 void	init_player_direction(t_cub3d *data, char spawn)
