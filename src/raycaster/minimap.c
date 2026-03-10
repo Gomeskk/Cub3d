@@ -59,22 +59,30 @@ static void	draw_map_tiles(t_cub3d *data, int params[2])
 
 static void	draw_player_on_map(t_cub3d *data, int params[3])
 {
-	int		px;
-	int		py;
+	int		pos[2];
 	int		i;
-	double	map_scale;
+	int		edge[4];
+	int		j;
+	double	t;
 
-	map_scale = (double)params[2] / 1000.0;
-	px = params[1] + (int)(data->player.pos_x * map_scale);
-	py = params[1] + (int)(data->player.pos_y * map_scale);
-	put_player_dot(&data->img, px, py, 3, 0xFF0000);
-	i = 0;
-	while (i <= params[0])
+	pos[0] = params[1] + (int)(data->player.pos_x * params[2] / 1000.0);
+	pos[1] = params[1] + (int)(data->player.pos_y * params[2] / 1000.0);
+	i = -1;
+	while (++i <= params[0])
 	{
-		pixel_put(&data->img, px + (int)(data->player.dir_x * i),
-			py + (int)(data->player.dir_y * i), 0x00FF00);
-		i++;
+		edge[0] = pos[0] + (int)((data->player.dir_x - data->player.plane_x) * i);
+		edge[1] = pos[1] + (int)((data->player.dir_y - data->player.plane_y) * i);
+		edge[2] = pos[0] + (int)((data->player.dir_x + data->player.plane_x) * i);
+		edge[3] = pos[1] + (int)((data->player.dir_y + data->player.plane_y) * i);
+		j = -1;
+		while (++j <= 20)
+		{
+			t = j / 20.0;
+			pixel_put(&data->img, edge[0] + (int)((edge[2] - edge[0]) * t),
+				edge[1] + (int)((edge[3] - edge[1]) * t), 0xdb6cea);
+		}
 	}
+	put_player_dot(&data->img, pos[0], pos[1], 3, 0xFF0000);
 }
 
 void	render_minimap(t_cub3d *data)
