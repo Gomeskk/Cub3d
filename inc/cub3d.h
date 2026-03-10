@@ -95,6 +95,7 @@ int 	has_space_neighbor(char **g, int r, int c);
 //			2DGAME			//
 void	pixel_put(t_img *img, int x, int y, int color);
 void	draw_minimap(t_cub3d *data);
+void	render_minimap(t_cub3d *data);
 void	draw_direction_line(t_img *img, t_cub3d *data, int color);
 void	put_color_tile(t_img *screen, int pos_x, int pos_y, int color, int tile);
 

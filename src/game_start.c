@@ -63,6 +63,8 @@ static int	render_game(t_cub3d *data)
 		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
 		// Render 3D view
 		raycast_render(data);
+		// Draw minimap overlay in top-left corner
+		render_minimap(data);
 		// Display rendered frame
 		mlx_clear_window(data->mlx, data->window);
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
