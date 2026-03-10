@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 15:16:19 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/10 22:36:18 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,14 @@ void	reattach_hooks(t_cub3d *data)
 	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);
 	mlx_hook(data->window, 3, 1L << 1, unified_key_release, data);
 	mlx_hook(data->window, 17, 0, x_window, data);
+	printf("[DEBUG] About to attach mouse_moved hook (event 6, mask 0x%lx)\n", 1L << 6);
 	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
 	mlx_loop_hook(data->mlx, unified_loop, data);
+	// CRITICAL: Call mlx_int_set_win_event_mask to apply the hook masks to X11
+	// This function collects all hook masks and applies them to the window
+	// Normally only called by mlx_loop at startup, but we need it after window recreation
+	mlx_int_set_win_event_mask(data->mlx);
+	// Force X11 to process the hook registrations
+	mlx_do_sync(data->mlx);
 }
 

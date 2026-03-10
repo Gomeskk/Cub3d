@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 16:04:38 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/10 22:37:05 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void rotate_player(t_cub3d *data, double angle)
     data->player.plane_x = old_planex * cos(angle) - data->player.plane_y * sin(angle);
     data->player.plane_y = old_planex * sin(angle) + data->player.plane_y * cos(angle);
 }
+
+#include <unistd.h>
+#include <stdio.h>
 
 // Continuous rotation based on mouse distance from center
 void update_mouse_rotation(t_cub3d *data, double dt)
@@ -81,7 +84,12 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     if (distance_from_center_x != 0.0 || distance_from_center_y != 0.0)
     {
         mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
+        write(1, "\033[1;1H", 7);
+    write(1, "\033[2J", 7);
+    printf("Mouse moved:\nx=%d, y=%d\ndistance_x=%.2f, distance_y=%.2f\nrotation_speed=%.4f, pitch_speed=%.4f\n",
+           data->mouse.x, data->mouse.y, distance_from_center_x, distance_from_center_y, rotation_speed, pitch_speed);
     }
+    
 }
 
 //mouse motion event handler - tracks position only

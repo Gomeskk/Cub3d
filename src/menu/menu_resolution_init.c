@@ -11,6 +11,9 @@ int	create_new_window(t_cub3d *data, int width, int height)
 	data->window = mlx_new_window(data->mlx, width, height, "Cub3D");
 	if (!data->window)
 		return (0);
+	// Force X11 to process all pending requests
+	mlx_do_sync(data->mlx);
+	
 	// Update global dimension tracking
 	data->current_width = width;
 	data->current_height = height;
