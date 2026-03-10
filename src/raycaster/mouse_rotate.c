@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/10 22:37:05 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/10 23:07:15 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,10 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     double distance_from_center_y;
     double rotation_speed;
     double pitch_speed;
-    double sensitivity_scale;
-    double max_pitch_scaled;
     double sensibility_mult;
     
     // Get menu sensibility multiplier (0.5x to 2.0x)
     sensibility_mult = get_sensibility_multiplier(data->menu.options.sensibility_level);
-    
-    // Scale sensitivity to maintain consistent feel across resolutions
-    // Standard resolution is 1920x1080 (RES_4)
-    sensitivity_scale = (double)data->current_width / (double)RES_4_WIDTH;
     
     // Calculate horizontal distance from center (left/right rotation)
     distance_from_center_x = (double)(data->mouse.x - data->mouse.cx);
@@ -58,26 +52,24 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     distance_from_center_y = (double)(data->mouse.y - data->mouse.cy);
     
     // Handle horizontal rotation (yaw)
+    // No resolution scaling - same pixel movement = same rotation at any resolution
     if (distance_from_center_x != 0.0)
     {
-        rotation_speed = distance_from_center_x * MOUSE_SENSITIVITY * sensitivity_scale * sensibility_mult * dt;
+        rotation_speed = distance_from_center_x * MOUSE_SENSITIVITY * sensibility_mult * dt;
         rotate_player(data, rotation_speed);
     }
     
     // Handle vertical pitch (looking up/down)
     if (distance_from_center_y != 0.0)
     {
-        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensitivity_scale * sensibility_mult * dt * 1000.0; // Scale for pixel offset
+        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensibility_mult * dt * 1000.0; // Scale for pixel offset
         data->player.pitch += pitch_speed;
         
-        // Scale MAX_PITCH based on current resolution height
-        max_pitch_scaled = MAX_PITCH * ((double)data->current_height / (double)RES_4_HEIGHT);
-        
-        // Constrain pitch to prevent over-rotation
-        if (data->player.pitch > max_pitch_scaled)
-            data->player.pitch = max_pitch_scaled;
-        if (data->player.pitch < -max_pitch_scaled)
-            data->player.pitch = -max_pitch_scaled;
+        // Constrain pitch to prevent over-rotation (same limit at all resolutions)
+        if (data->player.pitch > MAX_PITCH)
+            data->player.pitch = MAX_PITCH;
+        if (data->player.pitch < -MAX_PITCH)
+            data->player.pitch = -MAX_PITCH;
     }
     
     // Reset mouse to center if it moved

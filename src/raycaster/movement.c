@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 16:43:45 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/10 22:50:58 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ static int	check_collision_range(t_cub3d *data, double cx, double cy, int start_
 		{
 			// Check wall tile first (cheaper than intersection calc)
 			if (data->map.grid[row][col] == '1')
+			{
+				if (circle_intersects_rectangle(data, cx, cy, row, col))
+					return (1);
+			}
+			// BUTTON COLLISION: Buttons are solid walls with interactive functionality
+			// Player cannot walk through buttons, but can activate them with 'E' key
+			if (data->map.grid[row][col] == 'B')
 			{
 				if (circle_intersects_rectangle(data, cx, cy, row, col))
 					return (1);
