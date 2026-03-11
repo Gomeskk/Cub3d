@@ -76,10 +76,6 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     if (distance_from_center_x != 0.0 || distance_from_center_y != 0.0)
     {
         mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
-        write(1, "\033[1;1H", 7);
-    write(1, "\033[2J", 7);
-    printf("Mouse moved:\nx=%d, y=%d\ndistance_x=%.2f, distance_y=%.2f\nrotation_speed=%.4f, pitch_speed=%.4f\n",
-           data->mouse.x, data->mouse.y, distance_from_center_x, distance_from_center_y, rotation_speed, pitch_speed);
     }
     
 }

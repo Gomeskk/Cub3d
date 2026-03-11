@@ -54,12 +54,15 @@ static void	handle_throttled_vertical_key(t_cub3d *data, int key,
 static void	handle_throttled_horizontal_key(t_cub3d *data, int key,
 				long current_time, long *last_time)
 {
-	if (data->status != OPTIONS_SCREEN)
+	if (data->status != OPTIONS_SCREEN && data->status != SKIN_SELECT)
 		return ;
 	if (current_time - *last_time < KEY_THROTTLE_MS)
 		return ;
 	*last_time = current_time;
-	handle_options_screen_keys(key, data);
+	if (data->status == OPTIONS_SCREEN)
+		handle_options_screen_keys(key, data);
+	else if (data->status == SKIN_SELECT)
+		handle_skin_select_keys(key, data);
 }
 
 int	menu_loop_handler(t_cub3d *data)

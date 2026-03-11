@@ -152,6 +152,7 @@ void	cleanup_menu(t_cub3d *data);
 int		load_xpm_with_data(void *mlx, t_menu_img *img, char *path);
 int		init_start_game_images(t_cub3d *data);
 int		init_difficulty_images(t_cub3d *data);
+int		init_skin_select_images(t_cub3d *data);
 int		init_options_images(t_cub3d *data);
 // menu_images_arrays.c
 int		load_image_array(void *mlx, t_menu_img *imgs,
@@ -162,6 +163,7 @@ int		init_resolution_images(t_cub3d *data);
 // menu_navigation.c
 int		handle_main_menu_keys(int keycode, t_cub3d *data);
 int		handle_difficulty_keys(int keycode, t_cub3d *data);
+int		handle_skin_select_keys(int keycode, t_cub3d *data);
 int		handle_credits_screen_keys(int keycode, t_cub3d *data);
 // menu_navigation_options.c
 int		menu_key_handler(int keycode, t_cub3d *data);
@@ -189,6 +191,7 @@ int		menu_loop_handler(t_cub3d *data);
 // menu_render.c
 void	render_main_menu(t_cub3d *data);
 void	render_difficulty_menu(t_cub3d *data);
+void	render_skin_select(t_cub3d *data);
 void	render_credits_screen(t_cub3d *data);
 void	render_volume_sensibility(t_cub3d *data, float scale);
 // menu_render_options.c

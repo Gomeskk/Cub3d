@@ -24,7 +24,7 @@ int	init_start_game_images(t_cub3d *data)
 			"Png_images/StartGame/Credits.xpm") == -1)
 		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.credits_screen,
-			"Png_images/Difficulty/Easy.xpm") == -1)
+			"Png_images/Credits/Credits.xpm") == -1)
 		return (-1);
 	return (0);
 }
@@ -39,6 +39,20 @@ int	init_difficulty_images(t_cub3d *data)
 		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.difficulty.hard,
 			"Png_images/Difficulty/Hard.xpm") == -1)
+		return (-1);
+	return (0);
+}
+
+int	init_skin_select_images(t_cub3d *data)
+{
+	if (load_xpm_with_data(data->mlx, &data->menu.screens.skin_select,
+			"Png_images/SkinSelection/SkinSelect.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.screens.arrow_left,
+			"Png_images/SkinSelection/ArrowLeft.xpm") == -1)
+		return (-1);
+	if (load_xpm_with_data(data->mlx, &data->menu.screens.arrow_right,
+			"Png_images/SkinSelection/ArrowRight.xpm") == -1)
 		return (-1);
 	return (0);
 }

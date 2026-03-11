@@ -10,6 +10,8 @@ int	menu_key_handler(int keycode, t_cub3d *data)
 		return (handle_main_menu_keys(keycode, data));
 	else if (data->status == DIFFICULTY_SCREEN)
 		return (handle_difficulty_keys(keycode, data));
+	else if (data->status == SKIN_SELECT)
+		return (handle_skin_select_keys(keycode, data));
 	else if (data->status == OPTIONS_SCREEN)
 		return (handle_options_screen_keys(keycode, data));
 	else if (data->status == CREDITS_SCREEN)

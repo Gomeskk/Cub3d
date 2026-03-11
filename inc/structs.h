@@ -194,6 +194,9 @@ typedef struct s_menu_screens
 	t_menu_img	screen_buffer;
 	t_menu_img	arrow_up;
 	t_menu_img	arrow_down;
+	t_menu_img	skin_select;
+	t_menu_img	arrow_left;
+	t_menu_img	arrow_right;
 }				t_menu_screens;
 
 typedef struct s_difficulty_imgs
@@ -236,6 +239,8 @@ typedef struct s_menu
 	t_options_state		options;
 	int					menu_choice;
 	int					difficulty_choice;
+	int					skin_choice;
+	int					last_skin_arrow_direction;
 }				t_menu;
 
 typedef struct s_game_settings

@@ -54,6 +54,29 @@ void	render_difficulty_menu(t_cub3d *data)
 }
 
 /*
+** Render skin selection screen
+** Shows base skin image with arrow overlay (left or right) on top
+*/
+void	render_skin_select(t_cub3d *data)
+{
+	float	scale;
+
+	scale = get_scale(data);
+	// Always render base skin selection screen first
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+		data->menu.screens.skin_select, 0, 0, scale);
+	// Overlay arrow on top: left arrow or right arrow
+	if (data->menu.last_skin_arrow_direction == -1)
+		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+			data->menu.screens.arrow_left, 0, 0, scale);
+	else
+		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+			data->menu.screens.arrow_right, 0, 0, scale);
+	mlx_put_image_to_window(data->mlx, data->window,
+		data->menu.screens.screen_buffer.image, 0, 0);
+}
+
+/*
 ** Render volume and sensibility level indicators
 ** Positions scaled images at specific coordinates on screen
 */

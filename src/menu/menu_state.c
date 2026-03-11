@@ -14,6 +14,8 @@ int	init_menu_images(t_cub3d *data)
 		return (-1);
 	if (init_difficulty_images(data) == -1)
 		return (-1);
+	if (init_skin_select_images(data) == -1)
+		return (-1);
 	if (init_options_images(data) == -1)
 		return (-1);
 	// Create compositing buffer (all menus drawn here first)
@@ -35,6 +37,8 @@ void	init_menu_state(t_cub3d *data)
 {
 	data->menu.menu_choice = MENU_START;
 	data->menu.difficulty_choice = DIFF_MEDIUM;
+	data->menu.skin_choice = 0;
+	data->menu.last_skin_arrow_direction = 1;
 	data->menu.options.sensibility_level = SENSIBILITY_DEFAULT;
 	data->menu.options.volume_level = VOLUME_DEFAULT;
 	data->menu.options.resolution_level = RESOLUTION_DEFAULT;
