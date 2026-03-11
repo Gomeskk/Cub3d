@@ -204,6 +204,9 @@ void	player_movement(t_cub3d *data, double dt)
 	current_speed = data->player.speed;
 	if (data->keys.shift)
 		current_speed *= SPRINT_MULTIPLIER;
+	// Apply crouch multiplier when Ctrl is held (overrides sprint)
+	if (data->keys.ctrl)
+		current_speed = data->player.speed * CROUCH_MULTIPLIER;
 	
 	move_distance = current_speed * dt;
 	new_x = data->player.pos_x + direction_x * move_distance;

@@ -106,6 +106,7 @@ void	init_game(t_cub3d *data)
 	data->keys.space = 0;
 	data->keys.v = 0;
 	data->keys.e = 0;
+	data->keys.tab = 0;
 	data->keys.arrow_up = 0;
 	data->keys.arrow_down = 0;
 	data->keys.arrow_left = 0;
@@ -118,6 +119,7 @@ void	init_game(t_cub3d *data)
 	data->player.z_offset = 0.0;  // Initialize on ground
 	data->player.vertical_velocity = 0.0;  // Initialize with no vertical movement
 	data->player.is_jumping = 0;  // Initialize on ground
+	data->player.minimap_visible = 1;  // Initialize minimap visible
 	data->player.fov_level = 0;  // Start with normal FOV
 	init_player_direction(data, data->player.spawn_dir);
 	mlx_mouse_hide(data->mlx, data->window);

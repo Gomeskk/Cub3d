@@ -75,6 +75,7 @@ typedef struct s_player
 	double	vertical_velocity; // current upward/downward velocity
 	int		is_jumping; // 1 if in air, 0 if on ground
 	int		fov_level; // 0=normal, 1=narrow, 2=wide
+	int		minimap_visible; // 1 if minimap shown, 0 if hidden
 	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
 
@@ -85,9 +86,11 @@ typedef struct s_keys
 	int			s;
 	int			d;
 	int			shift;
+	int			ctrl;
 	int			space;
 	int			v;
 	int			e;
+	int			tab;
 	int			arrow_up;
 	int			arrow_down;
 	int			arrow_left;

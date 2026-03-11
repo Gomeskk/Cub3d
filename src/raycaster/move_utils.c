@@ -26,12 +26,16 @@ int	key_pressed(int keycode, t_cub3d *data)
 		data->keys.d = 1;
 	if (keycode == XK_Shift_L || keycode == XK_Shift_R)
 		data->keys.shift = 1;
+	if (keycode == XK_Control_L || keycode == XK_Control_R)
+		data->keys.ctrl = 1;
 	if (keycode == XK_space)
 		data->keys.space = 1;
 	if (keycode == XK_v)
 		data->keys.v = 1;
 	if (keycode == XK_e)
 		data->keys.e = 1;
+	if (keycode == XK_Tab)
+		data->keys.tab = 1;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 1;
 	if (keycode == XK_Down)
@@ -55,12 +59,16 @@ int	key_released(int keycode, t_cub3d *data)
 		data->keys.d = 0;
 	if (keycode == XK_Shift_L || keycode == XK_Shift_R)
 		data->keys.shift = 0;
+	if (keycode == XK_Control_L || keycode == XK_Control_R)
+		data->keys.ctrl = 0;
 	if (keycode == XK_space)
 		data->keys.space = 0;
 	if (keycode == XK_v)
 		data->keys.v = 0;
 	if (keycode == XK_e)
 		data->keys.e = 0;
+	if (keycode == XK_Tab)
+		data->keys.tab = 0;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 0;
 	if (keycode == XK_Down)

@@ -35,6 +35,7 @@ static int	render_game(t_cub3d *data)
 	static double	time;
 	static int		last_v_state = 0;
 	static int		last_e_state = 0;
+	static int		last_tab_state = 0;
 	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
@@ -55,6 +56,11 @@ static int	render_game(t_cub3d *data)
 		}
 		last_e_state = data->keys.e;
 		
+		// Minimap toggle with debounce - only trigger on press, not hold
+		if (data->keys.tab && !last_tab_state)
+			data->player.minimap_visible = !data->player.minimap_visible;
+		last_tab_state = data->keys.tab;
+		
 		// Update player physics and position
 		player_movement(data, time);
 		player_jump(data, time);
@@ -63,8 +69,9 @@ static int	render_game(t_cub3d *data)
 		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
 		// Render 3D view
 		raycast_render(data);
-		// Draw minimap overlay in top-left corner
-		render_minimap(data);
+		// Draw minimap overlay in top-left corner (if visible)
+		if (data->player.minimap_visible)
+			render_minimap(data);
 		// Display rendered frame
 		mlx_clear_window(data->mlx, data->window);
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
