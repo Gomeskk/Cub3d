@@ -62,6 +62,9 @@ int	create_game_image(t_cub3d *data, int width, int height)
 	// Store dimensions
 	data->img.width = width;
 	data->img.height = height;
+	// Reallocate z_buffer for new resolution width
+	free(data->z_buffer);
+	data->z_buffer = malloc(sizeof(double) * width);
 	return (1);
 }
 

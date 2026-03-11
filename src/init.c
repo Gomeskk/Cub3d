@@ -19,6 +19,8 @@ void    init_data(t_cub3d *data)
 	data->textures.ceiling = -1;
 	data->textures.button = NULL;
 	data->textures.alt_texture = NULL;
+	data->game_settings.enemy_speed_mult = 1.0;
+	data->game_settings.enemy_damage_mult = 1.0;
 }
 
 void	init_player_direction(t_cub3d *data, char spawn)
@@ -90,6 +92,20 @@ void	init_game(t_cub3d *data)
 	if (!load_wall_textures(data))
 		exit_error(data, "Failed to load wall textures");
 	
+	// Allocate z_buffer for sprite rendering
+	data->z_buffer = malloc(sizeof(double) * WIDTH);
+	if (!data->z_buffer)
+		exit_error(data, "Failed to allocate z_buffer");
+
+	// Load enemy texture
+	data->enemy_texture.image = mlx_xpm_file_to_image(data->mlx,
+			"Png_images/Enemys/enemy.xpm",
+			&data->enemy_texture.width, &data->enemy_texture.height);
+	if (data->enemy_texture.image)
+		data->enemy_texture.data = mlx_get_data_addr(data->enemy_texture.image,
+				&data->enemy_texture.bpp, &data->enemy_texture.size_line,
+				&data->enemy_texture.type);
+
 	data->tile = get_tile_size(data);
 	printf("tile -> %i\n", data->tile);
 	printf("x -> %f    y -> %f\n", data->player.pos_x, data->player.pos_y);
@@ -122,5 +138,17 @@ void	init_game(t_cub3d *data)
 	data->player.minimap_visible = 1;  // Initialize minimap visible
 	data->player.fov_level = 0;  // Start with normal FOV
 	init_player_direction(data, data->player.spawn_dir);
+	// Initialize enemy pixel positions from grid positions
+	{
+		int ei = 0;
+		while (ei < data->map.enemy_count)
+		{
+			data->map.enemies[ei].pos_x = data->map.enemies[ei].grid_x
+				* data->tile + data->tile / 2.0;
+			data->map.enemies[ei].pos_y = data->map.enemies[ei].grid_y
+				* data->tile + data->tile / 2.0;
+			ei++;
+		}
+	}
 	mlx_mouse_hide(data->mlx, data->window);
 }

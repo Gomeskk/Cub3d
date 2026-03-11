@@ -28,6 +28,12 @@ void	free_all(t_cub3d *data)
 		free_ar((void **)data->map.grid);
 	if (data->map.doors)
 		free(data->map.doors);
+	if (data->map.enemies)
+		free(data->map.enemies);
+	if (data->z_buffer)
+		free(data->z_buffer);
+	if (data->enemy_texture.image)
+		mlx_destroy_image(data->mlx, data->enemy_texture.image);
 	if (data->img.image)
 		mlx_destroy_image(data->mlx, data->img.image);
 	if (data->window)

@@ -110,6 +110,10 @@ int	parse_map(t_cub3d *data)
 	init_buttons(data);
 	if (data->map.buttons)
 		store_button_positions(data);
+	// Initialize enemies after map is validated
+	init_enemies(data);
+	if (data->map.enemies)
+		store_enemy_positions(data);
 	
 	return (1);
 }

@@ -64,6 +64,11 @@ static int	render_game(t_cub3d *data)
 		// Update player physics and position
 		player_movement(data, time);
 		player_jump(data, time);
+		// Update enemy patrol and check detection
+		update_enemies(data, time);
+		check_enemy_detection(data);
+		if (check_enemy_collision(data))
+			exit_game("An enemy caught you! Game Over!", data);
 		// Handle rotation from both mouse and keyboard
 		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
 		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys

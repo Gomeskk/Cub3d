@@ -34,6 +34,8 @@ typedef struct s_cub3d
 	t_img			img;
 	t_textures		textures;
 	t_wall_textures	wall_textures;
+	t_img			enemy_texture;
+	double			*z_buffer;
 	t_status		status;
 	t_tiles			tiles;
 	t_map			map;
@@ -136,6 +138,14 @@ void	init_buttons(t_cub3d *data);
 void	store_button_positions(t_cub3d *data);
 int		is_button(t_cub3d *data, int x, int y);
 void	activate_button(t_cub3d *data);
+
+//			ENEMIES				//
+void	init_enemies(t_cub3d *data);
+void	store_enemy_positions(t_cub3d *data);
+void	update_enemies(t_cub3d *data, double dt);
+void	check_enemy_detection(t_cub3d *data);
+int		check_enemy_collision(t_cub3d *data);
+void	render_enemies(t_cub3d *data);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
