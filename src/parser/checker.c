@@ -52,7 +52,8 @@ int	is_closed(t_cub3d *data)
 		while (x < data->map.col_count)
 		{
 			if (data->map.grid[y][x] == '0' || data->map.grid[y][x] == 'N' || data->map.grid[y][x] == 'S'
-				|| data->map.grid[y][x] == 'E' || data->map.grid[y][x] == 'W')
+				|| data->map.grid[y][x] == 'E' || data->map.grid[y][x] == 'W'
+				|| data->map.grid[y][x] == 'F')
 			{
 				if (y == 0 || y == data->map.row_count - 1 || x == 0 || x == data->map.col_count - 1)
 					return (ft_putendl_fd(NO_CLOSED, 2), exit_error(data, EXAMPLE), 0);

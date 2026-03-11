@@ -21,8 +21,11 @@ void raycast_render(t_cub3d *data)
         init_ray(data, &data->ray, x);
         perform_dda(data, &data->ray);
         draw_wall_column(data, &data->ray, x);
+        if (data->z_buffer)
+            data->z_buffer[x] = data->ray.perp_wall_dist;
         x++;
     }
+    render_enemies(data);
 }
 
 void init_ray(t_cub3d *data, t_ray *ray, int screen_x)

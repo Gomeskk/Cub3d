@@ -18,6 +18,12 @@
 # define FOV_WIDE 0.90  // Zoomed out (wide FOV)
 # define M_PI           3.14159265358979323846  /* pi */
 
+///          ENEMY SETTINGS          ///
+# define ENEMY_SPEED_BASE 60.0 // podes usar
+# define ENEMY_VISION_RADIUS 3.0 // podes usar
+# define ENEMY_CHASE_SPEED_MULT 2.5 // podes usar 
+# define ENEMY_COLLISION_RADIUS 0.3
+
 
 ///          MENU SETTINGS          ///
 # define KEY_THROTTLE_MS 200

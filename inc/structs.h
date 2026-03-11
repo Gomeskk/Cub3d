@@ -43,6 +43,20 @@ typedef struct s_button
 	int		is_activated;
 }				t_button;
 
+typedef struct s_enemy
+{
+	double	pos_x;
+	double	pos_y;
+	int		grid_x;
+	int		grid_y;
+	double	dir;
+	double	patrol_min;
+	double	patrol_max;
+	double	speed;
+	double	vision_radius;
+	int		chasing;
+}				t_enemy;
+
 typedef struct s_map
 {
 	char		**map;
@@ -55,6 +69,8 @@ typedef struct s_map
 	int			door_count;
 	t_button	*buttons;
 	int			button_count;
+	t_enemy		*enemies;
+	int			enemy_count;
 }				t_map;
 
 typedef struct s_player
@@ -77,6 +93,23 @@ typedef struct s_player
 	int		fov_level; // 0=normal, 1=narrow, 2=wide
 	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
+
+typedef struct s_sprite_calc
+{
+	double	sx;
+	double	sy;
+	double	inv;
+	double	tx;
+	double	ty;
+	int		screen_x;
+	int		height;
+	int		width;
+	int		start_y;
+	int		end_y;
+	int		start_x;
+	int		end_x;
+	int		v_offset;
+}			t_sprite_calc;
 
 typedef struct s_keys
 {
