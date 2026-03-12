@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 00:48:16 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     double rotation_speed;
     double pitch_speed;
     double sensibility_mult;
+    
+    // Only rotate if mouse is locked
+    if (!data->mouse.locked)
+        return;
     
     // Get menu sensibility multiplier (0.5x to 2.0x)
     sensibility_mult = get_sensibility_multiplier(data->menu.options.sensibility_level);

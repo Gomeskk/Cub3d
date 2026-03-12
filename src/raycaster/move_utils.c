@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 15:16:19 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	key_pressed(int keycode, t_cub3d *data)
 		data->keys.e = 1;
 	if (keycode == XK_Tab)
 		data->keys.tab = 1;
+	if (keycode == XK_t)
+		data->keys.t = 1;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 1;
 	if (keycode == XK_Down)
@@ -69,6 +71,8 @@ int	key_released(int keycode, t_cub3d *data)
 		data->keys.e = 0;
 	if (keycode == XK_Tab)
 		data->keys.tab = 0;
+	if (keycode == XK_t)
+		data->keys.t = 0;
 	if (keycode == XK_Up)
 		data->keys.arrow_up = 0;
 	if (keycode == XK_Down)

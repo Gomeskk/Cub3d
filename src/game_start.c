@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 00:57:25 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	render_game(t_cub3d *data)
 	static int		last_v_state = 0;
 	static int		last_e_state = 0;
 	static int		last_tab_state = 0;
+	static int		last_t_state = 0;
 	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
@@ -60,6 +61,22 @@ static int	render_game(t_cub3d *data)
 		if (data->keys.tab && !last_tab_state)
 			data->player.minimap_visible = !data->player.minimap_visible;
 		last_tab_state = data->keys.tab;
+		
+		// Mouse lock toggle with debounce - only trigger on press, not hold
+		if (data->keys.t && !last_t_state)
+		{
+			data->mouse.locked = !data->mouse.locked;
+			if (data->mouse.locked)
+			{
+				mlx_mouse_hide(data->mlx, data->window);
+				mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
+				data->mouse.x = data->mouse.cx;
+				data->mouse.y = data->mouse.cy;
+			}
+			else
+				mlx_mouse_show(data->mlx, data->window);
+		}
+		last_t_state = data->keys.t;
 		
 		// Update player physics and position
 		player_movement(data, time);
@@ -120,6 +137,7 @@ static int	unified_loop(t_cub3d *data)
 		// Setup game cursor and mouse tracking
 		data->mouse.cx = data->current_width / 2; // Divide by 2 to get center of screen
 		data->mouse.cy = data->current_height / 2;// Divide by 2 to get center of screen
+		data->mouse.locked = 1; // Start with mouse locked in game
 		mlx_mouse_hide(data->mlx, data->window);
 		data->mouse.x = data->mouse.cx;
 		data->mouse.y = data->mouse.cy;

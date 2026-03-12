@@ -124,6 +124,7 @@ typedef struct s_keys
 	int			v;
 	int			e;
 	int			tab;
+	int			t;
 	int			arrow_up;
 	int			arrow_down;
 	int			arrow_left;
@@ -137,6 +138,7 @@ typedef struct s_mouse
 	int			cx;
 	int			cy;
 	int			ignore;
+	int			locked;
 } t_mouse; // mouse rotation
 
 typedef enum e_status
