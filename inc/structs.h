@@ -92,6 +92,7 @@ typedef struct s_player
 	int		is_jumping; // 1 if in air, 0 if on ground
 	int		fov_level; // 0=normal, 1=narrow, 2=wide
 	int		minimap_visible; // 1 if minimap shown, 0 if hidden
+	int		flashlight_on; // 1 if flashlight active, 0 if off
 	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
 
@@ -129,6 +130,7 @@ typedef struct s_keys
 	int			arrow_down;
 	int			arrow_left;
 	int			arrow_right;
+	int			f;
 }				t_keys;
 
 typedef struct s_mouse

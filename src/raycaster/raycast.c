@@ -26,6 +26,7 @@ void raycast_render(t_cub3d *data)
         x++;
     }
     render_enemies(data);
+    apply_flashlight(data);
 }
 
 void init_ray(t_cub3d *data, t_ray *ray, int screen_x)

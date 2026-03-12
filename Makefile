@@ -26,7 +26,7 @@ PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
 
-RAYC_SRCS		= draw.c movement.c move_utils.c mouse_rotate.c keyboard_rotate.c raycast.c texture.c texture_helper.c door.c button.c minimap.c enemy.c enemy_render.c
+RAYC_SRCS		= draw.c movement.c move_utils.c mouse_rotate.c keyboard_rotate.c raycast.c texture.c texture_helper.c door.c button.c minimap.c enemy.c enemy_render.c flashlight.c
 RAYC_DIR		= src/raycaster/
 RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
 

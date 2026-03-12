@@ -37,6 +37,7 @@ static int	render_game(t_cub3d *data)
 	static int		last_e_state = 0;
 	static int		last_tab_state = 0;
 	static int		last_t_state = 0;
+	static int		last_f_state = 0;
 	
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
@@ -77,6 +78,9 @@ static int	render_game(t_cub3d *data)
 				mlx_mouse_show(data->mlx, data->window);
 		}
 		last_t_state = data->keys.t;
+		if (data->keys.f && !last_f_state)
+			data->player.flashlight_on = !data->player.flashlight_on;
+		last_f_state = data->keys.f;
 		
 		// Update player physics and position
 		player_movement(data, time);

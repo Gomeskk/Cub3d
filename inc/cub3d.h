@@ -73,6 +73,7 @@ void	update_keyboard_rotation(t_cub3d *data, double dt);
 
 //        RAYCASTER		    //
 void	raycast_render(t_cub3d *data);
+void	apply_flashlight(t_cub3d *data);
 void	init_ray(t_cub3d *data, t_ray *ray, int screen_x);
 void	setup_dda(t_cub3d *data, t_ray *ray);
 void	perform_dda(t_cub3d *data, t_ray *ray);
