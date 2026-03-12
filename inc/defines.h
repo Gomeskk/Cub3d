@@ -20,7 +20,7 @@
 # define FOV_NORMAL 0.66  // Standard field of view
 # define FOV_NARROW 0.33  // Zoomed in (narrow FOV)
 # define FOV_WIDE 0.90  // Zoomed out (wide FOV)
-# define M_PI           3.14159265358979323846  /* pi */
+# define M_PI           3.14159265358979323846
 
 ///          ENEMY SETTINGS          ///
 # define ENEMY_SPEED_BASE 60.0 // podes usar
