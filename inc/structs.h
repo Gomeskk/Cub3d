@@ -186,6 +186,7 @@ typedef struct s_wall_textures
 	t_img		west;
 	t_img		door;
 	t_img		button;
+	t_img		alt_button;
 	t_img		alt_north;
 	t_img		alt_south;
 	t_img		alt_east;

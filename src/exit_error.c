@@ -3,14 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:14:59 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/12 16:09:34 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/12 22:44:54 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	destroy_wall_textures(t_cub3d *data)
+{
+	void	*images[11];
+	int		i;
+	int		j;
+	int		already_destroyed;
+
+	images[0] = data->wall_textures.north.image;
+	images[1] = data->wall_textures.south.image;
+	images[2] = data->wall_textures.east.image;
+	images[3] = data->wall_textures.west.image;
+	images[4] = data->wall_textures.door.image;
+	images[5] = data->wall_textures.button.image;
+	images[6] = data->wall_textures.alt_button.image;
+	images[7] = data->wall_textures.alt_north.image;
+	images[8] = data->wall_textures.alt_south.image;
+	images[9] = data->wall_textures.alt_east.image;
+	images[10] = data->wall_textures.alt_west.image;
+	i = 0;
+	while (i < 11)
+	{
+		already_destroyed = 0;
+		j = 0;
+		while (j < i)
+		{
+			if (images[i] && images[i] == images[j])
+			{
+				already_destroyed = 1;
+				break ;
+			}
+			j++;
+		}
+		if (images[i] && !already_destroyed)
+			mlx_destroy_image(data->mlx, images[i]);
+		i++;
+	}
+}
 
 void	free_all(t_cub3d *data)
 {
@@ -28,10 +66,14 @@ void	free_all(t_cub3d *data)
 		free_ar((void **)data->map.grid);
 	if (data->map.doors)
 		free(data->map.doors);
+	if (data->map.buttons)
+		free(data->map.buttons);
 	if (data->map.enemies)
 		free(data->map.enemies);
 	if (data->z_buffer)
 		free(data->z_buffer);
+	if (data->mlx)
+		destroy_wall_textures(data);
 	if (data->enemy_texture.image)
 		mlx_destroy_image(data->mlx, data->enemy_texture.image);
 	if (data->img.image)

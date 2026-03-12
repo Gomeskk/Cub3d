@@ -85,6 +85,8 @@ static void	swap_to_alternate(t_cub3d *data)
 	t_img			temp;
 
 	wt = &data->wall_textures;
+	if (wt->textures_swapped)
+		return ;
 	// Store the alternate texture (Wall_W.xpm)
 	temp = wt->alt_north;
 	// Save original textures to alt slots for potential restore
@@ -92,6 +94,7 @@ static void	swap_to_alternate(t_cub3d *data)
 	wt->alt_south = wt->south;
 	wt->alt_east = wt->east;
 	wt->alt_west = wt->west;
+	wt->alt_button = wt->button;
 	// Set all directions to use the alternate texture
 	wt->north = temp;
 	wt->south = temp;
