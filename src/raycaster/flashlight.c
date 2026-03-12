@@ -45,22 +45,29 @@ static double	get_brightness(t_cub3d *data, int x, int y)
 	return (1.0 - (1.0 - min_light) * dist2 * dist2);
 }
 
+static double	get_screen_brightness(t_cub3d *data, int x, int y)
+{
+	if (!data->player.flashlight_on)
+		return (FLASHLIGHT_MIN_LIGHT);
+	return (get_brightness(data, x, y));
+}
+
 void	apply_flashlight(t_cub3d *data)
 {
 	int	x;
 	int	y;
+	double	brightness;
 
-	if (!data->player.flashlight_on)
-		return ;
 	y = 0;
 	while (y < data->current_height)
 	{
 		x = 0;
 		while (x < data->current_width)
 		{
+			brightness = get_screen_brightness(data, x, y);
 			pixel_put(&data->img, x, y,
 				darken_pixel(get_pixel(&data->img, x, y),
-					get_brightness(data, x, y)));
+					brightness));
 			x++;
 		}
 		y++;
