@@ -45,6 +45,7 @@ typedef struct s_cub3d
 	t_menu			menu;
 	t_game_settings	game_settings;
 	t_ray			ray;
+	t_fps_counter	fps;
 }					t_cub3d;
 
 //			INIT			//
@@ -85,6 +86,11 @@ int		get_tile_size(t_cub3d *data);
 double	get_time_in_seconds(void);
 double	get_delta_time(void);
 void	clear_image(t_img *img, int color);
+
+//			FPS COUNTER		//
+void	init_fps_counter(t_fps_counter *fps);
+void	update_fps_counter(t_fps_counter *fps);
+void	render_fps(t_cub3d *data);
 
 //			MAP UTILS		//
 int		count_lines(char *map);
@@ -194,6 +200,7 @@ int		create_game_image(t_cub3d *data, int width, int height);
 void	update_resolution_settings(t_cub3d *data, int level, int w, int h);
 // menu_utils.c
 double	get_sensibility_multiplier(int level);
+void	apply_difficulty_settings(t_cub3d *data);
 // menu_input.c
 int		key_press_handler(int keycode, t_cub3d *data);
 int		key_release_handler(int keycode, t_cub3d *data);

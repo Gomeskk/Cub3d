@@ -19,8 +19,7 @@ void    init_data(t_cub3d *data)
 	data->textures.ceiling = -1;
 	data->textures.button = NULL;
 	data->textures.alt_texture = NULL;
-	data->game_settings.enemy_speed_mult = 1.0;
-	data->game_settings.enemy_damage_mult = 1.0;
+	data->game_settings.difficulty_mult = 1.0;
 }
 
 void	init_player_direction(t_cub3d *data, char spawn)
@@ -150,5 +149,6 @@ void	init_game(t_cub3d *data)
 			ei++;
 		}
 	}
+	init_fps_counter(&data->fps);
 	mlx_mouse_hide(data->mlx, data->window);
 }

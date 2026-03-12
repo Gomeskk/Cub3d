@@ -96,6 +96,9 @@ static int	render_game(t_cub3d *data)
 			render_minimap(data);
 		// Display rendered frame (no clear needed - image buffer already cleared in raycast_render)
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
+		// Update and render FPS counter
+		update_fps_counter(&data->fps);
+		render_fps(data);
 		mlx_do_sync(data->mlx);
 		time = 0;
 	}
@@ -132,6 +135,8 @@ static int	unified_loop(t_cub3d *data)
 	if (!game_started)
 	{
 		game_started = 1;
+		// Apply difficulty settings based on menu choice
+		apply_difficulty_settings(data);
 		// Cleanup menu resources
 		cleanup_menu(data);
 		// Setup game cursor and mouse tracking

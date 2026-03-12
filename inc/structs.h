@@ -283,9 +283,14 @@ typedef struct s_menu
 
 typedef struct s_game_settings
 {
-	int			player_health;
-	float		enemy_speed_mult;
-	float		enemy_damage_mult;
+	float		difficulty_mult;
 }				t_game_settings;
+
+typedef struct s_fps_counter
+{
+	double		last_time;
+	int			frame_count;
+	int			fps;
+}				t_fps_counter;
 
 #endif

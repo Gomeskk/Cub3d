@@ -74,8 +74,8 @@ void	store_enemy_positions(t_cub3d *data)
 			max_x = scan_patrol_max(data, y, x);
 			data->map.enemies[i].patrol_min = (double)min_x;
 			data->map.enemies[i].patrol_max = (double)max_x;
-			data->map.enemies[i].speed = ENEMY_SPEED_BASE;
-			data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS;
+			data->map.enemies[i].speed = ENEMY_SPEED_BASE * data->game_settings.difficulty_mult;
+			data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS * data->game_settings.difficulty_mult;
 			data->map.enemies[i].chasing = 0;
 			data->map.grid[y][x] = '0';
 			i++;
@@ -112,8 +112,7 @@ static void	chase_player(t_cub3d *data, t_enemy *enemy, double dt)
 	dist = sqrt(dx * dx + dy * dy);
 	if (dist < 0.001)
 		return ;
-	speed = enemy->speed * data->game_settings.enemy_speed_mult
-		* ENEMY_CHASE_SPEED_MULT;
+	speed = enemy->speed * (ENEMY_CHASE_SPEED_MULT * data->game_settings.difficulty_mult);
 	new_x = enemy->pos_x + (dx / dist) * speed * dt;
 	new_y = enemy->pos_y + (dy / dist) * speed * dt;
 	if (enemy_can_move(data, new_x, enemy->pos_y))
@@ -129,7 +128,7 @@ static void	patrol_enemy(t_cub3d *data, t_enemy *enemy, double dt)
 	double	min_px;
 	double	max_px;
 
-	speed = enemy->speed * data->game_settings.enemy_speed_mult;
+	speed = enemy->speed;
 	new_x = enemy->pos_x + enemy->dir * speed * dt;
 	min_px = (enemy->patrol_min + 0.5) * data->tile;
 	max_px = (enemy->patrol_max + 0.5) * data->tile;

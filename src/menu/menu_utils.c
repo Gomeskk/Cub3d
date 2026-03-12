@@ -13,21 +13,21 @@ double	get_sensibility_multiplier(int level)
 
 void	apply_difficulty_settings(t_cub3d *data)
 {
-	(void)data;
-/* 	switch data->difficulty_choice:
-	    case 0: // Easy
-	        data->game_settings.player_health = 150;
-	        data->game_settings.enemy_speed_mult = 0.75;
-	        data->game_settings.enemy_damage_mult = 0.75;
-	        break;
-	    case 1: // Medium
-	        data->game_settings.player_health = 100;
-	        data->game_settings.enemy_speed_mult = 1.0;
-	        data->game_settings.enemy_damage_mult = 1.0;
-	        break;
-	    case 2: // Hard
-	        data->game_settings.player_health = 75;
-	        data->game_settings.enemy_speed_mult = 1.5;
-	        data->game_settings.enemy_damage_mult = 1.5;
-	        break; */
+	int	i;
+
+	if (data->menu.difficulty_choice == DIFF_EASY)
+		data->game_settings.difficulty_mult = 0.60;
+	else if (data->menu.difficulty_choice == DIFF_MEDIUM)
+		data->game_settings.difficulty_mult = 1.0;
+	else if (data->menu.difficulty_choice == DIFF_HARD)
+		data->game_settings.difficulty_mult = 1.25;
+	
+	// Update all existing enemies with new difficulty values
+	i = 0;
+	while (i < data->map.enemy_count)
+	{
+		data->map.enemies[i].speed = ENEMY_SPEED_BASE * data->game_settings.difficulty_mult;
+		data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS * data->game_settings.difficulty_mult;
+		i++;
+	}
 }
