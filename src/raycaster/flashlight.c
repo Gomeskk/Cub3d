@@ -1,13 +1,10 @@
 
 #include "cub3d.h"
 
-# define FLASHLIGHT_RADIUS 0.45
-# define FLASHLIGHT_MIN_LIGHT 0.14
-
 static int	get_pixel(t_img *img, int x, int y)
 {
 	return (*(int *)(img->data + y * img->size_line
-			+ x * (img->bpp / 8)));
+		+ x * (img->bpp / 8)));
 }
 
 static int	darken_pixel(int color, double brightness)
@@ -24,38 +21,27 @@ static int	darken_pixel(int color, double brightness)
 
 static double	get_brightness(t_cub3d *data, int x, int y)
 {
-	double	cx;
-	double	cy;
 	double	radius2;
 	double	dx;
 	double	dy;
 	double	dist2;
 	double	min_light;
 
-	cx = data->current_width / 2.0;
-	cy = data->current_height / 2.0;
 	radius2 = data->current_height * FLASHLIGHT_RADIUS;
 	radius2 = radius2 * radius2;
 	min_light = FLASHLIGHT_MIN_LIGHT;
-	dx = x - cx;
-	dy = y - cy;
+	dx = x - data->current_width / 2.0;
+	dy = y - data->current_height / 2.0;
 	dist2 = (dx * dx + dy * dy) / radius2;
 	if (dist2 >= 1.0)
 		return (min_light);
 	return (1.0 - (1.0 - min_light) * dist2 * dist2);
 }
 
-static double	get_screen_brightness(t_cub3d *data, int x, int y)
-{
-	if (!data->player.flashlight_on)
-		return (FLASHLIGHT_MIN_LIGHT);
-	return (get_brightness(data, x, y));
-}
-
 void	apply_flashlight(t_cub3d *data)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	double	brightness;
 
 	y = 0;
@@ -64,10 +50,11 @@ void	apply_flashlight(t_cub3d *data)
 		x = 0;
 		while (x < data->current_width)
 		{
-			brightness = get_screen_brightness(data, x, y);
+			brightness = FLASHLIGHT_MIN_LIGHT;
+			if (data->player.flashlight_on)
+				brightness = get_brightness(data, x, y);
 			pixel_put(&data->img, x, y,
-				darken_pixel(get_pixel(&data->img, x, y),
-					brightness));
+				darken_pixel(get_pixel(&data->img, x, y), brightness));
 			x++;
 		}
 		y++;

@@ -28,6 +28,10 @@
 # define ENEMY_CHASE_SPEED_MULT 2.0 // podes usar 
 # define ENEMY_COLLISION_RADIUS 0.3
 
+///          FLASHLIGHT SETTINGS    ///
+# define FLASHLIGHT_RADIUS 0.45
+# define FLASHLIGHT_MIN_LIGHT 0.14
+
 
 ///          MENU SETTINGS          ///
 # define KEY_THROTTLE_MS 200
