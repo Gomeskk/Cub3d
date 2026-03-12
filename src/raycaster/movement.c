@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:24:19 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/10 22:50:58 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/11 23:47:52 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,20 +233,27 @@ void	player_movement(t_cub3d *data, double dt)
 
 void	player_jump(t_cub3d *data, double dt)
 {
+	double	target_z;
+	double	z_change;
+	
 	if (dt <= 0.0)
 		return ;
 	
 	// Initiate jump if space pressed and player is on ground
-	if (data->keys.space && !data->player.is_jumping && data->player.z_offset <= 0.0)
+	if (data->keys.space && !data->player.is_jumping && data->player.z_offset >= CROUCH_HEIGHT)
 	{
 		data->player.vertical_velocity = JUMP_VELOCITY;
 		data->player.is_jumping = 1;
 	}
 	
-	// Apply gravity to vertical velocity
+	// Apply gravity to vertical velocity (jumping physics)
 	if (data->player.is_jumping || data->player.z_offset > 0.0)
 	{
-		data->player.vertical_velocity -= GRAVITY * dt;
+		// Use stronger gravity when falling for better game feel
+		if (data->player.vertical_velocity < 0.0)
+			data->player.vertical_velocity -= GRAVITY_FALL * dt;
+		else
+			data->player.vertical_velocity -= GRAVITY_RISE * dt;
 		data->player.z_offset += data->player.vertical_velocity * dt;
 		
 		// Clamp to max jump height
@@ -262,6 +269,36 @@ void	player_jump(t_cub3d *data, double dt)
 			data->player.z_offset = 0.0;
 			data->player.vertical_velocity = 0.0;
 			data->player.is_jumping = 0;
+		}
+	}
+	// Handle crouching (only when on ground and not jumping)
+	else if (!data->player.is_jumping)
+	{
+		// Determine target z position based on crouch key
+		if (data->keys.ctrl)
+			target_z = CROUCH_HEIGHT;
+		else
+			target_z = 0.0;
+		
+		// Smoothly transition to target crouch height
+		if (data->player.z_offset != target_z)
+		{
+			z_change = CROUCH_TRANSITION_SPEED * dt;
+			
+			if (data->player.z_offset < target_z)
+			{
+				// Rising from crouch
+				data->player.z_offset += z_change;
+				if (data->player.z_offset > target_z)
+					data->player.z_offset = target_z;
+			}
+			else
+			{
+				// Lowering into crouch
+				data->player.z_offset -= z_change;
+				if (data->player.z_offset < target_z)
+					data->player.z_offset = target_z;
+			}
 		}
 	}
 }

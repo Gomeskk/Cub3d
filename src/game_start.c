@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/10 22:36:18 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/12 00:57:25 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ static int	render_game(t_cub3d *data)
 		// Draw minimap overlay in top-left corner (if visible)
 		if (data->player.minimap_visible)
 			render_minimap(data);
-		// Display rendered frame
-		mlx_clear_window(data->mlx, data->window);
+		// Display rendered frame (no clear needed - image buffer already cleared in raycast_render)
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
+		mlx_do_sync(data->mlx);
 		time = 0;
 	}
 	return (0);

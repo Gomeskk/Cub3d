@@ -11,8 +11,11 @@
 # define MAX_PITCH 1000.0  // Maximum pitch in pixels (looking up/down)
 # define SPRINT_MULTIPLIER 1.8  // Sprint speed multiplier when Shift is held
 # define CROUCH_MULTIPLIER 0.5  // Crouch speed multiplier when Ctrl is held
-# define JUMP_VELOCITY 350.0  // Initial upward velocity when jumping
-# define GRAVITY 900.0  // Gravity acceleration (pulls player down)
+# define CROUCH_HEIGHT -150.0  // Camera height offset when crouching (negative = lower)
+# define CROUCH_TRANSITION_SPEED 600.0  // Speed of crouch transition
+# define JUMP_VELOCITY 280.0  // Initial upward velocity when jumping (slower rise)
+# define GRAVITY_RISE 700.0  // Gravity when rising (slower deceleration)
+# define GRAVITY_FALL 1400.0  // Gravity when falling (faster fall)
 # define MAX_JUMP_HEIGHT 200.0  // Maximum vertical offset from ground
 # define FOV_NORMAL 0.66  // Standard field of view
 # define FOV_NARROW 0.33  // Zoomed in (narrow FOV)

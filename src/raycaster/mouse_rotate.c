@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 01:15:11 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/10 23:07:15 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/12 00:48:16 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void update_mouse_rotation(t_cub3d *data, double dt)
     // Handle vertical pitch (looking up/down)
     if (distance_from_center_y != 0.0)
     {
-        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensibility_mult * dt * 1000.0; // Scale for pixel offset
+        pitch_speed = -distance_from_center_y * MOUSE_SENSITIVITY * sensibility_mult * dt * 3000.0; // Scale for pixel offset
         data->player.pitch += pitch_speed;
         
         // Constrain pitch to prevent over-rotation (same limit at all resolutions)
