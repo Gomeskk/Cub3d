@@ -32,9 +32,9 @@ int	load_wall_textures(t_cub3d *data)
 	if (!load_single_texture(data->mlx, &data->wall_textures.door,
 			"Png_images/Walls/Door.xpm"))
 		return (0);
-	// Load button texture - using Door.xpm temporarily for visibility
+	// Load button texture
 	if (!load_single_texture(data->mlx, &data->wall_textures.button,
-			"Png_images/Walls/Door.xpm"))
+			"Png_images/Walls/Button.xpm"))
 		return (0);
 	// Load alternate texture for button activation
 	if (!load_single_texture(data->mlx, &data->wall_textures.alt_north,
