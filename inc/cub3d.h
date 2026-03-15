@@ -156,6 +156,11 @@ void	update_enemies(t_cub3d *data, double dt);
 void	check_enemy_detection(t_cub3d *data);
 int		check_enemy_collision(t_cub3d *data);
 void	render_enemies(t_cub3d *data);
+int		scan_patrol_min(t_cub3d *data, int grid_y, int grid_x);
+int		scan_patrol_max(t_cub3d *data, int grid_y, int grid_x);
+int		enemy_can_move(t_cub3d *data, double px, double py);
+void	chase_player(t_cub3d *data, t_enemy *enemy, double dt);
+void	patrol_enemy(t_cub3d *data, t_enemy *enemy, double dt);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);
