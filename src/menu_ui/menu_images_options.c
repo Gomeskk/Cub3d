@@ -1,5 +1,8 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Load base options screen assets and tab highlight images.
+*/
 static int	init_options_base_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.options_screen,
@@ -14,7 +17,7 @@ static int	init_options_base_images(t_cub3d *data)
 	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.tab_sound,
 			"Png_images/TabChoices/TabSound.xpm") == -1)
 		return (-1);
-	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.tab_resolution,
+	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.tab_resol,
 			"Png_images/TabChoices/TabResolution.xpm") == -1)
 		return (-1);
 	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.tab_sensibility,
@@ -23,12 +26,17 @@ static int	init_options_base_images(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Load resolution confirmation assets and option image arrays.
+*/
 static int	init_options_resolution_images(t_cub3d *data)
 {
-	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.resolution_approve,
+	if (load_xpm_with_data(data->mlx,
+			&data->menu.options_imgs.resolution_approve,
 			"Png_images/ScreenSize/ResolutionAprove.xpm") == -1)
 		return (-1);
-	if (load_xpm_with_data(data->mlx, &data->menu.options_imgs.resolution_decline,
+	if (load_xpm_with_data(data->mlx,
+			&data->menu.options_imgs.resolution_decline,
 			"Png_images/ScreenSize/ResolutionDeclined.xpm") == -1)
 		return (-1);
 	if (init_volume_images(data) == -1)
@@ -40,6 +48,9 @@ static int	init_options_resolution_images(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Initialize all options menu images.
+*/
 int	init_options_images(t_cub3d *data)
 {
 	if (init_options_base_images(data) == -1)

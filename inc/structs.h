@@ -18,6 +18,8 @@ typedef struct s_menu_img
 typedef struct s_scale_data
 {
 	float		scale;
+	int			screen_x;
+	int			screen_y;
 	int			scaled_w;
 	int			scaled_h;
 	int			bpp;
@@ -253,7 +255,7 @@ typedef struct s_options_imgs
 	t_menu_img	sensibility[5];
 	t_menu_img	resolution[5];
 	t_menu_img	tab_sound;
-	t_menu_img	tab_resolution;
+	t_menu_img	tab_resol;
 	t_menu_img	tab_sensibility;
 	t_menu_img	resolution_approve;
 	t_menu_img	resolution_decline;

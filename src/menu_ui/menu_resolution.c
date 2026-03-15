@@ -41,6 +41,6 @@ void	apply_resolution(t_cub3d *data, int new_level)
 		return ;
 	if (!create_game_image(data, new_width, new_height))
 		return ;
-	update_resolution_settings(data, new_level, new_width, new_height);
+	update_resol_settings(data, new_level, new_width, new_height);
 	reattach_hooks(data);
 }

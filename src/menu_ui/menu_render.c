@@ -26,7 +26,8 @@ void	render_main_menu(t_cub3d *data)
 		img = &data->menu.screens.start_hover;
 	else
 		img = &data->menu.screens.start_selected;
-	put_img_to_img_scaled(&data->menu.screens.screen_buffer, *img, 0, 0, scale);
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+		*img, init_scale_data(0, 0, scale));
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
@@ -48,7 +49,8 @@ void	render_difficulty_menu(t_cub3d *data)
 		img = &data->menu.difficulty.medium;
 	else
 		img = &data->menu.difficulty.hard;
-	put_img_to_img_scaled(&data->menu.screens.screen_buffer, *img, 0, 0, scale);
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+		*img, init_scale_data(0, 0, scale));
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
@@ -63,13 +65,13 @@ void	render_skin_select(t_cub3d *data)
 
 	scale = get_scale(data);
 	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-		data->menu.screens.skin_select, 0, 0, scale);
+		data->menu.screens.skin_select, init_scale_data(0, 0, scale));
 	if (data->menu.last_skin_arrow_direction == -1)
 		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.screens.arrow_left, 0, 0, scale);
+			data->menu.screens.arrow_left, init_scale_data(0, 0, scale));
 	else
 		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-			data->menu.screens.arrow_right, 0, 0, scale);
+			data->menu.screens.arrow_right, init_scale_data(0, 0, scale));
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
@@ -91,11 +93,9 @@ void	render_volume_sensibility(t_cub3d *data, float scale)
 	sens_y = (int)(SENSIBILITY_IMG_Y * scale);
 	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
 		data->menu.options_imgs.volume[data->menu.options.volume_level],
-		vol_x, vol_y, scale);
+		init_scale_data(vol_x, vol_y, scale));
 	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-		data->menu.options_imgs.sensibility[data->menu.options.sensibility_level],
-		sens_x, sens_y, scale);
+		data->menu.options_imgs.sensibility
+	[data->menu.options.sensibility_level],
+		init_scale_data(sens_x, sens_y, scale));
 }
-
-
-

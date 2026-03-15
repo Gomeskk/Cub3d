@@ -56,9 +56,11 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 {
 	if (data->menu.options.resolution_arrow_count >= threshold)
 	{
-		if (dir == 1 && data->menu.options.pending_resolution_level < RESOLUTION_MAX)
+		if (dir == 1 && data->menu.options.pending_resolution_level
+			< RESOLUTION_MAX)
 			data->menu.options.pending_resolution_level++;
-		else if (dir == -1 && data->menu.options.pending_resolution_level > RESOLUTION_MIN)
+		else if (dir == -1 && data->menu.options.pending_resolution_level
+			> RESOLUTION_MIN)
 			data->menu.options.pending_resolution_level--;
 		data->menu.options.resolution_arrow_count = 0;
 	}
@@ -67,7 +69,8 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 
 /*
 ** Change skin selection (cycle through available skins)
-** Updates skin choice, tracks arrow direction, and re-renders skin selection screen
+** Updates skin choice, tracks arrow direction,
+**		and re-renders skin selection screen
 */
 static void	change_skin(t_cub3d *data, int direction)
 {
@@ -99,5 +102,3 @@ int	handle_skin_select_keys(int keycode, t_cub3d *data)
 	}
 	return (0);
 }
-
-

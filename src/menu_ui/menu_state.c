@@ -17,7 +17,8 @@ int	init_menu_images(t_cub3d *data)
 		return (-1);
 	if (init_options_images(data) == -1)
 		return (-1);
-	data->menu.screens.screen_buffer.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->menu.screens.screen_buffer.image
+		= mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (!data->menu.screens.screen_buffer.image)
 		return (-1);
 	data->menu.screens.screen_buffer.data = mlx_get_data_addr(
@@ -30,6 +31,9 @@ int	init_menu_images(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Initialize default menu navigation and options state values.
+*/
 void	init_menu_state(t_cub3d *data)
 {
 	data->menu.menu_choice = MENU_START;
@@ -76,10 +80,11 @@ static void	cleanup_menu_screens(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->menu.screens.options_screen.image);
 	if (data->menu.options_imgs.tab_sound.image)
 		mlx_destroy_image(data->mlx, data->menu.options_imgs.tab_sound.image);
-	if (data->menu.options_imgs.tab_resolution.image)
-		mlx_destroy_image(data->mlx, data->menu.options_imgs.tab_resolution.image);
+	if (data->menu.options_imgs.tab_resol.image)
+		mlx_destroy_image(data->mlx, data->menu.options_imgs.tab_resol.image);
 	if (data->menu.options_imgs.tab_sensibility.image)
-		mlx_destroy_image(data->mlx, data->menu.options_imgs.tab_sensibility.image);
+		mlx_destroy_image(data->mlx,
+			data->menu.options_imgs.tab_sensibility.image);
 	if (data->menu.screens.screen_buffer.image)
 		mlx_destroy_image(data->mlx, data->menu.screens.screen_buffer.image);
 }
@@ -96,18 +101,23 @@ static void	cleanup_menu_arrays(t_cub3d *data)
 	while (i < VOLUME_COUNT)
 	{
 		if (data->menu.options_imgs.volume[i].image)
-			mlx_destroy_image(data->mlx, data->menu.options_imgs.volume[i].image);
+			mlx_destroy_image(data->mlx,
+				data->menu.options_imgs.volume[i].image);
 		i++;
 	}
 	i = 0;
 	while (i < SENSIBILITY_COUNT)
 	{
 		if (data->menu.options_imgs.sensibility[i].image)
-			mlx_destroy_image(data->mlx, data->menu.options_imgs.sensibility[i].image);
+			mlx_destroy_image(data->mlx,
+				data->menu.options_imgs.sensibility[i].image);
 		i++;
 	}
 }
 
+/*
+** Release all menu image resources.
+*/
 void	cleanup_menu(t_cub3d *data)
 {
 	cleanup_menu_screens(data);

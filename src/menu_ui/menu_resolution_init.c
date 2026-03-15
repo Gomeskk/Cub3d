@@ -58,7 +58,7 @@ int	create_game_image(t_cub3d *data, int width, int height)
 }
 
 // Update resolution tracking and mouse center position
-void	update_resolution_settings(t_cub3d *data, int level, int width, int height)
+void	update_resol_settings(t_cub3d *data, int level, int width, int height)
 {
 	data->menu.options.resolution_level = level;
 	data->mouse.cx = width / 2;

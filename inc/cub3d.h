@@ -201,7 +201,7 @@ void	apply_resolution(t_cub3d *data, int new_level);
 int		create_new_window(t_cub3d *data, int width, int height);
 int		create_menu_buffer(t_cub3d *data, int width, int height);
 int		create_game_image(t_cub3d *data, int width, int height);
-void	update_resolution_settings(t_cub3d *data, int level, int w, int h);
+void	update_resol_settings(t_cub3d *data, int level, int w, int h);
 // menu_utils.c
 double	get_sensibility_multiplier(int level);
 void	apply_difficulty_settings(t_cub3d *data);
@@ -219,8 +219,9 @@ void	render_volume_sensibility(t_cub3d *data, float scale);
 void	render_options_menu(t_cub3d *data);
 void	pixel_put_menu(t_menu_img *img, int x, int y, int color);
 void	put_img_to_img(t_menu_img *screen, t_menu_img img, int screen_x, int screen_y);
+t_scale_data	init_scale_data(int screen_x, int screen_y, float scale);
 void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
-			int screen_x, int screen_y, float scale);
+			t_scale_data data);
 
 //			TESTER				//
 void	print_rgb(int color);

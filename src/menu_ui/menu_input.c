@@ -1,5 +1,8 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Update movement key state for menu navigation keys.
+*/
 static void	set_key_state(int keycode, t_cub3d *data, int state)
 {
 	if (keycode == XK_Up || keycode == XK_w)
@@ -12,6 +15,9 @@ static void	set_key_state(int keycode, t_cub3d *data, int state)
 		data->keys.d = state;
 }
 
+/*
+** Handle key press events and dispatch special menu keys.
+*/
 int	key_press_handler(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape && data->status == MAIN_MENU_SCREEN)
@@ -61,6 +67,3 @@ int	menu_key_handler(int keycode, t_cub3d *data)
 		return (handle_credits_screen_keys(keycode, data));
 	return (0);
 }
-
-
-

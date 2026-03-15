@@ -1,5 +1,8 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Return current time in milliseconds for input throttling.
+*/
 static long	get_time_ms(void)
 {
 	struct timeval	tv;
@@ -8,6 +11,9 @@ static long	get_time_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+/*
+** Process repeated up/down input with throttle timing.
+*/
 static void	handle_throttled_vertical_key(t_cub3d *data, int key,
 				long current_time, long *last_time)
 {
@@ -22,6 +28,9 @@ static void	handle_throttled_vertical_key(t_cub3d *data, int key,
 		handle_options_screen_keys(key, data);
 }
 
+/*
+** Process repeated left/right input with throttle timing.
+*/
 static void	handle_throttled_horizontal_key(t_cub3d *data, int key,
 				long current_time, long *last_time)
 {
@@ -36,6 +45,9 @@ static void	handle_throttled_horizontal_key(t_cub3d *data, int key,
 		handle_skin_select_keys(key, data);
 }
 
+/*
+** Poll held keys each loop and apply throttled menu actions.
+*/
 int	menu_loop_handler(t_cub3d *data)
 {
 	static long	last_w = 0;

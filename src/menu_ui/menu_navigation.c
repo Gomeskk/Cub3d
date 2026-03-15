@@ -70,7 +70,8 @@ static void	change_difficulty(t_cub3d *data, int direction)
 
 /*
 ** Handle key inputs on difficulty selection screen
-** Up/Down: cycle difficulty, Enter: go to skin selection, Escape: back to main menu
+** Up/Down: cycle difficulty, Enter: go to skin selection, 
+**		Escape: back to main menu
 */
 int	handle_difficulty_keys(int keycode, t_cub3d *data)
 {
@@ -91,5 +92,3 @@ int	handle_difficulty_keys(int keycode, t_cub3d *data)
 	}
 	return (0);
 }
-
-

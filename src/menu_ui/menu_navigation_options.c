@@ -1,5 +1,8 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Handle left/right keys for settings and resolution confirmation choice.
+*/
 void	handle_horizontal_keys(int keycode, t_cub3d *data)
 {
 	if (data->menu.options.resolution_confirm_active)
@@ -19,6 +22,9 @@ void	handle_horizontal_keys(int keycode, t_cub3d *data)
 	}
 }
 
+/*
+** Handle up/down keys for resolution selection logic.
+*/
 void	handle_vertical_keys(int keycode, t_cub3d *data)
 {
 	int	threshold;
@@ -36,6 +42,9 @@ void	handle_vertical_keys(int keycode, t_cub3d *data)
 	apply_resolution_change(data, direction, threshold);
 }
 
+/*
+** Handle Enter key actions in options and resolution confirmation.
+*/
 void	handle_enter_key(t_cub3d *data)
 {
 	if (data->menu.options.resolution_confirm_active)
@@ -48,7 +57,8 @@ void	handle_enter_key(t_cub3d *data)
 		render_options_menu(data);
 	}
 	else if (data->menu.options.section == SECTION_RESOLUTION
-		&& data->menu.options.pending_resolution_level != data->menu.options.resolution_level)
+		&& data->menu.options.pending_resolution_level
+		!= data->menu.options.resolution_level)
 	{
 		data->menu.options.resolution_confirm_active = 1;
 		data->menu.options.resolution_confirm_choice = 0;
@@ -56,6 +66,9 @@ void	handle_enter_key(t_cub3d *data)
 	}
 }
 
+/*
+** Handle Escape while inside options menu states.
+*/
 static int	handle_escape_in_options(t_cub3d *data)
 {
 	if (data->menu.options.resolution_confirm_active)
@@ -71,6 +84,9 @@ static int	handle_escape_in_options(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Handle all key input while options screen is active.
+*/
 int	handle_options_screen_keys(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape)
@@ -79,7 +95,8 @@ int	handle_options_screen_keys(int keycode, t_cub3d *data)
 		handle_enter_key(data);
 	else if (keycode == XK_Tab)
 	{
-		data->menu.options.section = (data->menu.options.section + 1) % SECTION_COUNT;
+		data->menu.options.section = (data->menu.options.section + 1)
+			% SECTION_COUNT;
 		render_options_menu(data);
 	}
 	else if (keycode == XK_Left || keycode == XK_a
