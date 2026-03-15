@@ -1,14 +1,6 @@
 #include "../../inc/cub3d.h"
 #include <sys/time.h>
 
-static long	get_time_ms(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
 static void	set_key_state(int keycode, t_cub3d *data, int state)
 {
 	if (keycode == XK_Up || keycode == XK_w)
@@ -37,51 +29,39 @@ int	key_release_handler(int keycode, t_cub3d *data)
 	return (0);
 }
 
-static void	handle_throttled_vertical_key(t_cub3d *data, int key,
-				long current_time, long *last_time)
+/*
+** Handle key inputs on credits screen
+** Escape: back to main menu
+*/
+int	handle_credits_screen_keys(int keycode, t_cub3d *data)
 {
-	if (current_time - *last_time < KEY_THROTTLE_MS)
-		return ;
-	*last_time = current_time;
-	if (data->status == MAIN_MENU_SCREEN)
-		handle_main_menu_keys(key, data);
-	else if (data->status == DIFFICULTY_SCREEN)
-		handle_difficulty_keys(key, data);
-	else if (data->status == OPTIONS_SCREEN)
-		handle_options_screen_keys(key, data);
-}
-
-static void	handle_throttled_horizontal_key(t_cub3d *data, int key,
-				long current_time, long *last_time)
-{
-	if (data->status != OPTIONS_SCREEN && data->status != SKIN_SELECT)
-		return ;
-	if (current_time - *last_time < KEY_THROTTLE_MS)
-		return ;
-	*last_time = current_time;
-	if (data->status == OPTIONS_SCREEN)
-		handle_options_screen_keys(key, data);
-	else if (data->status == SKIN_SELECT)
-		handle_skin_select_keys(key, data);
-}
-
-int	menu_loop_handler(t_cub3d *data)
-{
-	static long	last_w = 0;
-	static long	last_s = 0;
-	static long	last_a = 0;
-	static long	last_d = 0;
-	long		current_time;
-
-	current_time = get_time_ms();
-	if (data->keys.w)
-		handle_throttled_vertical_key(data, XK_w, current_time, &last_w);
-	if (data->keys.s)
-		handle_throttled_vertical_key(data, XK_s, current_time, &last_s);
-	if (data->keys.a)
-		handle_throttled_horizontal_key(data, XK_a, current_time, &last_a);
-	if (data->keys.d)
-		handle_throttled_horizontal_key(data, XK_d, current_time, &last_d);
+	if (keycode == XK_Escape)
+	{
+		data->menu.menu_choice = MENU_START;
+		data->status = MAIN_MENU_SCREEN;
+		render_main_menu(data);
+	}
 	return (0);
 }
+
+/*
+** Top-level menu key dispatcher
+** Routes key events to appropriate handler based on current menu status
+*/
+int	menu_key_handler(int keycode, t_cub3d *data)
+{
+	if (data->status == MAIN_MENU_SCREEN)
+		return (handle_main_menu_keys(keycode, data));
+	else if (data->status == DIFFICULTY_SCREEN)
+		return (handle_difficulty_keys(keycode, data));
+	else if (data->status == SKIN_SELECT)
+		return (handle_skin_select_keys(keycode, data));
+	else if (data->status == OPTIONS_SCREEN)
+		return (handle_options_screen_keys(keycode, data));
+	else if (data->status == CREDITS_SCREEN)
+		return (handle_credits_screen_keys(keycode, data));
+	return (0);
+}
+
+
 

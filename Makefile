@@ -18,22 +18,34 @@ CC 				= cc
 CFLAGS 			= -Wall -Wextra -Werror -g -O3
 INCLUDES 		= -I inc/
 
+RAYC_SRCS		= draw.c raycast.c dda.c
+RAYC_DIR		= src/raycaster/
+RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
+
+PLAYER_SRCS		= movement.c move_utils.c mouse_rotate.c keyboard_rotate.c
+PLAYER_DIR		= src/player/
+PLAYER 			=  $(addprefix $(PLAYER_DIR), $(PLAYER_SRCS))
+
+FEATURES_SRCS	= door.c button.c minimap.c enemy.c enemy_render.c flashlight.c
+FEATURES_DIR	= src/features/
+FEATURES 		=  $(addprefix $(FEATURES_DIR), $(FEATURES_SRCS))
+
+TEXTURES_SRCS	= texture.c texture_helper.c
+TEXTURES_DIR	= src/textures/
+TEXTURES		=  $(addprefix $(TEXTURES_DIR), $(TEXTURES_SRCS))
+
+MENU_SRCS		= menu_images.c menu_images_options.c menu_images_arrays.c menu_input.c menu_input_loop.c menu_navigation.c menu_navigation_options.c menu_options_settings.c menu_render.c menu_render_utils.c menu_resolution.c menu_resolution_init.c menu_state.c menu_transparency.c menu_utils.c
+MENU_DIR		= src/menu_ui/
+MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
+
 ### CUB3D SRCS ###
-SRCS 			= $(PARSER_SRCS) $(RAYC_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c fps_counter.c
+SRCS 			= $(PARSER_SRCS) $(RAYC_SRCS) $(PLAYER_SRCS) $(FEATURES_SRCS) $(TEXTURES_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c test.c utils.c game_start.c
+
 SRC_DIR 		= src/
 
 PARSER_SRCS		= parser.c checker.c map_utils.c parse_map.c 
 PARSER_DIR		= src/parser/
 PARSER 			=  $(addprefix $(PARSER_DIR), $(PARSER_SRCS))
-
-RAYC_SRCS		= draw.c movement.c move_utils.c mouse_rotate.c keyboard_rotate.c raycast.c texture.c texture_helper.c door.c button.c minimap.c enemy.c enemy_render.c flashlight.c
-RAYC_DIR		= src/raycaster/
-RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
-
-
-MENU_SRCS		= menu_images.c menu_images_arrays.c menu_input.c menu_navigation.c menu_navigation_options.c menu_options_settings.c menu_render.c menu_render_options.c menu_resolution.c menu_resolution_init.c menu_state.c menu_transparency.c menu_utils.c
-MENU_DIR		= src/menu/
-MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 
 
 TOTAL_SRCS 		= $(words $(SRCS))
@@ -58,7 +70,7 @@ MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -l
 MLX_INC			= -I/usr/include -I mlx_linux -O3 
 
 
-vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR) $(MENU_DIR)
+vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR) $(PLAYER_DIR) $(FEATURES_DIR) $(TEXTURES_DIR) $(MENU_DIR)
 
 all: $(NAME)
 

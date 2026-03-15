@@ -1,24 +1,5 @@
 #include "../../inc/cub3d.h"
 
-/*
-** Top-level menu key dispatcher
-** Routes key events to appropriate handler based on current menu status
-*/
-int	menu_key_handler(int keycode, t_cub3d *data)
-{
-	if (data->status == MAIN_MENU_SCREEN)
-		return (handle_main_menu_keys(keycode, data));
-	else if (data->status == DIFFICULTY_SCREEN)
-		return (handle_difficulty_keys(keycode, data));
-	else if (data->status == SKIN_SELECT)
-		return (handle_skin_select_keys(keycode, data));
-	else if (data->status == OPTIONS_SCREEN)
-		return (handle_options_screen_keys(keycode, data));
-	else if (data->status == CREDITS_SCREEN)
-		return (handle_credits_screen_keys(keycode, data));
-	return (0);
-}
-
 void	handle_horizontal_keys(int keycode, t_cub3d *data)
 {
 	// In resolution confirm: toggle approve/decline

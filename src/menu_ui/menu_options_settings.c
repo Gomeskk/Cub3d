@@ -65,3 +65,42 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 	render_options_menu(data);
 }
 
+/*
+** Change skin selection (cycle through available skins)
+** Updates skin choice, tracks arrow direction, and re-renders skin selection screen
+*/
+static void	change_skin(t_cub3d *data, int direction)
+{
+	data->menu.skin_choice += direction;
+	// Assuming we have multiple skins, adjust range as needed
+	// For now, cycle between 0-2 (3 skins)
+	if (data->menu.skin_choice > 2)
+		data->menu.skin_choice = 0;
+	else if (data->menu.skin_choice < 0)
+		data->menu.skin_choice = 2;
+	// Track which arrow was pressed: -1 for left, 1 for right
+	data->menu.last_skin_arrow_direction = direction;
+	render_skin_select(data);
+}
+
+/*
+** Handle key inputs on skin selection screen
+** Left/Right: cycle skins, Enter: start game, Escape: back to difficulty
+*/
+int	handle_skin_select_keys(int keycode, t_cub3d *data)
+{
+	if (keycode == XK_Left || keycode == XK_a)
+		change_skin(data, -1);
+	else if (keycode == XK_Right || keycode == XK_d)
+		change_skin(data, 1);
+	else if (keycode == XK_Return)
+		data->status = GAME;
+	else if (keycode == XK_Escape)
+	{
+		data->status = DIFFICULTY_SCREEN;
+		render_difficulty_menu(data);
+	}
+	return (0);
+}
+
+

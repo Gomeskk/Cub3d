@@ -68,3 +68,20 @@ void	render_options_menu(t_cub3d *data)
 	mlx_put_image_to_window(data->mlx, data->window,
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
+
+/*
+** Render credits screen
+** Shows game credits with instructions to start or go back
+*/
+void	render_credits_screen(t_cub3d *data)
+{
+	t_menu_img	*img;
+	float		scale;
+
+	scale = (float)data->current_width / (float)RES_4_WIDTH;
+	mlx_clear_window(data->mlx, data->window);
+	img = &data->menu.screens.credits_screen;
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer, *img, 0, 0, scale);
+	mlx_put_image_to_window(data->mlx, data->window,
+		data->menu.screens.screen_buffer.image, 0, 0);
+}
