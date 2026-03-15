@@ -36,8 +36,8 @@ int	init_sensibility_images(t_cub3d *data)
 		"Png_images/Sensibility/(0.5).xpm", "Png_images/Sensibility/(1).xpm",
 		"Png_images/Sensibility/(1.5).xpm", "Png_images/Sensibility/(2).xpm"};
 
-	return (load_image_array(data->mlx, data->menu.options_imgs.sensibility, paths,
-			SENSIBILITY_COUNT));
+	return (load_image_array(data->mlx, data->menu.options_imgs.sensibility,
+			 paths, SENSIBILITY_COUNT));
 }
 
 int	init_resolution_images(t_cub3d *data)

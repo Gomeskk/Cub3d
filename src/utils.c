@@ -56,3 +56,15 @@ int	get_tile_size(t_cub3d *data)
 		size = 1;
 	return (size);
 }
+
+int	load_xpm_with_data(void *mlx, t_menu_img *img, char *path)
+{
+	img->image = mlx_xpm_file_to_image(mlx, path, &img->width, &img->height);
+	if (!img->image)
+		return (-1);
+	img->data = mlx_get_data_addr(img->image, &img->bpp,
+			&img->size_line, &img->endian);
+	if (!img->data)
+		return (-1);
+	return (0);
+}

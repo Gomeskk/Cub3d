@@ -62,10 +62,8 @@ void	render_skin_select(t_cub3d *data)
 	float	scale;
 
 	scale = get_scale(data);
-	// Always render base skin selection screen first
 	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
 		data->menu.screens.skin_select, 0, 0, scale);
-	// Overlay arrow on top: left arrow or right arrow
 	if (data->menu.last_skin_arrow_direction == -1)
 		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
 			data->menu.screens.arrow_left, 0, 0, scale);

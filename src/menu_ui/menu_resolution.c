@@ -20,13 +20,10 @@ static void	get_resolution_dimensions(int level, int *width, int *height)
 // Destroy old window and images to free memory before creating new ones
 static void	destroy_old_resources(t_cub3d *data)
 {
-	// Destroy menu compositing buffer image
 	if (data->menu.screens.screen_buffer.image)
 		mlx_destroy_image(data->mlx, data->menu.screens.screen_buffer.image);
-	// Destroy game rendering image
 	if (data->img.image)
 		mlx_destroy_image(data->mlx, data->img.image);
-	// Now safe to destroy window after images are freed
 	mlx_destroy_window(data->mlx, data->window);
 }
 
@@ -36,21 +33,14 @@ void	apply_resolution(t_cub3d *data, int new_level)
 	int	new_width;
 	int	new_height;
 
-	// Get dimensions for this resolution level
 	get_resolution_dimensions(new_level, &new_width, &new_height);
-	// Clean up old window and images
 	destroy_old_resources(data);
-	// Create new window with new size
 	if (!create_new_window(data, new_width, new_height))
 		return ;
-	// Create menu compositing buffer
 	if (!create_menu_buffer(data, new_width, new_height))
 		return ;
-	// Create game rendering image
 	if (!create_game_image(data, new_width, new_height))
 		return ;
-	// Update tracking variables
 	update_resolution_settings(data, new_level, new_width, new_height);
-	// Reattach event hooks to new window (MLX requirement)
 	reattach_hooks(data);
 }

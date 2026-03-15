@@ -1,16 +1,16 @@
 #include "../../inc/cub3d.h"
 
+// Bounds check to prevent segfault
+// Convert bits per pixel to bytes: bpp >> 3 is bpp / 8
+// Calculate pixel memory address
 void	pixel_put_menu(t_menu_img *img, int x, int y, int color)
 {
 	char	*pixel;
 	int		offset;
 
-	// Bounds check to prevent segfault
 	if (x < 0 || y < 0 || y >= img->height || x >= img->width)
 		return ;
-	// Convert bits per pixel to bytes: bpp >> 3 is bpp / 8
 	offset = (img->bpp >> 3);
-	// Calculate pixel memory address
 	pixel = img->data + (y * img->size_line + x * offset);
 	*(unsigned int *)pixel = color;
 }

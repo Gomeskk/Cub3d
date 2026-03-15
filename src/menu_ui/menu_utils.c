@@ -21,8 +21,6 @@ void	apply_difficulty_settings(t_cub3d *data)
 		data->game_settings.difficulty_mult = 1.0;
 	else if (data->menu.difficulty_choice == DIFF_HARD)
 		data->game_settings.difficulty_mult = 1.25;
-	
-	// Update all existing enemies with new difficulty values
 	i = 0;
 	while (i < data->map.enemy_count)
 	{

@@ -11,7 +11,7 @@
 # include <unistd.h>
 # include <time.h>
 # include <math.h>
-# include <X11/keysym.h>
+#include  <sys/time.h>
 # include "defines.h"
 # include "structs.h"
 

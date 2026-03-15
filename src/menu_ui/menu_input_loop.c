@@ -1,5 +1,4 @@
 #include "../../inc/cub3d.h"
-#include <sys/time.h>
 
 static long	get_time_ms(void)
 {

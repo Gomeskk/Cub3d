@@ -1,5 +1,4 @@
 #include "../../inc/cub3d.h"
-#include <sys/time.h>
 
 static void	set_key_state(int keycode, t_cub3d *data, int state)
 {

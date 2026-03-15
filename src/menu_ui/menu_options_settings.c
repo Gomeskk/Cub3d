@@ -72,13 +72,10 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 static void	change_skin(t_cub3d *data, int direction)
 {
 	data->menu.skin_choice += direction;
-	// Assuming we have multiple skins, adjust range as needed
-	// For now, cycle between 0-2 (3 skins)
 	if (data->menu.skin_choice > 2)
 		data->menu.skin_choice = 0;
 	else if (data->menu.skin_choice < 0)
 		data->menu.skin_choice = 2;
-	// Track which arrow was pressed: -1 for left, 1 for right
 	data->menu.last_skin_arrow_direction = direction;
 	render_skin_select(data);
 }

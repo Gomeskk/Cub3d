@@ -9,7 +9,6 @@
 */
 int	init_menu_images(t_cub3d *data)
 {
-	// Load menu screen images
 	if (init_start_game_images(data) == -1)
 		return (-1);
 	if (init_difficulty_images(data) == -1)
@@ -18,11 +17,9 @@ int	init_menu_images(t_cub3d *data)
 		return (-1);
 	if (init_options_images(data) == -1)
 		return (-1);
-	// Create compositing buffer (all menus drawn here first)
 	data->menu.screens.screen_buffer.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (!data->menu.screens.screen_buffer.image)
 		return (-1);
-	// Get buffer data address for direct pixel manipulation
 	data->menu.screens.screen_buffer.data = mlx_get_data_addr(
 			data->menu.screens.screen_buffer.image,
 			&data->menu.screens.screen_buffer.bpp,
@@ -61,7 +58,6 @@ void	init_menu_state(t_cub3d *data)
 */
 static void	cleanup_menu_screens(t_cub3d *data)
 {
-	// Destroy main menu images
 	if (data->menu.screens.start_normal.image)
 		mlx_destroy_image(data->mlx, data->menu.screens.start_normal.image);
 	if (data->menu.screens.start_hover.image)
@@ -70,14 +66,12 @@ static void	cleanup_menu_screens(t_cub3d *data)
 		mlx_destroy_image(data->mlx, data->menu.screens.start_selected.image);
 	if (data->menu.screens.credits_screen.image)
 		mlx_destroy_image(data->mlx, data->menu.screens.credits_screen.image);
-	// Destroy difficulty selection images
 	if (data->menu.difficulty.easy.image)
 		mlx_destroy_image(data->mlx, data->menu.difficulty.easy.image);
 	if (data->menu.difficulty.medium.image)
 		mlx_destroy_image(data->mlx, data->menu.difficulty.medium.image);
 	if (data->menu.difficulty.hard.image)
 		mlx_destroy_image(data->mlx, data->menu.difficulty.hard.image);
-	// Destroy options menu images
 	if (data->menu.screens.options_screen.image)
 		mlx_destroy_image(data->mlx, data->menu.screens.options_screen.image);
 	if (data->menu.options_imgs.tab_sound.image)
@@ -98,7 +92,6 @@ static void	cleanup_menu_arrays(t_cub3d *data)
 {
 	int	i;
 
-	// ARRAY CLEANUP: Destroy all volume level images (0-10)
 	i = 0;
 	while (i < VOLUME_COUNT)
 	{
@@ -106,7 +99,6 @@ static void	cleanup_menu_arrays(t_cub3d *data)
 			mlx_destroy_image(data->mlx, data->menu.options_imgs.volume[i].image);
 		i++;
 	}
-	// ARRAY CLEANUP: Destroy all sensibility level images (0-10)
 	i = 0;
 	while (i < SENSIBILITY_COUNT)
 	{
