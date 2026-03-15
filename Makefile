@@ -26,7 +26,7 @@ PLAYER_SRCS		= movement.c move_utils.c mouse_rotate.c keyboard_rotate.c
 PLAYER_DIR		= src/player/
 PLAYER 			=  $(addprefix $(PLAYER_DIR), $(PLAYER_SRCS))
 
-FEATURES_SRCS	= door.c button.c minimap.c enemy.c enemy_render.c flashlight.c enemy_move.c
+FEATURES_SRCS	= door.c button.c minimap.c enemy.c enemy_render.c flashlight.c enemy_move.c enemy_init.c hue_shift.c enemy_sort.c
 FEATURES_DIR	= src/features/
 FEATURES 		=  $(addprefix $(FEATURES_DIR), $(FEATURES_SRCS))
 

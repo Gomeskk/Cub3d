@@ -161,6 +161,15 @@ int		scan_patrol_max(t_cub3d *data, int grid_y, int grid_x);
 int		enemy_can_move(t_cub3d *data, double px, double py);
 void	chase_player(t_cub3d *data, t_enemy *enemy, double dt);
 void	patrol_enemy(t_cub3d *data, t_enemy *enemy, double dt);
+int	clamp_color(int value);
+int	is_whiteish_pixel(int r, int g, int b);
+int	is_blueish_pixel(int r, int g, int b);
+int	apply_enemy_hue_gradient(int color, int stripe, int y,
+	double anim_time);
+void	calc_sprite_transform(t_cub3d *data, t_enemy *enemy,
+	t_sprite_calc *sc);
+void	calc_sprite_dims(t_cub3d *data, t_sprite_calc *sc);
+void	sort_enemies_by_dist(t_cub3d *data, int *order, double *dist);
 
 //			FREE/ERROR			//
 void	free_all(t_cub3d *data);

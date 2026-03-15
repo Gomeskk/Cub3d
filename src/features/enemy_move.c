@@ -52,7 +52,7 @@ void	chase_player(t_cub3d *data, t_enemy *enemy, double dt)
 	if (sqrt(dx * dx + dy * dy) < 0.001)
 		return ;
 	speed = enemy->speed
-        * (ENEMY_CHASE_SPEED_MULT * data->game_settings.difficulty_mult);
+		* (ENEMY_CHASE_SPEED_MULT * data->game_settings.difficulty_mult);
 	new_x = enemy->pos_x + (dx / sqrt(dx * dx + dy * dy)) * speed * dt;
 	new_y = enemy->pos_y + (dy / sqrt(dx * dx + dy * dy)) * speed * dt;
 	if (enemy_can_move(data, new_x, enemy->pos_y))
