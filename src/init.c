@@ -3,47 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/15 18:01:16 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/15 23:29:56 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	load_enemy_animations(t_cub3d *data)
-{
-	char	*paths[ENEMY_ANIM_FRAMES];
-	int		i;
-
-	paths[0] = "Png_images/Enemys/1.xpm";
-	paths[1] = "Png_images/Enemys/2.xpm";
-	paths[2] = "Png_images/Enemys/3.xpm";
-	paths[3] = "Png_images/Enemys/4.xpm";
-	paths[4] = "Png_images/Enemys/5.xpm";
-	paths[5] = "Png_images/Enemys/6.xpm";
-	i = -1;
-	while (++i < ENEMY_ANIM_FRAMES)
-	{
-		data->enemy_frames[i].image = mlx_xpm_file_to_image(data->mlx,
-				paths[i], &data->enemy_frames[i].width,
-				&data->enemy_frames[i].height);
-		if (!data->enemy_frames[i].image)
-			return (0);
-		data->enemy_frames[i].data = mlx_get_data_addr(data->enemy_frames[i].image,
-				&data->enemy_frames[i].bpp, &data->enemy_frames[i].size_line,
-				&data->enemy_frames[i].type);
-		if (!data->enemy_frames[i].data)
-			return (0);
-	}
-	data->enemy_frame_count = ENEMY_ANIM_FRAMES;
-	data->enemy_anim_enabled = 1;
-	data->enemy_texture = data->enemy_frames[0];
-	return (1);
-}
-
-void    init_data(t_cub3d *data)
+/*
+** Initialize core data defaults before parsing and resource loading.
+*/
+void	init_data(t_cub3d *data)
 {
 	ft_bzero(data, sizeof(t_cub3d));
 	data->textures.floor = -1;
@@ -55,58 +27,48 @@ void    init_data(t_cub3d *data)
 
 void	init_player_direction(t_cub3d *data, char spawn)
 {
-	printf("Initializing player direction with spawn character: '%c'\n", spawn);
-	
-	if (spawn == 'N')
-	{
-		data->player.angle = 3 * M_PI / 2;
-		data->player.dir_x = 0;
-		data->player.dir_y = -1;
-		data->player.plane_x = 0.66;
-		data->player.plane_y = 0;
-		printf("Set direction: North (dir_x=0, dir_y=-1)\n");
-	}
-	else if (spawn == 'S')
-	{
-		data->player.angle = M_PI / 2;
-		data->player.dir_x = 0;
-		data->player.dir_y = 1;
-		data->player.plane_x = -0.66;
-		data->player.plane_y = 0;
-		printf("Set direction: South (dir_x=0, dir_y=1)\n");
-	}
-	else if (spawn == 'E')
-	{
-		data->player.angle = 0;
-		data->player.dir_x = 1;
-		data->player.dir_y = 0;
-		data->player.plane_x = 0;
-		data->player.plane_y = 0.66;
-		printf("Set direction: East (dir_x=1, dir_y=0)\n");
-	}
-	else if (spawn == 'W')
-	{
-		data->player.angle = M_PI;
-		data->player.dir_x = -1;
-		data->player.dir_y = 0;
-		data->player.plane_x = 0;
-		data->player.plane_y = -0.66;
-		printf("Set direction: West (dir_x=-1, dir_y=0)\n");
-	}
+	if (spawn == 'N' || spawn == 'S')
+		init_player_direction_ns(data, spawn);
+	else if (spawn == 'E' || spawn == 'W')
+		init_player_direction_ew(data, spawn);
 	else
 	{
-		printf("WARNING: Unknown spawn character '%c', using default North direction\n", spawn);
 		data->player.angle = 3 * M_PI / 2;
 		data->player.dir_x = 0;
 		data->player.dir_y = -1;
 		data->player.plane_x = 0.66;
 		data->player.plane_y = 0;
 	}
-	
-	printf("Final direction values: dir_x=%.3f, dir_y=%.3f, angle=%.3f\n", 
-		   data->player.dir_x, data->player.dir_y, data->player.angle);
 }
 
+/*
+** Initialize runtime gameplay values after resources are loaded.
+*/
+static void	init_runtime_state(t_cub3d *data)
+{
+	data->tile = get_tile_size(data);
+	data->player.speed = data->tile * 2.5;
+	data->player.radius = data->tile / 4;
+	data->player.pos_x = data->player.pos_x * data->tile + data->tile / 2.0;
+	data->player.pos_y = data->player.pos_y * data->tile + data->tile / 2.0;
+	ft_bzero(&data->keys, sizeof(t_keys));
+	data->mouse.cx = WIDTH / 2;
+	data->mouse.cy = HEIGHT / 2;
+	data->mouse.x = data->mouse.cx;
+	data->mouse.y = data->mouse.cy;
+	data->player.pitch = 0.0;
+	data->player.z_offset = 0.0;
+	data->player.vertical_velocity = 0.0;
+	data->player.is_jumping = 0;
+	data->player.minimap_visible = 1;
+	data->player.fov_level = 0;
+	init_player_direction(data, data->player.spawn_dir);
+	init_enemy_runtime_state(data);
+}
+
+/*
+** Initialize mlx resources and gameplay state before entering the loop.
+*/
 void	init_game(t_cub3d *data)
 {
 	data->mlx = mlx_init();
@@ -114,64 +76,16 @@ void	init_game(t_cub3d *data)
 	data->current_width = WIDTH;
 	data->current_height = HEIGHT;
 	data->img.image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->img.data = mlx_get_data_addr(data->img.image, &data->img.bpp, &data->img.size_line, &data->img.type);
+	data->img.data = mlx_get_data_addr(data->img.image, &data->img.bpp,
+			&data->img.size_line, &data->img.type);
 	data->img.width = WIDTH;
-    data->img.height = HEIGHT;
-	
-	// Load wall textures
+	data->img.height = HEIGHT;
 	if (!load_wall_textures(data))
 		exit_error(data, "Failed to load wall textures");
-	
-	// Allocate z_buffer for sprite rendering
 	data->z_buffer = malloc(sizeof(double) * WIDTH);
 	if (!data->z_buffer)
 		exit_error(data, "Failed to allocate z_buffer");
-
 	if (!load_enemy_animations(data))
 		exit_error(data, "Failed to load enemy animation textures");
-
-	data->tile = get_tile_size(data);
-	printf("tile -> %i\n", data->tile);
-	printf("x -> %f    y -> %f\n", data->player.pos_x, data->player.pos_y);
-	data->player.speed = data->tile * 2.5;
-	data->player.radius = data->tile / 4;
-	data->player.pos_x = data->player.pos_x * data->tile + data->tile / 2.0;
-	data->player.pos_y = data->player.pos_y * data->tile + data->tile / 2.0;
-	printf("x doubled -> %f    y doubled -> %f\n", data->player.pos_x, data->player.pos_y);
-	data->keys.a = 0;
-	data->keys.d = 0;
-	data->keys.s = 0;
-	data->keys.w = 0;
-	data->keys.shift = 0;
-	data->keys.space = 0;
-	data->keys.v = 0;
-	data->keys.e = 0;
-	data->keys.tab = 0;
-	data->keys.arrow_up = 0;
-	data->keys.arrow_down = 0;
-	data->keys.arrow_left = 0;
-	data->keys.arrow_right = 0;
-	data->mouse.cx = WIDTH / 2;
-	data->mouse.cy = HEIGHT / 2;
-	data->mouse.x = data->mouse.cx;  // Initialize current position to center
-	data->mouse.y = data->mouse.cy;
-	data->player.pitch = 0.0;  // Initialize pitch to center (no vertical offset)
-	data->player.z_offset = 0.0;  // Initialize on ground
-	data->player.vertical_velocity = 0.0;  // Initialize with no vertical movement
-	data->player.is_jumping = 0;  // Initialize on ground
-	data->player.minimap_visible = 1;  // Initialize minimap visible
-	data->player.fov_level = 0;  // Start with normal FOV
-	init_player_direction(data, data->player.spawn_dir);
-	// Initialize enemy pixel positions from grid positions
-	int i = 0;
-	while (i < data->map.enemy_count)
-	{
-		data->map.enemies[i].pos_x = data->map.enemies[i].grid_x
-			* data->tile + data->tile / 2.0;
-		data->map.enemies[i].pos_y = data->map.enemies[i].grid_y
-			* data->tile + data->tile / 2.0;
-		i++;
-	}
-	init_fps_counter(&data->fps);
-	mlx_mouse_hide(data->mlx, data->window);
+	init_runtime_state(data);
 }

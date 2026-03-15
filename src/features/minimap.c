@@ -13,7 +13,7 @@ static int	get_tile_color(t_cub3d *data, int x, int y)
 		if (is_door_open(data, x, y))
 			return (0x00FF00);
 		else
-			return (data->textures.ceiling);
+			return (0x8704E4);
 	}
 	else if (tile == 'B')
 		return (0xFFFF00);

@@ -54,6 +54,10 @@ typedef struct s_cub3d
 //			INIT			//
 void    init_data(t_cub3d *data);
 void	init_game(t_cub3d *data);
+int		load_enemy_animations(t_cub3d *data);
+void	init_player_direction_ns(t_cub3d *data, char spawn);
+void	init_player_direction_ew(t_cub3d *data, char spawn);
+void	init_enemy_runtime_state(t_cub3d *data);
 
 //			PARSER			//
 int		parse_map(t_cub3d *data);

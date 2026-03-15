@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/15 23:48:45 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,80 +30,74 @@ void	clear_image(t_img *img, int color)
 	}
 }
 
+static void	handle_game_toggles(t_cub3d *data)
+{
+	static int	last_v_state = 0;
+	static int	last_e_state = 0;
+	static int	last_tab_state = 0;
+	static int	last_t_state = 0;
+	static int	last_f_state = 0;
+
+	if (data->keys.v && !last_v_state)
+		cycle_fov(data);
+	last_v_state = data->keys.v;
+	if (data->keys.e && !last_e_state)
+	{
+		toggle_door(data);
+		activate_button(data);
+	}
+	last_e_state = data->keys.e;
+	if (data->keys.tab && !last_tab_state)
+		data->player.minimap_visible = !data->player.minimap_visible;
+	last_tab_state = data->keys.tab;
+	if (data->keys.t && !last_t_state)
+	{
+		data->mouse.locked = !data->mouse.locked;
+		if (data->mouse.locked)
+		{
+			mlx_mouse_hide(data->mlx, data->window);
+			mlx_mouse_move(data->mlx, data->window,
+				data->mouse.cx, data->mouse.cy);
+			data->mouse.x = data->mouse.cx;
+			data->mouse.y = data->mouse.cy;
+		}
+		else
+			mlx_mouse_show(data->mlx, data->window);
+	}
+	last_t_state = data->keys.t;
+	if (data->keys.f && !last_f_state)
+		data->player.flashlight_on = !data->player.flashlight_on;
+	last_f_state = data->keys.f;
+}
+
+static void	render_game_frame(t_cub3d *data, double time)
+{
+	player_movement(data, time);
+	player_jump(data, time);
+	update_enemies(data, time);
+	check_enemy_detection(data);
+	if (check_enemy_collision(data))
+		exit_game("An enemy caught you! Game Over!", data);
+	update_mouse_rotation(data, time);
+	update_keyboard_rotation(data, time);
+	raycast_render(data);
+	if (data->player.minimap_visible)
+		render_minimap(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
+	update_fps_counter(&data->fps);
+	render_fps(data);
+	mlx_do_sync(data->mlx);
+}
+
 static int	render_game(t_cub3d *data)
 {
 	static double	time;
-	static int		last_v_state = 0;
-	static int		last_e_state = 0;
-	static int		last_tab_state = 0;
-	static int		last_t_state = 0;
-	static int		last_f_state = 0;
-	
+
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
 	{
-		// FOV cycling with debounce - only trigger on press, not hold
-		// Prevents rapid cycling when key is held down
-		if (data->keys.v && !last_v_state)
-			cycle_fov(data);
-		last_v_state = data->keys.v;
-		
-		// Door toggle with debounce - only trigger on press, not hold
-		// Prevents rapid open/close when key is held down
-		if (data->keys.e && !last_e_state)
-		{
-			toggle_door(data);
-			// Also check for button activation
-			activate_button(data);
-		}
-		last_e_state = data->keys.e;
-		
-		// Minimap toggle with debounce - only trigger on press, not hold
-		if (data->keys.tab && !last_tab_state)
-			data->player.minimap_visible = !data->player.minimap_visible;
-		last_tab_state = data->keys.tab;
-		
-		// Mouse lock toggle with debounce - only trigger on press, not hold
-		if (data->keys.t && !last_t_state)
-		{
-			data->mouse.locked = !data->mouse.locked;
-			if (data->mouse.locked)
-			{
-				mlx_mouse_hide(data->mlx, data->window);
-				mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
-				data->mouse.x = data->mouse.cx;
-				data->mouse.y = data->mouse.cy;
-			}
-			else
-				mlx_mouse_show(data->mlx, data->window);
-		}
-		last_t_state = data->keys.t;
-		if (data->keys.f && !last_f_state)
-			data->player.flashlight_on = !data->player.flashlight_on;
-		last_f_state = data->keys.f;
-		
-		// Update player physics and position
-		player_movement(data, time);
-		player_jump(data, time);
-		// Update enemy patrol and check detection
-		update_enemies(data, time);
-		check_enemy_detection(data);
-		if (check_enemy_collision(data))
-			exit_game("An enemy caught you! Game Over!", data);
-		// Handle rotation from both mouse and keyboard
-		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
-		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
-		// Render 3D view
-		raycast_render(data);
-		// Draw minimap overlay in top-left corner (if visible)
-		if (data->player.minimap_visible)
-			render_minimap(data);
-		// Display rendered frame (no clear needed - image buffer already cleared in raycast_render)
-		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
-		// Update and render FPS counter
-		update_fps_counter(&data->fps);
-		render_fps(data);
-		mlx_do_sync(data->mlx);
+		handle_game_toggles(data);
+		render_game_frame(data, time);
 		time = 0;
 	}
 	return (0);
