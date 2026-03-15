@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/15 23:48:45 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/15 23:51:26 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,3 @@ void	reattach_hooks(t_cub3d *data)
 	// Force X11 to process the hook registrations
 	mlx_do_sync(data->mlx);
 }
-
