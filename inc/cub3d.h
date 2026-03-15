@@ -35,6 +35,9 @@ typedef struct s_cub3d
 	t_textures		textures;
 	t_wall_textures	wall_textures;
 	t_img			enemy_texture;
+	t_img			enemy_frames[ENEMY_ANIM_FRAMES];
+	int				enemy_frame_count;
+	int				enemy_anim_enabled;
 	double			*z_buffer;
 	t_status		status;
 	t_tiles			tiles;

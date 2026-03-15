@@ -65,7 +65,7 @@ all: $(NAME)
 $(OBJ_DIR)%.o: %.c | $(OBJ_DIR)
 				@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ && \
     			$(eval FILES=$(shell echo $$(($(FILES) + 1)))) \
-    			$(call PRINT_PROGRESS,$(TOTAL_SRCS),$(PINK),$(WHITE)Compiling$(DEFAULT) $@)
+    			$(call PRINT_PROGRESS,$(TOTAL_SRCS),$(PINK),$(WHITE)Compiling$(DEFAULT) $@) 
 
 $(OBJ_DIR):
 				@mkdir -p $@
@@ -76,6 +76,34 @@ $(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(GNL) $(OBJ_DIR)
 				@echo "$(WHITE)Creating $(PINK)$(NAME)'s$(WHITE) executable...$(DEFAULT)"
 				@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(MLX_CC) $(LIBS) -o $@
 				@echo "$(PINK)$(NAME) was born!$(DEFAULT)"
+				@echo "$(WHITE)__$(PINK)88888888888888888888888888888888\n\
+_$(PINK)88$(WHITE)_________________________________________$(PINK)88\n\
+88$(WHITE)_____$(PINK)8888$(WHITE)_______________________________$(PINK)88\n\
+88$(WHITE)____$(PINK)88888$(WHITE)________________________________$(PINK)88\n\
+88$(WHITE)____$(PINK)88$(WHITE)__$(PINK)88$(WHITE)_______________________________$(PINK)88\n\
+88$(WHITE)___$(PINK)88$(WHITE)___$(PINK)88$(WHITE)_______________________________$(PINK)88\n\
+88$(WHITE)__$(PINK)888$(WHITE)___$(PINK)8888$(WHITE)____________________________$(PINK)88\n\
+88$(WHITE)___$(PINK)88888888$(WHITE)_____________________________$(PINK)88\n\
+88$(WHITE)__$(PINK)88$(WHITE)______$(PINK)88$(WHITE)_____________________________$(PINK)88\n\
+88$(WHITE)_________________$(PINK)888$(WHITE)______________________$(PINK)88\n\
+88$(WHITE)________________$(PINK)88888$(WHITE)____________________$(PINK)88\n\
+88$(WHITE)______________$(PINK)888888888$(WHITE)_________________$(PINK)88\n\
+88$(WHITE)_____________$(PINK)88888888888$(WHITE)________________$(PINK)88\n\
+88$(WHITE)____________$(PINK)8888888888888$(WHITE)______________$(PINK)88\n\
+88$(WHITE)___________$(PINK)888888888888888$(WHITE)____________$(PINK)88\n\
+88$(WHITE)_________$(PINK)8888888888888888888$(WHITE)_________$(PINK)88\n\
+88$(WHITE)_________$(PINK)8888888888888888888$(WHITE)_________$(PINK)88\n\
+88$(WHITE)__________$(PINK)88888888888888888$(WHITE)__________$(PINK)88\n\
+88$(WHITE)_________________$(PINK)8888$(WHITE)____________________$(PINK)88\n\
+88$(WHITE)_______________$(PINK)8888888$(WHITE)__________________$(PINK)88\n\
+88$(WHITE)____________________________$(PINK)88$(WHITE)______$(PINK)88$(WHITE)___$(PINK)88\n\
+88$(WHITE)_____________________________$(PINK)88$(WHITE)____$(PINK)888$(WHITE)___$(PINK)88\n\
+88$(WHITE)_____________________________$(PINK)88888888$(WHITE)___$(PINK)88\n\
+88$(WHITE)______________________________$(PINK)88$(WHITE)__$(PINK)888$(WHITE)____$(PINK)88\n\
+88$(WHITE)______________________________$(PINK)888$(WHITE)_$(PINK)88$(WHITE)_____$(PINK)88\n\
+88$(WHITE)___________       ___________$(PINK)888$(WHITE)_______$(PINK)88\n\
+_88$(WHITE)________________________________$(PINK)88\n\
+$(WHITE)__$(PINK)888888888888888888888888888888888"
 
 $(LIBFT):
 				@make -C $(LIBFT_PATH)

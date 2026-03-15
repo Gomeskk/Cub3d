@@ -1,5 +1,88 @@
 #include "cub3d.h"
 
+static t_img	*get_current_enemy_texture(t_cub3d *data)
+{
+	int		frame;
+	double	t;
+
+	if (!data->enemy_anim_enabled || data->enemy_frame_count <= 0)
+		return (&data->enemy_texture);
+	t = get_time_in_seconds();
+	frame = ((int)(t * ENEMY_ANIM_FPS)) % data->enemy_frame_count;
+	data->enemy_texture = data->enemy_frames[frame];
+	return (&data->enemy_frames[frame]);
+}
+
+static int	clamp_color(int value)
+{
+	if (value < 0)
+		return (0);
+	if (value > 255)
+		return (255);
+	return (value);
+}
+
+static int	is_whiteish_pixel(int r, int g, int b)
+{
+	int	min_c;
+	int	max_c;
+
+	min_c = r;
+	if (g < min_c)
+		min_c = g;
+	if (b < min_c)
+		min_c = b;
+	max_c = r;
+	if (g > max_c)
+		max_c = g;
+	if (b > max_c)
+		max_c = b;
+	if (min_c > 185 && (max_c - min_c) < 38)
+		return (1);
+	return (0);
+}
+
+static int	is_blueish_pixel(int r, int g, int b)
+{
+	if (b > 85 && b > r + 18 && b > g + 10)
+		return (1);
+	return (0);
+}
+
+static int	apply_enemy_hue_gradient(int color, int stripe, int y,
+	double anim_time)
+{
+	int		r;
+	int		g;
+	int		b;
+	int		target_r;
+	int		target_g;
+	int		target_b;
+	double	phase;
+	double	wave;
+	double	wave_2;
+	double	mix;
+
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+	if (is_whiteish_pixel(r, g, b))
+		return (color);
+	if (!is_blueish_pixel(r, g, b))
+		return (color);
+	phase = anim_time * 3.1 + stripe * 0.020 + y * 0.020;
+	wave = (sin(phase) + 1.0) * 0.5;
+	wave_2 = (sin(phase * 1.35 + 0.9) + 1.0) * 0.5;
+	target_r = (int)(4.0 + 14.0 * wave_2);
+	target_g = (int)(110.0 + 80.0 * wave);
+	target_b = (int)(205.0 + 50.0 * wave_2);
+	mix = 0.36 + 0.38 * wave;
+	r = clamp_color((int)(r * (1.0 - mix) + target_r * mix));
+	g = clamp_color((int)(g * (1.0 - mix) + target_g * mix));
+	b = clamp_color((int)(b * (1.0 - mix) + target_b * mix));
+	return ((r << 16) | (g << 8) | b);
+}
+
 static void	calc_sprite_transform(t_cub3d *data, t_enemy *enemy,
 	t_sprite_calc *sc)
 {
@@ -45,29 +128,35 @@ static void	calc_sprite_dims(t_cub3d *data, t_sprite_calc *sc)
 		sc->end_x = data->current_width - 1;
 }
 
-static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc, int stripe)
+static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc,
+	t_img *texture, int stripe)
 {
 	int	tex_x;
 	int	tex_y;
 	int	y;
 	int	d;
 	int	color;
+	double	anim_time;
 
 	tex_x = (int)((stripe - (-sc->width / 2 + sc->screen_x))
-			* data->enemy_texture.width / sc->width);
-	if (tex_x < 0 || tex_x >= data->enemy_texture.width)
+			* texture->width / sc->width);
+	if (tex_x < 0 || tex_x >= texture->width)
 		return ;
+	anim_time = get_time_in_seconds() * (ENEMY_HUE_SHIFT_SPEED * 0.06);
 	y = sc->start_y;
 	while (y < sc->end_y)
 	{
 		d = (y - sc->v_offset) * 256 - data->current_height * 128
 			+ sc->height * 128;
-		tex_y = d * data->enemy_texture.height / sc->height / 256;
-		if (tex_y >= 0 && tex_y < data->enemy_texture.height)
+		tex_y = d * texture->height / sc->height / 256;
+		if (tex_y >= 0 && tex_y < texture->height)
 		{
-			color = get_texture_pixel(&data->enemy_texture, tex_x, tex_y);
+			color = get_texture_pixel(texture, tex_x, tex_y);
 			if ((color & 0x00FFFFFF) != 0)
+			{
+				color = apply_enemy_hue_gradient(color, stripe, y, anim_time);
 				pixel_put(&data->img, stripe, y, color);
+			}
 		}
 		y++;
 	}
@@ -76,18 +165,20 @@ static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc, int stripe)
 static void	draw_single_enemy(t_cub3d *data, t_enemy *enemy)
 {
 	t_sprite_calc	sc;
+	t_img			*texture;
 	int				stripe;
 
+	texture = get_current_enemy_texture(data);
 	calc_sprite_transform(data, enemy, &sc);
 	calc_sprite_dims(data, &sc);
-	if (sc.height <= 0)
+	if (sc.height <= 0 || !texture || !texture->image)
 		return ;
 	stripe = sc.start_x;
 	while (stripe < sc.end_x)
 	{
 		if (stripe >= 0 && stripe < data->current_width
 			&& sc.ty < data->z_buffer[stripe])
-			draw_sprite_column(data, &sc, stripe);
+			draw_sprite_column(data, &sc, texture, stripe);
 		stripe++;
 	}
 }

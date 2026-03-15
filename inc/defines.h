@@ -27,6 +27,9 @@
 # define ENEMY_VISION_RADIUS 2.5 // podes usar
 # define ENEMY_CHASE_SPEED_MULT 2.0 // podes usar 
 # define ENEMY_COLLISION_RADIUS 0.3
+# define ENEMY_ANIM_FRAMES 6
+# define ENEMY_ANIM_FPS 8.0
+# define ENEMY_HUE_SHIFT_SPEED 50.0
 
 ///          FLASHLIGHT SETTINGS    ///
 # define FLASHLIGHT_RADIUS 0.45

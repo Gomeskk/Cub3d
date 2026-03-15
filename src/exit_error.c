@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:14:59 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 22:44:54 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/14 15:34:14 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ static void	destroy_wall_textures(t_cub3d *data)
 	}
 }
 
+static void	destroy_enemy_textures(t_cub3d *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < ENEMY_ANIM_FRAMES)
+	{
+		if (data->enemy_frames[i].image)
+			mlx_destroy_image(data->mlx, data->enemy_frames[i].image);
+		i++;
+	}
+}
+
 void	free_all(t_cub3d *data)
 {
 	if (data->textures.ea)
@@ -74,8 +87,8 @@ void	free_all(t_cub3d *data)
 		free(data->z_buffer);
 	if (data->mlx)
 		destroy_wall_textures(data);
-	if (data->enemy_texture.image)
-		mlx_destroy_image(data->mlx, data->enemy_texture.image);
+	if (data->mlx)
+		destroy_enemy_textures(data);
 	if (data->img.image)
 		mlx_destroy_image(data->mlx, data->img.image);
 	if (data->window)

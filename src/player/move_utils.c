@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 19:19:40 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/15 16:32:49 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	key_released(int keycode, t_cub3d *data)
 
 double get_time_in_seconds(void)
 {
+	//colocar em utils
     struct timespec ts;
     clock_gettime(1, &ts);
     return (ts.tv_sec + ts.tv_nsec / 1e9);

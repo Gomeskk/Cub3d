@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/03 16:47:11 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/14 15:34:14 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	load_enemy_animations(t_cub3d *data)
+{
+	char	*paths[ENEMY_ANIM_FRAMES];
+	int		i;
+
+	paths[0] = "Png_images/Enemys/1.xpm";
+	paths[1] = "Png_images/Enemys/2.xpm";
+	paths[2] = "Png_images/Enemys/3.xpm";
+	paths[3] = "Png_images/Enemys/4.xpm";
+	paths[4] = "Png_images/Enemys/5.xpm";
+	paths[5] = "Png_images/Enemys/6.xpm";
+	i = -1;
+	while (++i < ENEMY_ANIM_FRAMES)
+	{
+		data->enemy_frames[i].image = mlx_xpm_file_to_image(data->mlx,
+				paths[i], &data->enemy_frames[i].width,
+				&data->enemy_frames[i].height);
+		if (!data->enemy_frames[i].image)
+			return (0);
+		data->enemy_frames[i].data = mlx_get_data_addr(data->enemy_frames[i].image,
+				&data->enemy_frames[i].bpp, &data->enemy_frames[i].size_line,
+				&data->enemy_frames[i].type);
+		if (!data->enemy_frames[i].data)
+			return (0);
+	}
+	data->enemy_frame_count = ENEMY_ANIM_FRAMES;
+	data->enemy_anim_enabled = 1;
+	data->enemy_texture = data->enemy_frames[0];
+	return (1);
+}
 
 void    init_data(t_cub3d *data)
 {
@@ -96,14 +127,8 @@ void	init_game(t_cub3d *data)
 	if (!data->z_buffer)
 		exit_error(data, "Failed to allocate z_buffer");
 
-	// Load enemy texture
-	data->enemy_texture.image = mlx_xpm_file_to_image(data->mlx,
-			"Png_images/Enemys/enemy.xpm",
-			&data->enemy_texture.width, &data->enemy_texture.height);
-	if (data->enemy_texture.image)
-		data->enemy_texture.data = mlx_get_data_addr(data->enemy_texture.image,
-				&data->enemy_texture.bpp, &data->enemy_texture.size_line,
-				&data->enemy_texture.type);
+	if (!load_enemy_animations(data))
+		exit_error(data, "Failed to load enemy animation textures");
 
 	data->tile = get_tile_size(data);
 	printf("tile -> %i\n", data->tile);
