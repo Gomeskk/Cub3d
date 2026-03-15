@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/14 15:34:14 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/15 18:01:16 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,16 +163,14 @@ void	init_game(t_cub3d *data)
 	data->player.fov_level = 0;  // Start with normal FOV
 	init_player_direction(data, data->player.spawn_dir);
 	// Initialize enemy pixel positions from grid positions
+	int i = 0;
+	while (i < data->map.enemy_count)
 	{
-		int ei = 0;
-		while (ei < data->map.enemy_count)
-		{
-			data->map.enemies[ei].pos_x = data->map.enemies[ei].grid_x
-				* data->tile + data->tile / 2.0;
-			data->map.enemies[ei].pos_y = data->map.enemies[ei].grid_y
-				* data->tile + data->tile / 2.0;
-			ei++;
-		}
+		data->map.enemies[i].pos_x = data->map.enemies[i].grid_x
+			* data->tile + data->tile / 2.0;
+		data->map.enemies[i].pos_y = data->map.enemies[i].grid_y
+			* data->tile + data->tile / 2.0;
+		i++;
 	}
 	init_fps_counter(&data->fps);
 	mlx_mouse_hide(data->mlx, data->window);
