@@ -1,17 +1,8 @@
 #include "../../inc/cub3d.h"
 
-int	load_xpm_with_data(void *mlx, t_menu_img *img, char *path)
-{
-	img->image = mlx_xpm_file_to_image(mlx, path, &img->width, &img->height);
-	if (!img->image)
-		return (-1);
-	img->data = mlx_get_data_addr(img->image, &img->bpp,
-			&img->size_line, &img->endian);
-	if (!img->data)
-		return (-1);
-	return (0);
-}
-
+/*
+** Load main menu and credits background images.
+*/
 int	init_start_game_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.start_normal,
@@ -29,6 +20,9 @@ int	init_start_game_images(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Load difficulty selection images (easy, medium, hard).
+*/
 int	init_difficulty_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.difficulty.easy,
@@ -43,6 +37,9 @@ int	init_difficulty_images(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Load skin selection screen and left/right arrow images.
+*/
 int	init_skin_select_images(t_cub3d *data)
 {
 	if (load_xpm_with_data(data->mlx, &data->menu.screens.skin_select,
@@ -56,5 +53,3 @@ int	init_skin_select_images(t_cub3d *data)
 		return (-1);
 	return (0);
 }
-
-

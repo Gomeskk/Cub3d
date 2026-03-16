@@ -1,8 +1,10 @@
 #include "../../inc/cub3d.h"
 
+/*
+** Handle left/right keys for settings and resolution confirmation choice.
+*/
 void	handle_horizontal_keys(int keycode, t_cub3d *data)
 {
-	// In resolution confirm: toggle approve/decline
 	if (data->menu.options.resolution_confirm_active)
 	{
 		if (keycode == XK_Left || keycode == XK_a)
@@ -11,7 +13,6 @@ void	handle_horizontal_keys(int keycode, t_cub3d *data)
 			data->menu.options.resolution_confirm_choice = 0;
 		render_options_menu(data);
 	}
-	// Otherwise: adjust volume/sensibility settings
 	else
 	{
 		if (keycode == XK_Left || keycode == XK_a)
@@ -21,12 +22,14 @@ void	handle_horizontal_keys(int keycode, t_cub3d *data)
 	}
 }
 
+/*
+** Handle up/down keys for resolution selection logic.
+*/
 void	handle_vertical_keys(int keycode, t_cub3d *data)
 {
 	int	threshold;
 	int	direction;
 
-	// Only active when resolution section is selected
 	if (data->menu.options.section != SECTION_RESOLUTION)
 		return ;
 	if (keycode == XK_Up || keycode == XK_w)
@@ -35,14 +38,15 @@ void	handle_vertical_keys(int keycode, t_cub3d *data)
 		direction = -1;
 	else
 		return ;
-	// Uses threshold system to prevent rapid changes
 	threshold = set_arrow_direction(data, direction);
 	apply_resolution_change(data, direction, threshold);
 }
 
+/*
+** Handle Enter key actions in options and resolution confirmation.
+*/
 void	handle_enter_key(t_cub3d *data)
 {
-	// If confirmation active: apply or cancel resolution change
 	if (data->menu.options.resolution_confirm_active)
 	{
 		if (data->menu.options.resolution_confirm_choice == 1)
@@ -52,9 +56,9 @@ void	handle_enter_key(t_cub3d *data)
 		data->menu.options.resolution_confirm_active = 0;
 		render_options_menu(data);
 	}
-	// Otherwise: activate confirmation dialog if resolution changed
 	else if (data->menu.options.section == SECTION_RESOLUTION
-		&& data->menu.options.pending_resolution_level != data->menu.options.resolution_level)
+		&& data->menu.options.pending_resolution_level
+		!= data->menu.options.resolution_level)
 	{
 		data->menu.options.resolution_confirm_active = 1;
 		data->menu.options.resolution_confirm_choice = 0;
@@ -62,16 +66,17 @@ void	handle_enter_key(t_cub3d *data)
 	}
 }
 
+/*
+** Handle Escape while inside options menu states.
+*/
 static int	handle_escape_in_options(t_cub3d *data)
 {
-	// Cancel resolution confirmation if active
 	if (data->menu.options.resolution_confirm_active)
 	{
 		data->menu.options.resolution_confirm_active = 0;
 		render_options_menu(data);
 		return (0);
 	}
-	// Otherwise return to main menu
 	data->menu.menu_choice = MENU_START;
 	data->status = MAIN_MENU_SCREEN;
 	data->menu.options.section = SECTION_SOUND;
@@ -79,20 +84,21 @@ static int	handle_escape_in_options(t_cub3d *data)
 	return (0);
 }
 
+/*
+** Handle all key input while options screen is active.
+*/
 int	handle_options_screen_keys(int keycode, t_cub3d *data)
 {
-	// Escape: back to main menu (or cancel resolution confirmation)
 	if (keycode == XK_Escape)
 		return (handle_escape_in_options(data));
 	else if (keycode == XK_Return)
 		handle_enter_key(data);
-	// Tab: cycle through sections (sound/resolution/sensibility)
 	else if (keycode == XK_Tab)
 	{
-		data->menu.options.section = (data->menu.options.section + 1) % SECTION_COUNT;
+		data->menu.options.section = (data->menu.options.section + 1)
+			% SECTION_COUNT;
 		render_options_menu(data);
 	}
-	// Arrow keys: adjust settings or navigate confirmation
 	else if (keycode == XK_Left || keycode == XK_a
 		|| keycode == XK_Right || keycode == XK_d)
 		handle_horizontal_keys(keycode, data);

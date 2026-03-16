@@ -12,13 +12,8 @@
 
 #include "cub3d.h"
 
-static void	destroy_wall_textures(t_cub3d *data)
+static void	fill_wall_images(t_cub3d *data, void **images)
 {
-	void	*images[11];
-	int		i;
-	int		j;
-	int		already_destroyed;
-
 	images[0] = data->wall_textures.north.image;
 	images[1] = data->wall_textures.south.image;
 	images[2] = data->wall_textures.east.image;
@@ -30,6 +25,19 @@ static void	destroy_wall_textures(t_cub3d *data)
 	images[8] = data->wall_textures.alt_south.image;
 	images[9] = data->wall_textures.alt_east.image;
 	images[10] = data->wall_textures.alt_west.image;
+}
+
+/*
+** Destroys wall textures once each, skipping duplicated pointers.
+*/
+static void	destroy_wall_textures(t_cub3d *data)
+{
+	void	*images[11];
+	int		i;
+	int		j;
+	int		already_destroyed;
+
+	fill_wall_images(data, images);
 	i = 0;
 	while (i < 11)
 	{
@@ -50,20 +58,7 @@ static void	destroy_wall_textures(t_cub3d *data)
 	}
 }
 
-static void	destroy_enemy_textures(t_cub3d *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < ENEMY_ANIM_FRAMES)
-	{
-		if (data->enemy_frames[i].image)
-			mlx_destroy_image(data->mlx, data->enemy_frames[i].image);
-		i++;
-	}
-}
-
-void	free_all(t_cub3d *data)
+static void	free_non_graphic_data(t_cub3d *data)
 {
 	if (data->textures.ea)
 		free(data->textures.ea);
@@ -85,16 +80,35 @@ void	free_all(t_cub3d *data)
 		free(data->map.enemies);
 	if (data->z_buffer)
 		free(data->z_buffer);
-	if (data->mlx)
-		destroy_wall_textures(data);
-	if (data->mlx)
-		destroy_enemy_textures(data);
-	if (data->img.image)
-		mlx_destroy_image(data->mlx, data->img.image);
-	if (data->window)
-		mlx_destroy_window(data->mlx, data->window);
+}
+
+static void	destroy_enemy_textures(t_cub3d *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < ENEMY_ANIM_FRAMES)
+	{
+		if (data->enemy_frames[i].image)
+			mlx_destroy_image(data->mlx, data->enemy_frames[i].image);
+		i++;
+	}
+}
+
+/*
+** Releases all allocated resources and tears down mlx objects.
+*/
+void	free_all(t_cub3d *data)
+{
+	free_non_graphic_data(data);
 	if (data->mlx)
 	{
+		destroy_wall_textures(data);
+		destroy_enemy_textures(data);
+		if (data->img.image)
+			mlx_destroy_image(data->mlx, data->img.image);
+		if (data->window)
+			mlx_destroy_window(data->mlx, data->window);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
@@ -116,6 +130,9 @@ void	exit_game(char *end_game, t_cub3d *data)
 
 int	x_window(t_cub3d *data)
 {
-	exit_game("Thank you for Playing \033[1;35mbpires-r's\033[1;0m and \033[1;35mjoafaust's\033[1;0m game!", data);
+	exit_game("Thank you for Playing "
+		"\033[1;35mbpires-r's\033[1;0m and "
+		"\033[1;35mjoafaust's\033[1;0m game!",
+		data);
 	return (0);
 }

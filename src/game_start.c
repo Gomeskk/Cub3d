@@ -6,12 +6,15 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/12 01:09:40 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/15 23:51:26 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+** Fills every pixel in the target image with the given color.
+*/
 void	clear_image(t_img *img, int color)
 {
 	int	y;
@@ -30,170 +33,200 @@ void	clear_image(t_img *img, int color)
 	}
 }
 
+/*
+** Cycles field of view once per V key press.
+*/
+static void	handle_fov_toggle(t_cub3d *data)
+{
+	static int	last_v_state;
+
+	if (data->keys.v && !last_v_state)
+		cycle_fov(data);
+	last_v_state = data->keys.v;
+}
+
+/*
+** Toggles door interaction and button activation once per E key press.
+*/
+static void	handle_door_toggle(t_cub3d *data)
+{
+	static int	last_e_state;
+
+	if (data->keys.e && !last_e_state)
+	{
+		toggle_door(data);
+		activate_button(data);
+	}
+	last_e_state = data->keys.e;
+}
+
+/*
+** Toggles minimap and flashlight visibility on key press edges.
+*/
+static void	handle_ui_toggles(t_cub3d *data)
+{
+	static int	last_tab_state;
+	static int	last_f_state;
+
+	if (data->keys.tab && !last_tab_state)
+		data->player.minimap_visible = !data->player.minimap_visible;
+	last_tab_state = data->keys.tab;
+	if (data->keys.f && !last_f_state)
+		data->player.flashlight_on = !data->player.flashlight_on;
+	last_f_state = data->keys.f;
+}
+
+/*
+** Toggles mouse lock on T and recenters cursor when lock is enabled.
+*/
+static void	handle_mouse_lock_toggle(t_cub3d *data)
+{
+	static int	last_t_state;
+
+	if (data->keys.t && !last_t_state)
+	{
+		data->mouse.locked = !data->mouse.locked;
+		if (data->mouse.locked)
+		{
+			mlx_mouse_hide(data->mlx, data->window);
+			mlx_mouse_move(data->mlx, data->window,
+				data->mouse.cx, data->mouse.cy);
+			data->mouse.x = data->mouse.cx;
+			data->mouse.y = data->mouse.cy;
+		}
+		else
+			mlx_mouse_show(data->mlx, data->window);
+	}
+	last_t_state = data->keys.t;
+}
+
+/*
+** Executes all gameplay toggle handlers for the current frame.
+*/
+static void	handle_game_toggles(t_cub3d *data)
+{
+	handle_fov_toggle(data);
+	handle_door_toggle(data);
+	handle_ui_toggles(data);
+	handle_mouse_lock_toggle(data);
+}
+
+/*
+** Updates player/world state and renders a complete gameplay frame.
+*/
+static void	render_game_frame(t_cub3d *data, double time)
+{
+	player_movement(data, time);
+	player_jump(data, time);
+	update_enemies(data, time);
+	check_enemy_detection(data);
+	if (check_enemy_collision(data))
+		exit_game("An enemy caught you! Game Over!", data);
+	update_mouse_rotation(data, time);
+	update_keyboard_rotation(data, time);
+	raycast_render(data);
+	if (data->player.minimap_visible)
+		render_minimap(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
+	update_fps_counter(&data->fps);
+	render_fps(data);
+	mlx_do_sync(data->mlx);
+}
+
+/*
+** Runs the gameplay loop at the configured FPS cadence.
+*/
 static int	render_game(t_cub3d *data)
 {
 	static double	time;
-	static int		last_v_state = 0;
-	static int		last_e_state = 0;
-	static int		last_tab_state = 0;
-	static int		last_t_state = 0;
-	static int		last_f_state = 0;
-	
+
 	time += get_delta_time();
 	if (time >= 1.0 / FPS)
 	{
-		// FOV cycling with debounce - only trigger on press, not hold
-		// Prevents rapid cycling when key is held down
-		if (data->keys.v && !last_v_state)
-			cycle_fov(data);
-		last_v_state = data->keys.v;
-		
-		// Door toggle with debounce - only trigger on press, not hold
-		// Prevents rapid open/close when key is held down
-		if (data->keys.e && !last_e_state)
-		{
-			toggle_door(data);
-			// Also check for button activation
-			activate_button(data);
-		}
-		last_e_state = data->keys.e;
-		
-		// Minimap toggle with debounce - only trigger on press, not hold
-		if (data->keys.tab && !last_tab_state)
-			data->player.minimap_visible = !data->player.minimap_visible;
-		last_tab_state = data->keys.tab;
-		
-		// Mouse lock toggle with debounce - only trigger on press, not hold
-		if (data->keys.t && !last_t_state)
-		{
-			data->mouse.locked = !data->mouse.locked;
-			if (data->mouse.locked)
-			{
-				mlx_mouse_hide(data->mlx, data->window);
-				mlx_mouse_move(data->mlx, data->window, data->mouse.cx, data->mouse.cy);
-				data->mouse.x = data->mouse.cx;
-				data->mouse.y = data->mouse.cy;
-			}
-			else
-				mlx_mouse_show(data->mlx, data->window);
-		}
-		last_t_state = data->keys.t;
-		if (data->keys.f && !last_f_state)
-			data->player.flashlight_on = !data->player.flashlight_on;
-		last_f_state = data->keys.f;
-		
-		// Update player physics and position
-		player_movement(data, time);
-		player_jump(data, time);
-		// Update enemy patrol and check detection
-		update_enemies(data, time);
-		check_enemy_detection(data);
-		if (check_enemy_collision(data))
-			exit_game("An enemy caught you! Game Over!", data);
-		// Handle rotation from both mouse and keyboard
-		update_mouse_rotation(data, time); // Continuous rotation based on distance from center
-		update_keyboard_rotation(data, time); // Keyboard-based rotation using arrow keys
-		// Render 3D view
-		raycast_render(data);
-		// Draw minimap overlay in top-left corner (if visible)
-		if (data->player.minimap_visible)
-			render_minimap(data);
-		// Display rendered frame (no clear needed - image buffer already cleared in raycast_render)
-		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
-		// Update and render FPS counter
-		update_fps_counter(&data->fps);
-		render_fps(data);
-		mlx_do_sync(data->mlx);
+		handle_game_toggles(data);
+		render_game_frame(data, time);
 		time = 0;
 	}
 	return (0);
 }
 
+/*
+** Routes key press events to menu or gameplay handlers.
+*/
 static int	unified_key_press(int keycode, t_cub3d *data)
 {
-	// In menu: handle menu navigation keys
 	if (data->status != GAME)
 		return (key_press_handler(keycode, data));
-	// In game: handle movement/action keys
 	return (key_pressed(keycode, data));
 }
 
+/*
+** Routes key release events to menu or gameplay handlers.
+*/
 static int	unified_key_release(int keycode, t_cub3d *data)
 {
-	// In menu: handle menu key releases
 	if (data->status != GAME)
 		return (key_release_handler(keycode, data));
-	// In game: handle movement key releases
 	return (key_released(keycode, data));
 }
 
-
+/*
+** Runs menu loop until GAME starts, then initializes first game frame.
+*/
 static int	unified_loop(t_cub3d *data)
 {
 	static int	game_started = 0;
 
-	// Still in menu system
 	if (data->status != GAME)
 		return (menu_loop_handler(data));
-	// First time entering game after menu
 	if (!game_started)
 	{
 		game_started = 1;
-		// Apply difficulty settings based on menu choice
 		apply_difficulty_settings(data);
-		// Cleanup menu resources
 		cleanup_menu(data);
-		// Setup game cursor and mouse tracking
-		data->mouse.cx = data->current_width / 2; // Divide by 2 to get center of screen
-		data->mouse.cy = data->current_height / 2;// Divide by 2 to get center of screen
-		data->mouse.locked = 1; // Start with mouse locked in game
+		data->mouse.cx = data->current_width / 2;
+		data->mouse.cy = data->current_height / 2;
+		data->mouse.locked = 1;
 		mlx_mouse_hide(data->mlx, data->window);
 		data->mouse.x = data->mouse.cx;
 		data->mouse.y = data->mouse.cy;
-		// Render initial game frame
 		raycast_render(data);
 		mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 	}
-	// Continue game loop
 	return (render_game(data));
 }
 
+/*
+** Initializes menu/game state, registers hooks, and starts the mlx loop.
+*/
 void	game_start(t_cub3d *data)
 {
-	// Initialize game engine
 	init_game(data);
 	data->current_width = WIDTH;
 	data->current_height = HEIGHT;
 	mlx_mouse_show(data->mlx, data->window);
-	// Load menu images
 	if (init_menu_images(data) == -1)
 		exit_error(data, "Failed to load menu images");
-	// Initialize menu state and display
 	init_menu_state(data);
 	render_main_menu(data);
-	// Attach unified event hooks (work for both menu and game)
 	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);
 	mlx_hook(data->window, 3, 1L << 1, unified_key_release, data);
 	mlx_hook(data->window, 17, 0, x_window, data);
 	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
 	mlx_loop_hook(data->mlx, unified_loop, data);
-	// Start MLX event loop
 	mlx_loop(data->mlx);
 }
 
+/*
+** Reattaches all window and loop hooks after window recreation.
+*/
 void	reattach_hooks(t_cub3d *data)
 {
-	// Reattach event hooks after resolution change
 	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);
 	mlx_hook(data->window, 3, 1L << 1, unified_key_release, data);
 	mlx_hook(data->window, 17, 0, x_window, data);
 	mlx_hook(data->window, 6, 1L << 6, mouse_moved, data);
 	mlx_loop_hook(data->mlx, unified_loop, data);
-	// CRITICAL: Call mlx_int_set_win_event_mask to apply the hook masks to X11
-	// This function collects all hook masks and applies them to the window
-	// Normally only called by mlx_loop at startup, but we need it after window recreation
 	mlx_int_set_win_event_mask(data->mlx);
-	// Force X11 to process the hook registrations
 	mlx_do_sync(data->mlx);
 }
-

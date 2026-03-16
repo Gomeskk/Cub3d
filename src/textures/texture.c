@@ -1,7 +1,10 @@
-
 #include "cub3d.h"
 
-// Helper function to load a single texture
+/*
+** Loads one XPM file into a texture struct.
+** On success, fills image pointer, dimensions, and pixel buffer metadata.
+** Returns 1 on success and 0 if image creation fails.
+*/
 static int	load_single_texture(void *mlx, t_img *tex, char *path)
 {
 	tex->image = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
@@ -12,10 +15,8 @@ static int	load_single_texture(void *mlx, t_img *tex, char *path)
 	return (1);
 }
 
-// Load all wall textures from map file paths
 int	load_wall_textures(t_cub3d *data)
 {
-	// Load textures using paths from .cub file
 	if (!load_single_texture(data->mlx, &data->wall_textures.north,
 			data->textures.no))
 		return (0);
@@ -28,36 +29,31 @@ int	load_wall_textures(t_cub3d *data)
 	if (!load_single_texture(data->mlx, &data->wall_textures.west,
 			data->textures.we))
 		return (0);
-	// Door texture remains hardcoded (not specified in .cub file)
 	if (!load_single_texture(data->mlx, &data->wall_textures.door,
 			"Png_images/Walls/Door.xpm"))
 		return (0);
-	// Load button texture
 	if (!load_single_texture(data->mlx, &data->wall_textures.button,
 			"Png_images/Walls/Button.xpm"))
 		return (0);
-	// Load alternate texture for button activation
 	if (!load_single_texture(data->mlx, &data->wall_textures.alt_north,
 			data->textures.we))
 		return (0);
-	// Initialize swap flag
 	data->wall_textures.textures_swapped = 0;
 	return (1);
 }
 
-// Select the appropriate texture based on wall direction
+/*
+** Chooses which texture must be used for the current ray hit.
+** Hit priority is: button first, then door, then directional wall texture.
+** For normal walls, side and ray step decide the facing texture.
+*/
 static t_img	*select_wall_texture(t_cub3d *data, t_ray *ray)
 {
-	// BUTTON CHECK: If ray hit a button, use button texture
 	if (ray->hit_button)
 		return (&data->wall_textures.button);
-	
-	// DOOR CHECK: If ray hit a door, use door texture regardless of direction
 	if (ray->hit_door)
 		return (&data->wall_textures.door);
-	
-	// Determine wall orientation for texture selection
-	if (ray->side == 0)	// Vertical wall (X-side hit)
+	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
 			return (&data->wall_textures.west);
@@ -73,33 +69,38 @@ static t_img	*select_wall_texture(t_cub3d *data, t_ray *ray)
 	}
 }
 
-// Calculate the X coordinate on the texture
+/*
+** Computes the horizontal hit position on the wall face in [0.0, 1.0).
+** The axis used depends on whether the ray hit an X-side or Y-side wall.
+** The fractional part is later converted into the texture X coordinate.
+*/
 static double	calculate_wall_x(t_cub3d *data, t_ray *ray)
 {
 	double	wall_x;
 
-	if (ray->side == 0)	// X-side hit (vertical wall)
-		wall_x = data->player.pos_y / data->tile + ray->perp_wall_dist * ray->ray_dir_y;
-	else	// Y-side hit (horizontal wall)
-		wall_x = data->player.pos_x / data->tile + ray->perp_wall_dist * ray->ray_dir_x;
-	wall_x -= floor(wall_x);	// Get fractional part (0.0 to 1.0)
+	if (ray->side == 0)
+		wall_x = data->player.pos_y / data->tile
+			+ ray->perp_wall_dist * ray->ray_dir_y;
+	else
+		wall_x = data->player.pos_x / data->tile
+			+ ray->perp_wall_dist * ray->ray_dir_x;
+	wall_x -= floor(wall_x);
 	return (wall_x);
 }
 
-// Main texture rendering function - called for each wall column
+/*
+** Renders one textured screen column for the current ray.
+** Selects texture, computes tex_x from hit position, initializes stepping,
+** then draws the vertical textured column at screen coordinate x.
+*/
 void	draw_textured_wall(t_cub3d *data, t_ray *ray, int x)
 {
 	t_img		*texture;
 	t_tex_draw	td;
 
-	// Select the appropriate texture
 	texture = select_wall_texture(data, ray);
 	td.ray = ray;
-	// Calculate wall_x (where exactly the wall was hit)
-	// X coordinate on the texture with bounds checking
 	td.tex_x = get_tex_x(texture, calculate_wall_x(data, ray), ray);
-	// Calculate step and starting position for texture
 	init_texture_step(texture, ray, data, &td);
-	// Draw the textured wall column
 	draw_texture_column(data, &td, texture, x);
 }

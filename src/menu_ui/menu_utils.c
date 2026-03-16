@@ -1,16 +1,26 @@
 #include "../../inc/cub3d.h"
-#include <sys/time.h>
 
-// Convert menu sensibility level (0-4) to multiplier
+/*
+** Convert menu sensibility level (0-4) to movement multiplier.
+*/
 double	get_sensibility_multiplier(int level)
 {
-	static const double multipliers[] = {0.0, 0.5, 1.0, 1.5, 2.0};
-	
 	if (level < 0 || level > 4)
 		return (1.0);
-	return (multipliers[level]);
+	if (level == 0)
+		return (0.0);
+	else if (level == 1)
+		return (0.5);
+	else if (level == 2)
+		return (1.0);
+	else if (level == 3)
+		return (1.5);
+	return (2.0);
 }
 
+/*
+** Apply current difficulty multiplier to all active enemies.
+*/
 void	apply_difficulty_settings(t_cub3d *data)
 {
 	int	i;
@@ -21,17 +31,20 @@ void	apply_difficulty_settings(t_cub3d *data)
 		data->game_settings.difficulty_mult = 1.0;
 	else if (data->menu.difficulty_choice == DIFF_HARD)
 		data->game_settings.difficulty_mult = 1.25;
-	
-	// Update all existing enemies with new difficulty values
 	i = 0;
 	while (i < data->map.enemy_count)
 	{
-		data->map.enemies[i].speed = ENEMY_SPEED_BASE * data->game_settings.difficulty_mult;
-		data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS * data->game_settings.difficulty_mult;
+		data->map.enemies[i].speed = ENEMY_SPEED_BASE
+			* data->game_settings.difficulty_mult;
+		data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS
+			* data->game_settings.difficulty_mult;
 		i++;
 	}
 }
 
+/*
+** Initialize FPS counter state.
+*/
 void	init_fps_counter(t_fps_counter *fps)
 {
 	fps->last_time = get_time_in_seconds();
@@ -39,6 +52,9 @@ void	init_fps_counter(t_fps_counter *fps)
 	fps->fps = 0;
 }
 
+/*
+** Update FPS counter once per rendered frame.
+*/
 void	update_fps_counter(t_fps_counter *fps)
 {
 	double	current_time;
@@ -55,6 +71,9 @@ void	update_fps_counter(t_fps_counter *fps)
 	}
 }
 
+/*
+** Draw FPS text overlay in the top-right corner.
+*/
 void	render_fps(t_cub3d *data)
 {
 	char	*fps_num;
