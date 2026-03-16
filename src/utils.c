@@ -24,7 +24,7 @@ int	is_ident_line(char *line)
 	return (ft_strchr("NSOEAWCF", line[i]) != NULL);
 }
 
-int is_empty_line(const char *s)
+int	is_empty_line(const char *s)
 {
 	if (!s)
 		return (1);

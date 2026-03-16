@@ -50,11 +50,10 @@ int	read_map(char *map, t_cub3d *data)
 	while (line)
 	{
 		trim = ft_strtrim(line, "\n");
-		data->map.map[i] = ft_strdup(trim);
+		data->map.map[i++] = ft_strdup(trim);
 		free(trim);
 		free(line);
 		line = get_next_line(fd);
-		i++;
 	}
 	data->map.map[i] = NULL;
 	close(fd);
@@ -73,7 +72,7 @@ void	copy_line(char **dest, char *src, int max_x)
 			if (src[i] == '\t')
 				(*dest)[i] = ' ';
 			else
-				(*dest)[i] = src[i];	
+				(*dest)[i] = src[i];
 		}
 		else
 			(*dest)[i] = ' ';

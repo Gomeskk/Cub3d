@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_cub3d	data;
+
 	init_data(&data);
 	if (argc != 2)
 		return (ft_putendl_fd(WRONG_ARGC, 2), 1);
