@@ -1,3 +1,4 @@
+
 #ifndef DEFINES_H
 # define DEFINES_H
 
@@ -11,9 +12,9 @@
 # define MAX_PITCH 1000.0  // Maximum pitch in pixels (looking up/down)
 # define SPRINT_MULTIPLIER 1.8  // Sprint speed multiplier when Shift is held
 # define CROUCH_MULTIPLIER 0.5  // Crouch speed multiplier when Ctrl is held
-# define CROUCH_HEIGHT -150.0  // Camera height offset when crouching (negative = lower)
+# define CROUCH_HEIGHT -150.0  // Camera height offset (negative = lower)
 # define CROUCH_TRANSITION_SPEED 600.0  // Speed of crouch transition
-# define JUMP_VELOCITY 280.0  // Initial upward velocity when jumping (slower rise)
+# define JUMP_VELOCITY 280.0  // Initial upward velocity when jump(slower rise)
 # define GRAVITY_RISE 700.0  // Gravity when rising (slower deceleration)
 # define GRAVITY_FALL 1400.0  // Gravity when falling (faster fall)
 # define MAX_JUMP_HEIGHT 200.0  // Maximum vertical offset from ground
@@ -34,7 +35,6 @@
 ///          FLASHLIGHT SETTINGS    ///
 # define FLASHLIGHT_RADIUS 0.45
 # define FLASHLIGHT_MIN_LIGHT 0.14
-
 
 ///          MENU SETTINGS          ///
 # define KEY_THROTTLE_MS 200
@@ -69,7 +69,8 @@
 
 ///         ERROR HANDLE            ///
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."
-# define WRONG_MAP_NAME "\033[1;35mcub3d:\033[1;0m .cub argument extended expected."
+# define WRONG_MAP_NAME "\033[1;35mcub3d:\033[1;0m .cub argument \
+extended expected."
 # define MAP_ERROR "\033[1;35mcub3d:\033[1;0m map error."
 # define WRONG_MAP "\033[1;35mcub3d:\033[1;0m non acceptable map."
 # define NO_IDENTIFIERS "\033[1;35mcub3d:\033[1;0m non acceptable identifiers."
@@ -79,14 +80,20 @@
 # define DUP_WE "\033[1;35mcub3d:\033[1;0m duplicated 'WE'."
 # define DUP_CEILING "\033[1;35mcub3d:\033[1;0m duplicated 'C'."
 # define DUP_FLOOR "\033[1;35mcub3d:\033[1;0m duplicated 'F'."
-# define NO_MISSING "\033[1;35mcub3d:\033[1;0m 'NO' path to texture is required."
-# define SO_MISSING "\033[1;35mcub3d:\033[1;0m 'SO' path to texture is required."
-# define EA_MISSING "\033[1;35mcub3d:\033[1;0m 'EA' path to texture is required."
-# define WE_MISSING "\033[1;35mcub3d:\033[1;0m 'WE' path to texture is required."
+# define NO_MISSING "\033[1;35mcub3d:\033[1;0m 'NO' path to texture \
+is required."
+# define SO_MISSING "\033[1;35mcub3d:\033[1;0m 'SO' path to texture \
+is required."
+# define EA_MISSING "\033[1;35mcub3d:\033[1;0m 'EA' path to texture \
+is required."
+# define WE_MISSING "\033[1;35mcub3d:\033[1;0m 'WE' path to texture \
+is required."
 # define C_MISSING "\033[1;35mcub3d:\033[1;0m 'C' path to texture is required."
 # define F_MISSING "\033[1;35mcub3d:\033[1;0m 'F' path to texture is required."
-# define TEXTURES "\033[1;37mPlease make sure to add all the textures and place them at the top of the file.\033[1;0m\n"
-# define WRONG_CHAR "\033[1;35mcub3d:\033[1;0m map should contain only 'NSEW01D' and spaces/tabs."
+# define TEXTURES "\033[1;37mPlease make sure to add all the textures \
+and place them at the top of the file.\033[1;0m\n"
+# define WRONG_CHAR "\033[1;35mcub3d:\033[1;0m map should contain \
+only 'NSEW01D' and spaces/tabs."
 # define NON_DIGIT "\033[1;35mcub3d:\033[1;0m C's && F's parameters should contain only digits.\n\
 \033[1;37mHere's an Example:\033[1;0m\n\
 F 220,100,0 \n\
@@ -105,7 +112,8 @@ C 255,0,30"
 \033[1;37mHere's an Example:\033[1;0m\n\
 F 220,100,0 \n\
 C 255,0,30"
-# define NO_CLOSED "\033[1;35mcub3d:\033[1;0m map should be closed by walls, 1's, and contain only the characters '0' 'NSEW'." 
+# define NO_CLOSED "\033[1;35mcub3d:\033[1;0m map should be closed by \
+walls, 1's, and contain only the characters '0' 'NSEW'."
 # define EXAMPLE "\033[1;37mHere's an Example of a .cub file:\033[1;0m\n\
 \033[1;35mNO\033[1;0m ./path_to_the_north_texture \n\
 \033[1;35mSO\033[1;0m ./path_to_the_south_texture \n\
