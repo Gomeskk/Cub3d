@@ -7,6 +7,7 @@ int	scan_patrol_min(t_cub3d *data, int grid_y, int grid_x)
 	x = grid_x - 1;
 	while (x >= 0 && data->map.grid[grid_y][x] != '1'
 		&& data->map.grid[grid_y][x] != 'D'
+		&& data->map.grid[grid_y][x] != 'B'
 		&& data->map.grid[grid_y][x] != ' ')
 		x--;
 	return (x + 1);
@@ -19,6 +20,7 @@ int	scan_patrol_max(t_cub3d *data, int grid_y, int grid_x)
 	x = grid_x + 1;
 	while (x < data->map.col_count && data->map.grid[grid_y][x] != '1'
 		&& data->map.grid[grid_y][x] != 'D'
+		&& data->map.grid[grid_y][x] != 'B'
 		&& data->map.grid[grid_y][x] != ' ')
 		x++;
 	return (x - 1);
@@ -34,7 +36,12 @@ int	enemy_can_move(t_cub3d *data, double px, double py)
 	if (gx < 0 || gx >= data->map.col_count
 		|| gy < 0 || gy >= data->map.row_count)
 		return (0);
-	if (data->map.grid[gy][gx] == '1' || data->map.grid[gy][gx] == 'D')
+	if (data->map.grid[gy][gx] == '1')
+		return (0);
+	if (data->map.grid[gy][gx] == 'B')
+		return (0);
+	if (data->map.grid[gy][gx] == 'D'
+		&& !is_door_open(data, gx, gy))
 		return (0);
 	return (1);
 }

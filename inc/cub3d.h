@@ -117,6 +117,11 @@ void			put_color_tile(t_img *screen, int pos_x,
 void			calc_movement_direction(t_cub3d *data, double *dx,
 					double *dy);
 
+//			MINIMAP			//
+void			draw_map_tiles(t_cub3d *data, int params[2]);
+double			minimap_ray_dist(t_cub3d *data, double ray_dx, double ray_dy);
+void			draw_player_on_map(t_cub3d *data, int params[3]);
+
 //			RAYCASTING			//
 void			raycast_render(t_cub3d *data);
 void			init_ray(t_cub3d *data, t_ray *ray, int screen_x);
