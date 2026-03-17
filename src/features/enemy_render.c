@@ -13,37 +13,44 @@ static t_img	*get_current_enemy_texture(t_cub3d *data)
 	return (&data->enemy_frames[frame]);
 }
 
+static void	draw_sprite_wave(t_cub3d *data, t_sprite_calc *sc,
+	t_img *texture, t_sprite_wave *wave)
+{
+	int	tex_y;
+	int	d;
+	int	color;
+
+	d = (wave->y - sc->v_offset) * 256 - data->current_height * 128
+		+ sc->height * 128;
+	tex_y = d * texture->height / sc->height / 256;
+	if (tex_y >= 0 && tex_y < texture->height)
+	{
+		color = get_texture_pixel(texture, wave->tex_x, tex_y);
+		if ((color & 0x00FFFFFF) != 0)
+		{
+			color = apply_enemy_hue_gradient(color, wave->stripe, wave->y,
+					wave->anim_time);
+			pixel_put(&data->img, wave->stripe, wave->y, color);
+		}
+	}
+}
+
 static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc,
 	t_img *texture, int stripe)
 {
-	int	tex_x;
-	int	tex_y;
-	int	y;
-	int	d;
-	int	color;
-	double	anim_time;
+	t_sprite_wave	wave;
 
-	tex_x = (int)((stripe - (-sc->width / 2 + sc->screen_x))
+	wave.tex_x = (int)((stripe - (-sc->width / 2 + sc->screen_x))
 			* texture->width / sc->width);
-	if (tex_x < 0 || tex_x >= texture->width)
+	if (wave.tex_x < 0 || wave.tex_x >= texture->width)
 		return ;
-	anim_time = get_time_in_seconds() * (ENEMY_HUE_SHIFT_SPEED * 0.06);
-	y = sc->start_y;
-	while (y < sc->end_y)
+	wave.anim_time = get_time_in_seconds() * (ENEMY_HUE_SHIFT_SPEED * 0.06);
+	wave.stripe = stripe;
+	wave.y = sc->start_y;
+	while (wave.y < sc->end_y)
 	{
-		d = (y - sc->v_offset) * 256 - data->current_height * 128
-			+ sc->height * 128;
-		tex_y = d * texture->height / sc->height / 256;
-		if (tex_y >= 0 && tex_y < texture->height)
-		{
-			color = get_texture_pixel(texture, tex_x, tex_y);
-			if ((color & 0x00FFFFFF) != 0)
-			{
-				color = apply_enemy_hue_gradient(color, stripe, y, anim_time);
-				pixel_put(&data->img, stripe, y, color);
-			}
-		}
-		y++;
+		draw_sprite_wave(data, sc, texture, &wave);
+		wave.y++;
 	}
 }
 

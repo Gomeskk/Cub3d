@@ -1,4 +1,3 @@
-
 #include "cub3d.h"
 
 static int	get_pixel(t_img *img, int x, int y)

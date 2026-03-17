@@ -1,4 +1,3 @@
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -115,6 +114,8 @@ void			render_minimap(t_cub3d *data);
 void			draw_direction_line(t_img *img, t_cub3d *data, int color);
 void			put_color_tile(t_img *screen, int pos_x,
 					int pos_y, int color, int tile);
+void			calc_movement_direction(t_cub3d *data, double *dx,
+					double *dy);
 
 //			RAYCASTING			//
 void			raycast_render(t_cub3d *data);
@@ -125,6 +126,15 @@ void			draw_wall_column(t_cub3d *data, t_ray *ray, int x);
 void			game_start(t_cub3d *data);
 void			reattach_hooks(t_cub3d *data);
 int				circle_collides_wall(t_cub3d *data, double cx, double cy);
+int				check_collision_range(t_cub3d *data,
+					t_circle_center center, int start_row, int end_row);
+int				row_has_collision(t_cub3d *data, t_circle_center center,
+					int row, int *col_range);
+void			get_col_range(t_cub3d *data, t_circle_center center,
+					int *col_range);
+int				is_blocking_cell(t_cub3d *data, int row, int col);
+int				circle_intersects_rectangle(t_cub3d *data, t_circle_center center,
+					int row, int col);	
 void			player_movement(t_cub3d *data, double dt);
 void			player_jump(t_cub3d *data, double dt);
 void			cycle_fov(t_cub3d *data);

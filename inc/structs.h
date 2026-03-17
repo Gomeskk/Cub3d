@@ -99,6 +99,14 @@ typedef struct s_player
 	char	spawn_dir; // spawn direction (N, S, E, W)
 }				t_player;
 
+typedef struct s_sprite_wave
+{
+	int		tex_x;
+	int		stripe;
+	int		y;
+	double	anim_time;
+}	t_sprite_wave;
+
 typedef struct s_sprite_calc
 {
 	double	sx;
@@ -291,6 +299,12 @@ typedef struct s_game_settings
 {
 	float		difficulty_mult;
 }				t_game_settings;
+
+typedef struct s_circle_center
+{
+	double	x;
+	double	y;
+}				t_circle_center;
 
 typedef struct s_fps_counter
 {

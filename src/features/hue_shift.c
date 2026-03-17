@@ -53,7 +53,7 @@ int	apply_enemy_hue_gradient(int color, int stripe, int y,
 	if (!is_blueish_pixel(rgb[0], rgb[1], rgb[2]))
 		return (color);
 	phase = anim_time * 3.1 + stripe * 0.020 + y * 0.020;
-	target_rgb[0] = (int)(4.0 + 14.0 *(sin(phase * 1.35 + 0.9) + 1.0) * 0.5);
+	target_rgb[0] = (int)(4.0 + 14.0 * (sin(phase * 1.35 + 0.9) + 1.0) * 0.5);
 	target_rgb[1] = (int)(110.0 + 80.0 * (sin(phase) + 1.0) * 0.5);
 	target_rgb[2] = (int)(205.0 + 50.0 *(sin(phase * 1.35 + 0.9) + 1.0) * 0.5);
 	mix = 0.36 + 0.38 * (sin(phase) + 1.0) * 0.5;
