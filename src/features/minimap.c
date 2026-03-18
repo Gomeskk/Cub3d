@@ -1,237 +1,112 @@
 
 #include "cub3d.h"
 
-static int	get_tile_color(t_cub3d *data, int x, int y)
+/*
+** Draws a circle outline representing an enemy's vision radius.
+** Uses 360 angle steps to create a smooth circular outline.
+** enemy_x/enemy_y = enemy center position on screen (in pixels)
+** radius_px = vision radius in pixels
+** Process: Draw circle by calculating points at each degree (0-359), convert
+** degrees to radians for trigonometric functions, calculate point on circle
+** using cos/sin, then draw pixel if within screen bounds.
+*/
+static void	draw_enemy_vision(t_cub3d *data, int enemy_x, int enemy_y,
+	int radius_px)
 {
-	char	tile;
+	int		angle_deg;
+	double	angle_rad;
+	int		circle_x;
+	int		circle_y;
 
-	tile = data->map.grid[y][x];
-	if (tile == '1')
-		return (0x00FFFF);
-	else if (tile == 'D')
+	angle_deg = 0;
+	while (angle_deg < 360)
 	{
-		if (is_door_open(data, x, y))
-			return (0x00FF00);
-		else
-			return (0x8704E4);
-	}
-	else if (tile == 'B')
-		return (0xFFFF00);
-	else if (tile == '0' || tile == 'N' || tile == 'S' 
-		|| tile == 'E' || tile == 'W')
-		return (0x000000);
-	return (0x000000);
-}
-
-static void	draw_map_tile(t_cub3d *data, int x, int y, int params[2])
-{
-	int		pos[2];
-	int		screen_x;
-	int		screen_y;
-	int		color;
-	char	tile;
-
-	tile = data->map.grid[y][x];
-	if (tile == ' ' || tile == '\0')
-		return ;
-	screen_x = params[1] + x * params[0];
-	screen_y = params[1] + y * params[0];
-	pos[0] = screen_x;
-	pos[1] = screen_y;
-	color = get_tile_color(data, x, y);
-	put_color_tile(&data->img, pos, color, params[0]);
-}
-
-static void	draw_map_tiles(t_cub3d *data, int params[2])
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < data->map.row_count)
-	{
-		x = 0;
-		while (x < data->map.col_count && data->map.grid[y][x])
-		{
-			draw_map_tile(data, x, y, params);
-			x++;
-		}
-		y++;
+		angle_rad = angle_deg * M_PI / 180.0;
+		circle_x = enemy_x + (int)(cos(angle_rad) * radius_px);
+		circle_y = enemy_y + (int)(sin(angle_rad) * radius_px);
+		if (circle_x >= 0 && circle_x < data->current_width
+			&& circle_y >= 0 && circle_y < data->current_height)
+			pixel_put(&data->img, circle_x, circle_y, 0xFF0000);
+		angle_deg++;
 	}
 }
 
-static double	minimap_ray_dist(t_cub3d *data, double ray_dx, double ray_dy)
+/*
+** Draws a single enemy on the minimap with vision radius circle.
+** Calculates enemy screen position and displays with yellow dot.
+** params[1] = offset, params[2] = map_scale_x1000
+** enemy_index = which enemy in the enemies array to draw
+** Process: Convert enemy world position to minimap screen position, convert
+** vision radius from grid units to screen pixels, draw red circle showing
+** vision radius, then draw yellow dot at enemy position (0xFCF803).
+*/
+static void	draw_enemy_on_map(t_cub3d *data, int params[3], int enemy_index)
 {
-	double	pos_x;
-	double	pos_y;
-	double	delta_x;
-	double	delta_y;
-	double	side_x;
-	double	side_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
+	int	enemy_screen_x;
+	int	enemy_screen_y;
+	int	vision_radius_px;
 
-	pos_x = data->player.pos_x / data->tile;
-	pos_y = data->player.pos_y / data->tile;
-	map_x = (int)pos_x;
-	map_y = (int)pos_y;
-	if (ray_dx == 0)
-		delta_x = 1e30;
-	else
-		delta_x = fabs(1.0 / ray_dx);
-	if (ray_dy == 0)
-		delta_y = 1e30;
-	else
-		delta_y = fabs(1.0 / ray_dy);
-	if (ray_dx < 0)
+	enemy_screen_x = params[1] + (int)(data->map.enemies[enemy_index].pos_x
+			* params[2] / 1000.0);
+	enemy_screen_y = params[1] + (int)(data->map.enemies[enemy_index].pos_y
+			* params[2] / 1000.0);
+	vision_radius_px = (int)(data->map.enemies[enemy_index].vision_radius
+			* data->tile * params[2] / 1000.0);
+	draw_enemy_vision(data, enemy_screen_x, enemy_screen_y, vision_radius_px);
+	put_player_dot(&data->img, enemy_screen_x, enemy_screen_y, 0xFCF803);
+}
+
+/*
+** Iterates through all enemies and draws them on the minimap.
+** Each enemy is shown with vision radius and position marker.
+** params contains minimap scaling and offset information.
+** Process: Loop through all enemies in the map and draw each one.
+*/
+static void	draw_enemies_on_map(t_cub3d *data, int params[3])
+{
+	int	enemy_index;
+
+	enemy_index = 0;
+	while (enemy_index < data->map.enemy_count)
 	{
-		step_x = -1;
-		side_x = (pos_x - map_x) * delta_x;
-	}
-	else
-	{
-		step_x = 1;
-		side_x = (map_x + 1.0 - pos_x) * delta_x;
-	}
-	if (ray_dy < 0)
-	{
-		step_y = -1;
-		side_y = (pos_y - map_y) * delta_y;
-	}
-	else
-	{
-		step_y = 1;
-		side_y = (map_y + 1.0 - pos_y) * delta_y;
-	}
-	while (1)
-	{
-		if (side_x < side_y)
-		{
-			map_x += step_x;
-			if (map_x < 0 || map_x >= data->map.col_count)
-				return (side_x);
-			if (data->map.grid[map_y][map_x] == '1'
-				|| (data->map.grid[map_y][map_x] == 'D'
-					&& !is_door_open(data, map_x, map_y)))
-				return (side_x);
-			side_x += delta_x;
-		}
-		else
-		{
-			map_y += step_y;
-			if (map_y < 0 || map_y >= data->map.row_count)
-				return (side_y);
-			if (data->map.grid[map_y][map_x] == '1'
-				|| (data->map.grid[map_y][map_x] == 'D'
-					&& !is_door_open(data, map_x, map_y)))
-				return (side_y);
-			side_y += delta_y;
-		}
+		draw_enemy_on_map(data, params, enemy_index);
+		enemy_index++;
 	}
 }
 
-static void	draw_minimap_line(t_img *img, int x0, int y0, int x1, int y1,
-	int color)
-{
-	int		steps;
-	double	sx;
-	double	sy;
-	int		i;
-
-	steps = abs(x1 - x0);
-	if (abs(y1 - y0) > steps)
-		steps = abs(y1 - y0);
-	if (steps == 0)
-		return ;
-	sx = (double)(x1 - x0) / steps;
-	sy = (double)(y1 - y0) / steps;
-	i = -1;
-	while (++i <= steps)
-		pixel_put(img, x0 + (int)(sx * i), y0 + (int)(sy * i), color);
-}
-
-static void	draw_player_on_map(t_cub3d *data, int params[3])
-{
-	int		pos[2];
-	int		num_rays;
-	int		r;
-	double	cam_x;
-	double	ray_dx;
-	double	ray_dy;
-	double	dist;
-	int		hit[2];
-
-	pos[0] = params[1] + (int)(data->player.pos_x * params[2] / 1000.0);
-	pos[1] = params[1] + (int)(data->player.pos_y * params[2] / 1000.0);
-	num_rays = 60;
-	r = -1;
-	while (++r <= num_rays)
-	{
-		cam_x = 2.0 * r / (double)num_rays - 1.0;
-		ray_dx = data->player.dir_x + data->player.plane_x * cam_x;
-		ray_dy = data->player.dir_y + data->player.plane_y * cam_x;
-		dist = minimap_ray_dist(data, ray_dx, ray_dy);
-		hit[0] = pos[0] + (int)(ray_dx * dist * data->tile
-				* params[2] / 1000.0);
-		hit[1] = pos[1] + (int)(ray_dy * dist * data->tile
-				* params[2] / 1000.0);
-		draw_minimap_line(&data->img, pos[0], pos[1],
-			hit[0], hit[1], 0xdb6cea);
-	}
-	put_player_dot(&data->img, pos[0], pos[1], 0xfc03d2);
-}
-
+/*
+** Main function to render the complete minimap display.
+** Calculates scaling, draws map tiles, enemies, and player FOV cone.
+** Minimap size adapts to screen width, minimum 5 pixels per tile.
+** Process: Calculate tile size based on screen width (responsive minimap),
+** calculate offset/margin from screen edge, set player FOV line length
+** slightly larger than tiles, calculate scale factor (multiply by 1000 to
+** avoid floating point), pack parameters [0]=tile_size, [1]=offset,
+** [2]=scale*1000, draw all map tiles (walls, doors, floors), draw all
+** enemies with vision circles, update params for player rendering (use longer
+** lines for FOV), then draw player position and FOV cone.
+*/
 void	render_minimap(t_cub3d *data)
 {
-	int		map_tile;
-	int		offset;
-	int		line_len;
-	int		params[3];
+	int		tile_size;
+	int		screen_offset;
+	int		player_line_len;
+	int		render_params[3];
 	double	map_scale;
 
-	map_tile = data->current_width / 128;
-	if (map_tile < 5)
-		map_tile = 5;
-	offset = data->current_width / 160;
-	if (offset < 5)
-		offset = 5;
-	line_len = map_tile + 3;
-	map_scale = (double)map_tile / data->tile;
-	params[0] = map_tile;
-	params[1] = offset;
-	params[2] = (int)(map_scale * 1000);
-	draw_map_tiles(data, params);
-	// Draw enemies on minimap with vision radius circle and dot
-	{
-		int ei = 0;
-		while (ei < data->map.enemy_count)
-		{
-			int ex = params[1] + (int)(data->map.enemies[ei].pos_x
-					* params[2] / 1000.0);
-			int ey = params[1] + (int)(data->map.enemies[ei].pos_y
-					* params[2] / 1000.0);
-			int radius_px = (int)(data->map.enemies[ei].vision_radius
-					* data->tile * params[2] / 1000.0);
-			// Draw vision radius circle outline
-			{
-				int angle_step = 0;
-				while (angle_step < 360)
-				{
-					double rad = angle_step * M_PI / 180.0;
-					int cx = ex + (int)(cos(rad) * radius_px);
-					int cy = ey + (int)(sin(rad) * radius_px);
-					if (cx >= 0 && cx < data->current_width
-						&& cy >= 0 && cy < data->current_height)
-						pixel_put(&data->img, cx, cy, 0xFF0000);
-					angle_step++;
-				}
-			}
-			put_player_dot(&data->img, ex, ey, 0xFCF803);
-			ei++;
-		}
-	}
-	params[0] = line_len;
-	draw_player_on_map(data, params);
+	tile_size = data->current_width / 128;
+	if (tile_size < 5)
+		tile_size = 5;
+	screen_offset = data->current_width / 160;
+	if (screen_offset < 5)
+		screen_offset = 5;
+	player_line_len = tile_size + 3;
+	map_scale = (double)tile_size / data->tile;
+	render_params[0] = tile_size;
+	render_params[1] = screen_offset;
+	render_params[2] = (int)(map_scale * 1000);
+	draw_map_tiles(data, render_params);
+	draw_enemies_on_map(data, render_params);
+	render_params[0] = player_line_len;
+	draw_player_on_map(data, render_params);
 }

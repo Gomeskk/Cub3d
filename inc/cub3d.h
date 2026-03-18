@@ -120,14 +120,29 @@ void			put_color_tile(t_img *screen, int pos[2], int color, int tile);
 void			calc_movement_direction(t_cub3d *data, double *dx,
 					double *dy);
 
+//			MINIMAP			//
+void			draw_map_tiles(t_cub3d *data, int params[2]);
+double			minimap_ray_dist(t_cub3d *data, double ray_dx, double ray_dy);
+void			draw_player_on_map(t_cub3d *data, int params[3]);
+
 //			RAYCASTING			//
 void			raycast_render(t_cub3d *data);
 void			init_ray(t_cub3d *data, t_ray *ray, int screen_x);
 void			setup_dda(t_cub3d *data, t_ray *ray);
 void			perform_dda(t_cub3d *data, t_ray *ray);
 void			draw_wall_column(t_cub3d *data, t_ray *ray, int x);
+
+//			GAME LOOP			//
 void			game_start(t_cub3d *data);
 void			reattach_hooks(t_cub3d *data);
+int				unified_key_press(int keycode, t_cub3d *data);
+int				unified_key_release(int keycode, t_cub3d *data);
+int				unified_loop(t_cub3d *data);
+void			handle_game_toggles(t_cub3d *data);
+void			render_game_frame(t_cub3d *data, double delta_time);
+int				render_game(t_cub3d *data);
+
+//			COLLISION			//
 int				circle_collides_wall(t_cub3d *data, double cx, double cy);
 int				check_collision_range(t_cub3d *data,
 					t_circle_center center, int start_row, int end_row);
