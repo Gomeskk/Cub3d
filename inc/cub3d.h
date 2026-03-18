@@ -268,11 +268,9 @@ void			pixel_put_menu(t_menu_img *img, int x, int y, int color);
 void			put_img_to_img(t_menu_img *screen, t_menu_img img,
 					int screen_x, int screen_y);
 t_scale_data	init_scale_data(int screen_x, int screen_y, float scale);
-void			put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
-					t_scale_data data);
-
-//			TESTER				//
-void			print_rgb(int color);
-void			print_grid(char **grid);
+void            put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
+                    t_scale_data data);
+void            put_timg_to_menu_scaled(t_menu_img *screen, t_img *img,
+                    t_scale_data data);
 
 #endif

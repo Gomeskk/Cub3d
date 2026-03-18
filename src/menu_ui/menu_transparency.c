@@ -137,3 +137,58 @@ void	put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
 		copy_scaled_row(screen, src_pix, data);
 	}
 }
+
+/*
+** Copy one row of t_img (game texture) to menu screen with scaling
+** Similar to copy_scaled_row but for t_img format
+*/
+static void    copy_timg_scaled_row(t_menu_img *screen, int *src_pix,
+        t_scale_data data)
+{
+    int    x;
+    int    src_x;
+    int    *dst_pix;
+
+    dst_pix = (int *)(screen->data + data.screen_y * screen->size_line
+            + data.screen_x * (screen->bpp >> 3));
+    x = -1;
+    while (++x < data.scaled_w)
+    {
+        src_x = (int)(x / data.scale);
+        if (data.screen_x + x >= 0 && data.screen_x + x < screen->width
+            && src_pix[src_x] >= 0)
+            dst_pix[x] = src_pix[src_x];
+    }
+}
+
+/*
+** Draw a t_img (game texture) onto a t_menu_img with scaling
+** Used to display hand skins in the menu
+*/
+void    put_timg_to_menu_scaled(t_menu_img *screen, t_img *img,
+        t_scale_data data)
+{
+    int                y;
+    int                src_y;
+    int                *src_pix;
+    int                draw_y;
+    int                base_y;
+
+    if (!img || !img->image || !img->data)
+        return ;
+    base_y = data.screen_y;
+    data.scaled_w = (int)(img->width * data.scale);
+    data.scaled_h = (int)(img->height * data.scale);
+    data.bpp = screen->bpp;
+    y = -1;
+    while (++y < data.scaled_h)
+    {
+        draw_y = base_y + y;
+        if (draw_y < 0 || draw_y >= screen->height)
+            continue ;
+        src_y = (int)(y / data.scale);
+        src_pix = (int *)(img->data + src_y * img->size_line);
+        data.screen_y = draw_y;
+        copy_timg_scaled_row(screen, src_pix, data);
+    }
+}
