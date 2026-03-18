@@ -26,7 +26,7 @@ PLAYER_SRCS		= movement.c player_utils.c mouse_rotate.c keyboard_rotate.c calc_m
 PLAYER_DIR		= src/player/
 PLAYER 			=  $(addprefix $(PLAYER_DIR), $(PLAYER_SRCS))
 
-FEATURES_SRCS	= door.c button.c minimap.c minimap_tiles.c minimap_raycast.c minimap_player.c enemy.c enemy_render.c flashlight.c enemy_move.c enemy_init.c hue_shift.c enemy_sort.c enemy_projection.c hands.c
+FEATURES_SRCS	= door.c button.c minimap.c minimap_tiles.c minimap_raycast.c minimap_player.c enemy.c enemy_render.c flashlight.c enemy_move.c enemy_init.c hue_shift.c enemy_sort.c enemy_projection.c hands.c hands_texture.c
 FEATURES_DIR	= src/features/
 FEATURES 		=  $(addprefix $(FEATURES_DIR), $(FEATURES_SRCS))
 
@@ -39,7 +39,7 @@ MENU_DIR		= src/menu_ui/
 MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 
 ### CUB3D SRCS ###
-SRCS             = $(PARSER_SRCS) $(RAYC_SRCS) $(PLAYER_SRCS) $(FEATURES_SRCS) $(TEXTURES_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c init_helpers.c test.c utils.c game_start.c game_loop.c game_render.c game_toggles.c
+SRCS             = $(PARSER_SRCS) $(RAYC_SRCS) $(PLAYER_SRCS) $(FEATURES_SRCS) $(TEXTURES_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c init_helpers.c utils.c game_start.c game_loop.c game_render.c game_toggles.c free.c
 
 SRC_DIR 		= src/
 
