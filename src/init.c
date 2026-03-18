@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 01:01:11 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/18 17:46:51 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	init_game(t_cub3d *data)
 		exit_error(data, "Failed to allocate z_buffer");
 	if (!load_enemy_animations(data))
 		exit_error(data, "Failed to load enemy animation textures");
+	if (!load_hands_textures(data))
+		exit_error(data, "Failed to load hand textures");
 	init_runtime_state(data);
 }
 

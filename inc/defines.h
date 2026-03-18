@@ -32,6 +32,12 @@
 # define ENEMY_ANIM_FPS 8.0
 # define ENEMY_HUE_SHIFT_SPEED 50.0
 
+///          HANDS SETTINGS          ///
+# define HAND_SKIN_COUNT 6
+# define HAND_WALK_BOB_SPEED 7.0
+# define HAND_SPRINT_BOB_SPEED 11.0
+# define HAND_BOB_AMPLITUDE 14
+
 ///          FLASHLIGHT SETTINGS    ///
 # define FLASHLIGHT_RADIUS 0.45
 # define FLASHLIGHT_MIN_LIGHT 0.14

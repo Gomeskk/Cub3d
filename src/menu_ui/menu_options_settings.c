@@ -75,10 +75,10 @@ void	apply_resolution_change(t_cub3d *data, int dir, int threshold)
 static void	change_skin(t_cub3d *data, int direction)
 {
 	data->menu.skin_choice += direction;
-	if (data->menu.skin_choice > 2)
+	if (data->menu.skin_choice >= HAND_SKIN_COUNT)
 		data->menu.skin_choice = 0;
 	else if (data->menu.skin_choice < 0)
-		data->menu.skin_choice = 2;
+		data->menu.skin_choice = HAND_SKIN_COUNT - 1;
 	data->menu.last_skin_arrow_direction = direction;
 	render_skin_select(data);
 }

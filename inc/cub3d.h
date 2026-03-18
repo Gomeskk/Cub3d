@@ -35,9 +35,11 @@ typedef struct s_cub3d
 	t_wall_textures	wall_textures;
 	t_img			enemy_texture;
 	t_img			enemy_frames[ENEMY_ANIM_FRAMES];
+	t_hands			hands;
 	int				enemy_frame_count;
 	int				enemy_anim_enabled;
 	double			*z_buffer;
+	double			frame_dt;
 	t_status		status;
 	t_tiles			tiles;
 	t_map			map;
@@ -57,6 +59,8 @@ int				load_enemy_animations(t_cub3d *data);
 void			init_player_direction_ns(t_cub3d *data, char spawn);
 void			init_player_direction_ew(t_cub3d *data, char spawn);
 void			init_enemy_runtime_state(t_cub3d *data);
+int				load_hands_textures(t_cub3d *data);
+void			render_hands(t_cub3d *data);
 
 //			PARSER			//
 int				parse_map(t_cub3d *data);

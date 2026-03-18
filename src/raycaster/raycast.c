@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:12:53 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 01:02:40 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/18 17:46:51 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ void	raycast_render(t_cub3d *data)
 	}
 	render_enemies(data);
 	apply_flashlight(data);
+	render_hands(data);
 }

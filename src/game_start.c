@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 02:22:22 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/15 23:51:26 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/18 17:46:51 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ static void	handle_game_toggles(t_cub3d *data)
 */
 static void	render_game_frame(t_cub3d *data, double time)
 {
+	data->frame_dt = time;
 	player_movement(data, time);
 	player_jump(data, time);
 	update_enemies(data, time);

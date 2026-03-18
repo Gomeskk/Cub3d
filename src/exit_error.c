@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:14:59 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/14 15:34:14 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/18 18:02:48 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ static void	destroy_enemy_textures(t_cub3d *data)
 	}
 }
 
+static void	destroy_hands_textures(t_cub3d *data)
+{
+	int	skin;
+
+	skin = 0;
+	while (skin < HAND_SKIN_COUNT)
+	{
+		if (data->hands.skins[skin].image)
+			mlx_destroy_image(data->mlx, data->hands.skins[skin].image);
+		skin++;
+	}
+}
+
 /*
 ** Releases all allocated resources and tears down mlx objects.
 */
@@ -105,6 +118,7 @@ void	free_all(t_cub3d *data)
 	{
 		destroy_wall_textures(data);
 		destroy_enemy_textures(data);
+		destroy_hands_textures(data);
 		if (data->img.image)
 			mlx_destroy_image(data->mlx, data->img.image);
 		if (data->window)

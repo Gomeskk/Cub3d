@@ -203,7 +203,13 @@ typedef struct s_wall_textures
 	t_img		alt_east;
 	t_img		alt_west;
 	int			textures_swapped;
-}				t_wall_textures;
+} 				t_wall_textures;
+
+typedef struct s_hands
+{
+	t_img		skins[HAND_SKIN_COUNT];
+	double		anim_phase;
+} 				t_hands;
 
 typedef struct s_ray
 {
