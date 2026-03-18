@@ -320,7 +320,7 @@ This is the anti-fisheye part because we use perpendicular distance to the camer
 
 - `line_height` is inversely proportional to distance.
 - Add vertical offsets from pitch and jump/crouch (`z_offset`).
-- Clamp `draw_start` and `draw_end` to visible screen.
+- Bounds `draw_start` and `draw_end` to visible screen.
 
 7. Paint one full column
 

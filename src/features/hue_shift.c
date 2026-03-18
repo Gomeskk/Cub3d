@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	clamp_color(int value)
+int	bound_color(int value)
 {
 	if (value < 0)
 		return (0);
@@ -57,8 +57,8 @@ int	apply_enemy_hue_gradient(int color, int stripe, int y,
 	target_rgb[1] = (int)(110.0 + 80.0 * (sin(phase) + 1.0) * 0.5);
 	target_rgb[2] = (int)(205.0 + 50.0 *(sin(phase * 1.35 + 0.9) + 1.0) * 0.5);
 	mix = 0.36 + 0.38 * (sin(phase) + 1.0) * 0.5;
-	rgb[0] = clamp_color((int)(rgb[0] * (1.0 - mix) + target_rgb[0] * mix));
-	rgb[1] = clamp_color((int)(rgb[1] * (1.0 - mix) + target_rgb[1] * mix));
-	rgb[2] = clamp_color((int)(rgb[2] * (1.0 - mix) + target_rgb[2] * mix));
+	rgb[0] = bound_color((int)(rgb[0] * (1.0 - mix) + target_rgb[0] * mix));
+	rgb[1] = bound_color((int)(rgb[1] * (1.0 - mix) + target_rgb[1] * mix));
+	rgb[2] = bound_color((int)(rgb[2] * (1.0 - mix) + target_rgb[2] * mix));
 	return ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 }

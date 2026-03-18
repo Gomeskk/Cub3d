@@ -3,7 +3,7 @@
 /*
 ** Adjust volume or sensibility setting
 ** Increments/decrements based on current section
-** Clamps values to min/max bounds
+** Bounds values to min/max limits
 */
 void	adjust_setting(t_cub3d *data, int direction)
 {

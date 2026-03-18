@@ -76,7 +76,7 @@ static void	copy_scaled_row(t_menu_img *screen, int *src_pix,
 }
 
 /*
-** Initialize scaling parameters for menu image blitting.
+** Initialize scaling parameters for menu image drawing.
 */
 t_scale_data	init_scale_data(int screen_x, int screen_y, float scale)
 {

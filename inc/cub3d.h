@@ -179,7 +179,7 @@ int				scan_patrol_max(t_cub3d *data, int grid_y, int grid_x);
 int				enemy_can_move(t_cub3d *data, double px, double py);
 void			chase_player(t_cub3d *data, t_enemy *enemy, double dt);
 void			patrol_enemy(t_cub3d *data, t_enemy *enemy, double dt);
-int				clamp_color(int value);
+int				bound_color(int value);
 int				is_whiteish_pixel(int r, int g, int b);
 int				is_blueish_pixel(int r, int g, int b);
 int				apply_enemy_hue_gradient(int color, int stripe, int y,

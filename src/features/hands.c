@@ -40,7 +40,7 @@ int	load_hands_textures(t_cub3d *data)
 	return (1);
 }
 
-static int	get_hands_bob_offset(t_cub3d *data)
+static int	get_hands_motion_offset(t_cub3d *data)
 {
 	double	speed;
 
@@ -50,16 +50,16 @@ static int	get_hands_bob_offset(t_cub3d *data)
 		return (0);
 	}
 	if (data->keys.shift && !data->keys.ctrl)
-		speed = HAND_SPRINT_BOB_SPEED;
+		speed = HAND_SPRINT_MOTION_SPEED;
 	else
-		speed = HAND_WALK_BOB_SPEED;
+		speed = HAND_WALK_MOTION_SPEED;
 	data->hands.anim_phase += data->frame_dt * speed;
 	if (data->hands.anim_phase >= 2.0 * M_PI)
 		data->hands.anim_phase = fmod(data->hands.anim_phase, 2.0 * M_PI);
-	return ((int)(sin(data->hands.anim_phase) * HAND_BOB_AMPLITUDE));
+	return ((int)(sin(data->hands.anim_phase) * HAND_MOTION_AMPLITUDE));
 }
 
-static void	blit_hands_scaled(t_img *dst, t_img *src, int y_offset)
+static void	draw_hands_scaled(t_img *dst, t_img *src, int y_offset)
 {
 	int		x;
 	int		y;
@@ -94,16 +94,16 @@ void	render_hands(t_cub3d *data)
 {
 	t_img	*skin_img;
 	int		skin_idx;
-	int		bob_offset;
+	int		motion_offset;
 
 	if (data->status != GAME)
 		return ;
-	bob_offset = get_hands_bob_offset(data);
+	motion_offset = get_hands_motion_offset(data);
 	skin_idx = data->menu.skin_choice;
 	if (skin_idx < 0 || skin_idx >= HAND_SKIN_COUNT)
 		skin_idx = 0;
 	skin_img = &data->hands.skins[skin_idx];
 	if (!skin_img->image || !skin_img->data)
 		return ;
-	blit_hands_scaled(&data->img, skin_img, bob_offset);
+	draw_hands_scaled(&data->img, skin_img, motion_offset);
 }
