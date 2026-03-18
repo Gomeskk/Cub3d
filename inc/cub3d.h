@@ -112,8 +112,7 @@ void			pixel_put(t_img *img, int x, int y, int color);
 void			draw_minimap(t_cub3d *data);
 void			render_minimap(t_cub3d *data);
 void			draw_direction_line(t_img *img, t_cub3d *data, int color);
-void			put_color_tile(t_img *screen, int pos_x,
-					int pos_y, int color, int tile);
+void			put_color_tile(t_img *screen, int pos[2], int color, int tile);
 void			calc_movement_direction(t_cub3d *data, double *dx,
 					double *dy);
 
@@ -138,8 +137,7 @@ int				circle_intersects_rectangle(t_cub3d *data, t_circle_center center,
 void			player_movement(t_cub3d *data, double dt);
 void			player_jump(t_cub3d *data, double dt);
 void			cycle_fov(t_cub3d *data);
-void			put_player_dot(t_img *img, int cx, int cy,
-					int radius, int color);
+void			put_player_dot(t_img *img, int cx, int cy, int color);
 int				key_released(int keycode, t_cub3d *data);
 int				key_pressed(int keycode, t_cub3d *data);
 

@@ -1,9 +1,7 @@
 #include "cub3d.h"
 
-int	key_pressed(int keycode, t_cub3d *data)
+static void	update_movement_keys_press(int keycode, t_cub3d *data)
 {
-	if (keycode == XK_Escape)
-		x_window(data);
 	if (keycode == XK_w)
 		data->keys.w = 1;
 	if (keycode == XK_a)
@@ -18,6 +16,13 @@ int	key_pressed(int keycode, t_cub3d *data)
 		data->keys.ctrl = 1;
 	if (keycode == XK_space)
 		data->keys.space = 1;
+}
+
+int	key_pressed(int keycode, t_cub3d *data)
+{
+	update_movement_keys_press(keycode, data);
+	if (keycode == XK_Escape)
+		x_window(data);
 	if (keycode == XK_v)
 		data->keys.v = 1;
 	if (keycode == XK_e)
@@ -39,7 +44,7 @@ int	key_pressed(int keycode, t_cub3d *data)
 	return (0);
 }
 
-int	key_released(int keycode, t_cub3d *data)
+static void	update_movement_keys_release(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_w)
 		data->keys.w = 0;
@@ -55,6 +60,11 @@ int	key_released(int keycode, t_cub3d *data)
 		data->keys.ctrl = 0;
 	if (keycode == XK_space)
 		data->keys.space = 0;
+}
+
+int	key_released(int keycode, t_cub3d *data)
+{
+	update_movement_keys_release(keycode, data);
 	if (keycode == XK_v)
 		data->keys.v = 0;
 	if (keycode == XK_e)

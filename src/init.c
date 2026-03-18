@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 19:32:48 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/15 23:29:56 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/18 01:01:11 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,24 @@ void	init_game(t_cub3d *data)
 	if (!load_enemy_animations(data))
 		exit_error(data, "Failed to load enemy animation textures");
 	init_runtime_state(data);
+}
+
+void	init_ray(t_cub3d *data, t_ray *ray, int screen_x)
+{
+	ray->camera_x = 2 * screen_x / (double)data->current_width - 1;
+	ray->hit = 0;
+	ray->hit_door = 0;
+	ray->hit_button = 0;
+	ray->ray_dir_x = data->player.dir_x + data->player.plane_x * ray->camera_x;
+	ray->ray_dir_y = data->player.dir_y + data->player.plane_y * ray->camera_x;
+	ray->map_x = (int)(data->player.pos_x / data->tile);
+	ray->map_y = (int)(data->player.pos_y / data->tile);
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(1.0 / ray->ray_dir_x);
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(1.0 / ray->ray_dir_y);
 }

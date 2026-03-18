@@ -25,6 +25,7 @@ static int	get_tile_color(t_cub3d *data, int x, int y)
 
 static void	draw_map_tile(t_cub3d *data, int x, int y, int params[2])
 {
+	int		pos[2];
 	int		screen_x;
 	int		screen_y;
 	int		color;
@@ -35,8 +36,10 @@ static void	draw_map_tile(t_cub3d *data, int x, int y, int params[2])
 		return ;
 	screen_x = params[1] + x * params[0];
 	screen_y = params[1] + y * params[0];
+	pos[0] = screen_x;
+	pos[1] = screen_y;
 	color = get_tile_color(data, x, y);
-	put_color_tile(&data->img, screen_x, screen_y, color, params[0]);
+	put_color_tile(&data->img, pos, color, params[0]);
 }
 
 static void	draw_map_tiles(t_cub3d *data, int params[2])
@@ -177,7 +180,7 @@ static void	draw_player_on_map(t_cub3d *data, int params[3])
 		draw_minimap_line(&data->img, pos[0], pos[1],
 			hit[0], hit[1], 0xdb6cea);
 	}
-	put_player_dot(&data->img, pos[0], pos[1], 3, 0xfc03d2);
+	put_player_dot(&data->img, pos[0], pos[1], 0xfc03d2);
 }
 
 void	render_minimap(t_cub3d *data)
@@ -225,7 +228,7 @@ void	render_minimap(t_cub3d *data)
 					angle_step++;
 				}
 			}
-			put_player_dot(&data->img, ex, ey, 3, 0xFCF803);
+			put_player_dot(&data->img, ex, ey, 0xFCF803);
 			ei++;
 		}
 	}

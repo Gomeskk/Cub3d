@@ -22,7 +22,7 @@ RAYC_SRCS		= draw.c raycast.c dda.c
 RAYC_DIR		= src/raycaster/
 RAYC 			=  $(addprefix $(RAYC_DIR), $(RAYC_SRCS))
 
-PLAYER_SRCS		= movement.c player_utils.c mouse_rotate.c keyboard_rotate.c calc_moves.c collision.c keys.c
+PLAYER_SRCS		= movement.c player_utils.c mouse_rotate.c keyboard_rotate.c calc_moves.c collision.c keys.c jump_crouch.c
 PLAYER_DIR		= src/player/
 PLAYER 			=  $(addprefix $(PLAYER_DIR), $(PLAYER_SRCS))
 
