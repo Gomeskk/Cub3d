@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:12:33 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/02 17:03:12 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/18 22:24:52 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,3 @@ int	main(int argc, char **argv)
 	game_start(&data);
 	free_all(&data);
 }
-
-/*
-printf("Ceiling RGB = ");
-print_rgb(data.textures.ceiling);
-
-printf("Floor RGB = ");
-print_rgb(data.textures.floor);
-*/

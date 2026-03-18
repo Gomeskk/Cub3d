@@ -39,6 +39,7 @@ void	update_mouse_rotation(t_cub3d *data, double dt)
 	double	pitch_speed;
 	double	sensibility_mult;
 
+	pitch_speed = 0.0;
 	if (!data->mouse.locked)
 		return ;
 	sensibility_mult

@@ -11,6 +11,7 @@
 */
 void	render_game_frame(t_cub3d *data, double delta_time)
 {
+	data->frame_dt = delta_time;
 	player_movement(data, delta_time);
 	player_jump(data, delta_time);
 	update_enemies(data, delta_time);
