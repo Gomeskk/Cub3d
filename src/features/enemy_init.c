@@ -6,14 +6,15 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:28 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 00:15:26 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 00:55:55 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// Parses the map grid to count the number of enemies, represented by the character 'F', 
-// and updates the total enemy count within the game data.
+// Parses the map grid to count the number of enemies,
+//represented by the character 'F',  and updates the 
+//total enemy count within the game data.
 void	init_enemies(t_cub3d *data)
 {
 	int	y;
@@ -39,6 +40,7 @@ void	init_enemies(t_cub3d *data)
 	if (!data->map.enemies)
 		data->map.enemy_count = 0;
 }
+
 //Initializes the properties of a specific enemy instance within the game data,
 //setting its position, patrol boundaries, scaled speed, and vision radius. ~
 //it resets the map grid character at the enemy's 
