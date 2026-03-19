@@ -55,6 +55,7 @@ static void	initialize_game_state(t_cub3d *data)
 	data->mouse.x = data->mouse.cx;
 	data->mouse.y = data->mouse.cy;
 	raycast_render(data);
+	draw_screen_border(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 }
 

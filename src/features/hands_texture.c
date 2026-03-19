@@ -15,11 +15,14 @@
 static void	set_hand_paths(char *paths[HAND_SKIN_COUNT])
 {
 	paths[0] = "Png_images/Hands/light1.xpm";
-	paths[1] = "Png_images/Hands/medium1.xpm";
-	paths[2] = "Png_images/Hands/dark1.xpm";
-	paths[3] = "Png_images/Hands/light2.xpm";
+	paths[1] = "Png_images/Hands/light2.xpm";
+	paths[2] = "Png_images/Hands/light3.xpm";
+	paths[3] = "Png_images/Hands/medium1.xpm";
 	paths[4] = "Png_images/Hands/medium2.xpm";
-	paths[5] = "Png_images/Hands/dark2.xpm";
+	paths[5] = "Png_images/Hands/medium3.xpm";
+	paths[6] = "Png_images/Hands/dark1.xpm";
+	paths[7] = "Png_images/Hands/dark2.xpm";
+	paths[8] = "Png_images/Hands/dark3.xpm";
 }
 
 static int	load_hand_skin(t_cub3d *data, t_img *skin, char *path)

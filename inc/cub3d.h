@@ -97,6 +97,7 @@ int				get_tile_size(t_cub3d *data);
 double			get_time_in_seconds(void);
 double			get_delta_time(void);
 void			clear_image(t_img *img, int color);
+void            draw_screen_border(t_cub3d *data);
 
 //			FPS COUNTER		//
 void			init_fps_counter(t_fps_counter *fps);

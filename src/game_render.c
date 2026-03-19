@@ -34,6 +34,7 @@ void	render_game_frame(t_cub3d *data, double delta_time)
 	raycast_render(data);
 	if (data->player.minimap_visible)
 		render_minimap(data);
+	draw_screen_border(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->img.image, 0, 0);
 	update_fps_counter(&data->fps);
 	render_fps(data);

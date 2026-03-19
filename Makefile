@@ -39,7 +39,7 @@ MENU_DIR		= src/menu_ui/
 MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 
 ### CUB3D SRCS ###
-SRCS             = $(PARSER_SRCS) $(RAYC_SRCS) $(PLAYER_SRCS) $(FEATURES_SRCS) $(TEXTURES_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c init_helpers.c utils.c game_start.c game_loop.c game_render.c game_toggles.c free.c
+SRCS             = $(PARSER_SRCS) $(RAYC_SRCS) $(PLAYER_SRCS) $(FEATURES_SRCS) $(TEXTURES_SRCS) $(MENU_SRCS) cub3d.c exit_error.c init.c init_helpers.c utils.c game_start.c game_loop.c game_render.c game_toggles.c free.c border.c
 
 SRC_DIR 		= src/
 

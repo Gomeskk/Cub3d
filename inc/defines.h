@@ -20,6 +20,7 @@
 # define FOV_NORMAL 0.66  // Standard field of view
 # define FOV_NARROW 0.33  // Zoomed in (narrow FOV)
 # define FOV_WIDE 0.90  // Zoomed out (wide FOV)
+# define BORDER_THICKNESS 12  // Thickness of the black border in pixels
 # define M_PI           3.14159265358979323846
 
 ///          ENEMY SETTINGS          ///
@@ -32,7 +33,7 @@
 # define ENEMY_HUE_SHIFT_SPEED 50.0
 
 ///          HANDS SETTINGS          ///
-# define HAND_SKIN_COUNT 6
+# define HAND_SKIN_COUNT 9
 # define HAND_WALK_MOTION_SPEED 7.0
 # define HAND_SPRINT_MOTION_SPEED 11.0
 # define HAND_MOTION_AMPLITUDE 14
