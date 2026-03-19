@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bpires-r <bpires-r@student.42lisboa.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026-03-19 21:47:36 by bpires-r          #+#    #+#             */
+/*   Updated: 2026-03-19 21:47:36 by bpires-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -10,8 +22,7 @@
 # include <time.h>
 # include <math.h>
 # include <sys/time.h>
-# include "defines.h"
-# include "structs.h"
+# include "menu.h"
 
 typedef enum e_status
 {
@@ -57,8 +68,6 @@ typedef struct s_cub3d
 	t_ray			ray;
 	t_fps_counter	fps;
 }					t_cub3d;
-
-# include "menu.h"
 
 //			INIT			//
 void			init_data(t_cub3d *data);
