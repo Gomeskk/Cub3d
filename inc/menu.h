@@ -58,10 +58,10 @@ void			pixel_put_menu(t_menu_img *img, int x, int y, int color);
 void			put_img_to_img(t_menu_img *screen, t_menu_img img,
 					int screen_x, int screen_y);
 t_scale_data	init_scale_data(int screen_x, int screen_y, float scale);
-void            put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
-                    t_scale_data data);
-void            put_timg_to_menu_scaled(t_menu_img *screen, t_img *img,
-                    t_scale_data data);
-void    		draw_hand_skin(t_cub3d *data, float scale);
+void			put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
+					t_scale_data data);
+void			put_timg_to_menu_scaled(t_menu_img *screen, t_img *img,
+					t_scale_data data);
+void			draw_hand_skin(t_cub3d *data, float scale);
 
 #endif
