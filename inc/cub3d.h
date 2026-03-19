@@ -13,7 +13,6 @@
 # include <sys/time.h>
 # include "defines.h"
 # include "structs.h"
-# include "menu.h"
 
 typedef enum e_status
 {
@@ -59,6 +58,8 @@ typedef struct s_cub3d
 	t_ray			ray;
 	t_fps_counter	fps;
 }					t_cub3d;
+
+# include "menu.h"
 
 //			INIT			//
 void			init_data(t_cub3d *data);
