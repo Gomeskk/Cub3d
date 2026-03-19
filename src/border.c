@@ -1,63 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   border.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 01:25:30 by joafaust          #+#    #+#             */
+/*   Updated: 2026/03/19 01:26:58 by joafaust         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
 ** Draws a horizontal border line at the specified y position.
 ** Fills the entire width with black pixels.
 */
-static void    draw_horizontal_line(t_cub3d *data, int y)
+static void	draw_horizontal_line(t_cub3d *data, int y)
 {
-    int    x;
+	int	x;
 
-    x = 0;
-    while (x < data->current_width)
-    {
-        pixel_put(&data->img, x, y, 0x800080);
-        x++;
-    }
+	x = 0;
+	while (x < data->current_width)
+	{
+		pixel_put(&data->img, x, y, 0x800080);
+		x++;
+	}
 }
 
 /*
 ** Draws the top and bottom borders of the screen.
 ** Border thickness defined by BORDER_THICKNESS.
 */
-static void    draw_horizontal_borders(t_cub3d *data)
+static void	draw_horizontal_borders(t_cub3d *data)
 {
-    int    y;
+	int	y;
 
-    y = 0;
-    while (y < BORDER_THICKNESS)
-    {
-        draw_horizontal_line(data, y);
-        y++;
-    }
-    y = data->current_height - BORDER_THICKNESS;
-    while (y < data->current_height)
-    {
-        draw_horizontal_line(data, y);
-        y++;
-    }
+	y = 0;
+	while (y < BORDER_THICKNESS)
+	{
+		draw_horizontal_line(data, y);
+		y++;
+	}
+	y = data->current_height - BORDER_THICKNESS;
+	while (y < data->current_height)
+	{
+		draw_horizontal_line(data, y);
+		y++;
+	}
 }
 
 /*
 ** Draws the left and right borders at the specified y position.
 ** Only draws the vertical edges, not the full width.
 */
-static void    draw_vertical_edges(t_cub3d *data, int y)
+static void	draw_vertical_edges(t_cub3d *data, int y)
 {
-    int    x;
+	int	x;
 
-    x = 0;
-    while (x < BORDER_THICKNESS)
-    {
-        pixel_put(&data->img, x, y, 0x800080);
-        x++;
-    }
-    x = data->current_width - BORDER_THICKNESS;
-    while (x < data->current_width)
-    {
-        pixel_put(&data->img, x, y, 0x800080);
-        x++;
-    }
+	x = 0;
+	while (x < BORDER_THICKNESS)
+	{
+		pixel_put(&data->img, x, y, 0x800080);
+		x++;
+	}
+	x = data->current_width - BORDER_THICKNESS;
+	while (x < data->current_width)
+	{
+		pixel_put(&data->img, x, y, 0x800080);
+		x++;
+	}
 }
 
 /*
@@ -65,15 +77,15 @@ static void    draw_vertical_edges(t_cub3d *data, int y)
 ** Border thickness defined by BORDER_THICKNESS.
 ** Draws top, bottom, left, and right borders as solid black rectangles.
 */
-void    draw_screen_border(t_cub3d *data)
+void	draw_screen_border(t_cub3d *data)
 {
-    int    y;
+	int	y;
 
-    draw_horizontal_borders(data);
-    y = BORDER_THICKNESS;
-    while (y < data->current_height - BORDER_THICKNESS)
-    {
-        draw_vertical_edges(data, y);
-        y++;
-    }
+	draw_horizontal_borders(data);
+	y = BORDER_THICKNESS;
+	while (y < data->current_height - BORDER_THICKNESS)
+	{
+		draw_vertical_edges(data, y);
+		y++;
+	}
 }
