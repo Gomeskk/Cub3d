@@ -6,12 +6,16 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:34 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 22:56:35 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 00:23:15 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//The scan_patrol_min function scans leftwards 
+//to find the left most accessible coordinate on the map.
+//It returns the minimum valid X-coordinate reached before encountering
+//walls, doors, or empty void spaces.
 int	scan_patrol_min(t_cub3d *data, int grid_y, int grid_x)
 {
 	int	x;
@@ -25,6 +29,8 @@ int	scan_patrol_min(t_cub3d *data, int grid_y, int grid_x)
 	return (x + 1);
 }
 
+//The scan_patrol_max function performs a similar scan but rightwards
+//to find the rightmost accessible X-coordinate on the map for enemy patrol.
 int	scan_patrol_max(t_cub3d *data, int grid_y, int grid_x)
 {
 	int	x;
@@ -38,6 +44,8 @@ int	scan_patrol_max(t_cub3d *data, int grid_y, int grid_x)
 	return (x - 1);
 }
 
+//Checks if an enemy can move into a given pixel position by 
+//converting it to grid coordinates and checking if the block is walkable
 int	enemy_can_move(t_cub3d *data, double px, double py)
 {
 	int	gx;
@@ -58,6 +66,8 @@ int	enemy_can_move(t_cub3d *data, double px, double py)
 	return (1);
 }
 
+//Moves an enemy towards the player's position if it's in chasing mode,
+//calculating the direction vector and applying movement based on speed and delta time.
 void	chase_player(t_cub3d *data, t_enemy *enemy, double dt)
 {
 	double	dx;
@@ -80,6 +90,8 @@ void	chase_player(t_cub3d *data, t_enemy *enemy, double dt)
 		enemy->pos_y = new_y;
 }
 
+//Moves an enemy back and forth between its patrol boundaries when not chasing,
+//reversing direction when reaching the limits.
 void	patrol_enemy(t_cub3d *data, t_enemy *enemy, double dt)
 {
 	double	new_x;
