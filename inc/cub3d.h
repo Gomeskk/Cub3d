@@ -4,7 +4,6 @@
 # include "../complete_lib/42_GNL/get_next_line_bonus.h"
 # include "../complete_lib/42_Libft/libft.h"
 # include <fcntl.h>
-# include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
@@ -106,7 +105,7 @@ int				get_tile_size(t_cub3d *data);
 double			get_time_in_seconds(void);
 double			get_delta_time(void);
 void			clear_image(t_img *img, int color);
-void            draw_screen_border(t_cub3d *data);
+void			draw_screen_border(t_cub3d *data);
 
 //			FPS COUNTER		//
 void			init_fps_counter(t_fps_counter *fps);
@@ -161,8 +160,8 @@ int				row_has_collision(t_cub3d *data, t_circle_center center,
 void			get_col_range(t_cub3d *data, t_circle_center center,
 					int *col_range);
 int				is_blocking_cell(t_cub3d *data, int row, int col);
-int				circle_intersects_rectangle(t_cub3d *data, t_circle_center center,
-					int row, int col);	
+int				circle_intersects_rectangle(t_cub3d *data,
+					t_circle_center center, int row, int col);	
 void			player_movement(t_cub3d *data, double dt);
 void			player_jump(t_cub3d *data, double dt);
 void			cycle_fov(t_cub3d *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:43 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 16:33:45 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 20:59:04 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc,
 		wave.y++;
 	}
 }
+
 //gets the current texture
 //calculates the sprite's position and dimensions on the screen
 //iterates through the vertical columns of the sprite and draws each column
