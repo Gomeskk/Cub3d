@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:20:11 by joafaust          #+#    #+#             */
-/*   Updated: 2026/03/18 22:20:12 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/19 20:15:52 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,36 +86,47 @@ static void	draw_enemies_on_map(t_cub3d *data, int params[3])
 }
 
 /*
-** Main function to render the complete minimap display.
-** Calculates scaling, draws map tiles, enemies, and player FOV cone.
-** Minimap size adapts to screen width, minimum 5 pixels per tile.
-** Process: Calculate tile size based on screen width (responsive minimap),
-** calculate offset/margin from screen edge, set player FOV line length
-** slightly larger than tiles, calculate scale factor (multiply by 1000 to
-** avoid floating point), pack parameters [0]=tile_size, [1]=offset,
-** [2]=scale*1000, draw all map tiles (walls, doors, floors), draw all
-** enemies with vision circles, update params for player rendering (use longer
-** lines for FOV), then draw player position and FOV cone.
+** Prepares minimap rendering parameters based on current screen/map size.
+** params[0] = minimap tile size, params[1] = screen offset,
+** params[2] = minimap scale * 1000.
 */
-void	render_minimap(t_cub3d *data)
+static void	init_minimap_params(t_cub3d *data, int params[3],
+	int *player_line_len)
 {
-	int		tile_size;
-	int		screen_offset;
-	int		player_line_len;
-	int		render_params[3];
-	double	map_scale;
+	int	tile_size;
+	int	max_map_size;
+	int	screen_offset;
 
 	tile_size = data->current_width / 128;
 	if (tile_size < 5)
 		tile_size = 5;
+	max_map_size = data->current_width / 8;
+	if (data->map.col_count > 0
+		&& tile_size * data->map.col_count > max_map_size)
+		tile_size = max_map_size / data->map.col_count;
+	if (data->map.row_count > 0
+		&& tile_size * data->map.row_count > max_map_size)
+		tile_size = max_map_size / data->map.row_count;
+	if (tile_size < 1)
+		tile_size = 1;
 	screen_offset = data->current_width / 160;
 	if (screen_offset < 5)
 		screen_offset = 5;
-	player_line_len = tile_size + 3;
-	map_scale = (double)tile_size / data->tile;
-	render_params[0] = tile_size;
-	render_params[1] = screen_offset;
-	render_params[2] = (int)(map_scale * 1000);
+	*player_line_len = tile_size + 3;
+	params[0] = tile_size;
+	params[1] = screen_offset;
+	params[2] = (int)(((double)tile_size / data->tile) * 1000);
+}
+
+/*
+** Renders the complete minimap: tiles, enemies, and player FOV.
+*/
+void	render_minimap(t_cub3d *data)
+{
+	int	player_line_len;
+	int	render_params[3];
+
+	init_minimap_params(data, render_params, &player_line_len);
 	draw_map_tiles(data, render_params);
 	draw_enemies_on_map(data, render_params);
 	render_params[0] = player_line_len;
