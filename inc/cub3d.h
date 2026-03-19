@@ -272,5 +272,6 @@ void            put_img_to_img_scaled(t_menu_img *screen, t_menu_img img,
                     t_scale_data data);
 void            put_timg_to_menu_scaled(t_menu_img *screen, t_img *img,
                     t_scale_data data);
+void    		draw_hand_skin(t_cub3d *data, float scale);
 
 #endif

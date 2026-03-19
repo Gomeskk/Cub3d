@@ -34,7 +34,7 @@ TEXTURES_SRCS	= texture.c texture_helper.c
 TEXTURES_DIR	= src/textures/
 TEXTURES		=  $(addprefix $(TEXTURES_DIR), $(TEXTURES_SRCS))
 
-MENU_SRCS		= menu_images.c menu_images_options.c menu_images_arrays.c menu_input.c menu_input_loop.c menu_navigation.c menu_navigation_options.c menu_options_settings.c menu_render.c menu_render_utils.c menu_resolution.c menu_resolution_init.c menu_state.c menu_transparency.c menu_utils.c
+MENU_SRCS		= menu_images.c menu_images_options.c menu_images_arrays.c menu_input.c menu_input_loop.c menu_navigation.c menu_navigation_options.c menu_options_settings.c menu_render.c menu_render_utils.c menu_resolution.c menu_resolution_init.c menu_state.c menu_transparency.c menu_utils.c menu_skin_select.c
 MENU_DIR		= src/menu_ui/
 MENU 			=  $(addprefix $(MENU_DIR), $(MENU_SRCS))
 

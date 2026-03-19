@@ -67,34 +67,23 @@ void	render_difficulty_menu(t_cub3d *data)
 		data->menu.screens.screen_buffer.image, 0, 0);
 }
 
-/*
-** Render skin selection screen
-** Shows base skin image with arrow overlay (left or right) on top
-** and the current selected hand skin in the center
-*/
-void    render_skin_select(t_cub3d *data)
+void	render_skin_select(t_cub3d *data)
 {
-    float    scale;
-    t_img    *current_skin;
-    int        skin_x;
-    int        skin_y;
+	float	scale;
 
-    scale = get_scale(data);
-    put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-        data->menu.screens.skin_select, init_scale_data(0, 0, scale));
-    current_skin = &data->hands.skins[data->menu.skin_choice];
-    skin_x = (int)((data->current_width - current_skin->width * scale) / 2);
-    skin_y = (int)((data->current_height - current_skin->height * scale) / 2);
-    put_timg_to_menu_scaled(&data->menu.screens.screen_buffer,
-        current_skin, init_scale_data(skin_x, skin_y, scale));
-    if (data->menu.last_skin_arrow_direction == -1)
-        put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-            data->menu.screens.arrow_left, init_scale_data(0, 0, scale));
-    else
-        put_img_to_img_scaled(&data->menu.screens.screen_buffer,
-            data->menu.screens.arrow_right, init_scale_data(0, 0, scale));
-    mlx_put_image_to_window(data->mlx, data->window,
-        data->menu.screens.screen_buffer.image, 0, 0);
+	scale = get_scale(data);
+	put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+		data->menu.screens.skin_select, init_scale_data(0, 0, scale));
+	if (data->menu.last_skin_arrow_direction == -1)
+		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+			data->menu.screens.arrow_left, init_scale_data(0, 0, scale));
+	else
+		put_img_to_img_scaled(&data->menu.screens.screen_buffer,
+			data->menu.screens.arrow_right,
+			init_scale_data(0, 0, scale));
+	draw_hand_skin(data, scale);
+	mlx_put_image_to_window(data->mlx, data->window,
+		data->menu.screens.screen_buffer.image, 0, 0);
 }
 
 /*
