@@ -1,5 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enemy_projection.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 22:56:38 by bpires-r          #+#    #+#             */
+/*   Updated: 2026/03/19 00:28:20 by bpires-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
+//computes the 2D positional difference between an enemy sprite and the player based on tile.
+//It then calculates the transformed sprite coordinates (tx and ty) using the
+//inverse camera matrix, effectively translating the sprite into the player's
+//localized camera space for raycasting rendering.
 void	calc_sprite_transform(t_cub3d *data, t_enemy *enemy,
 	t_sprite_calc *sc)
 {

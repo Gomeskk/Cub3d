@@ -169,6 +169,7 @@ void			init_texture_step(t_img *texture, t_ray *ray,
 					t_cub3d *data, t_tex_draw *td);
 void			draw_texture_column(t_cub3d *data, t_tex_draw *td,
 					t_img *texture, int x);
+void			fill_wall_images(t_cub3d *data, void **images);
 
 //			DOORS				//
 void			init_doors(t_cub3d *data);

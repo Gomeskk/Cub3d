@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_images_arrays.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:17:42 by joafaust          #+#    #+#             */
-/*   Updated: 2026/03/18 22:17:43 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/18 23:39:35 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

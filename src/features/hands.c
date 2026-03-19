@@ -1,44 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hands.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/18 22:57:07 by bpires-r          #+#    #+#             */
+/*   Updated: 2026/03/18 23:31:26 by bpires-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-static void	set_hand_paths(char *paths[HAND_SKIN_COUNT])
-{
-	paths[0] = "Png_images/Hands/light1.xpm";
-	paths[1] = "Png_images/Hands/medium1.xpm";
-	paths[2] = "Png_images/Hands/dark1.xpm";
-	paths[3] = "Png_images/Hands/light2.xpm";
-	paths[4] = "Png_images/Hands/medium2.xpm";
-	paths[5] = "Png_images/Hands/dark2.xpm";
-}
-
-static int	load_hand_skin(t_cub3d *data, t_img *skin, char *path)
-{
-	skin->image = mlx_xpm_file_to_image(data->mlx, path,
-			&skin->width, &skin->height);
-	if (!skin->image)
-		return (0);
-	skin->data = mlx_get_data_addr(skin->image, &skin->bpp,
-			&skin->size_line, &skin->type);
-	if (!skin->data)
-		return (0);
-	return (1);
-}
-
-int	load_hands_textures(t_cub3d *data)
-{
-	char	*paths[HAND_SKIN_COUNT];
-	int		skin;
-
-	set_hand_paths(paths);
-	skin = 0;
-	while (skin < HAND_SKIN_COUNT)
-	{
-		if (!load_hand_skin(data, &data->hands.skins[skin], paths[skin]))
-			return (0);
-		skin++;
-	}
-	data->hands.anim_phase = 0.0;
-	return (1);
-}
 
 static int	get_hands_motion_offset(t_cub3d *data)
 {
@@ -61,32 +33,29 @@ static int	get_hands_motion_offset(t_cub3d *data)
 
 static void	draw_hands_scaled(t_img *dst, t_img *src, int y_offset)
 {
-	int		x;
-	int		y;
-	int		dst_y;
+	int		pos[2];
 	int		*src_row;
 	int		*dst_row;
 
-	y = 0;
-	while (y < dst->height)
+	pos[0] = 0;
+	while (pos[0] < dst->height)
 	{
-		dst_y = y + y_offset;
-		if (dst_y < 0 || dst_y >= dst->height)
+		if ((pos[0] + y_offset) < 0 || (pos[0] + y_offset) >= dst->height)
 		{
-			y++;
+			pos[0]++;
 			continue ;
 		}
-		src_row = (int *)(src->data + (y * src->height / dst->height)
+		src_row = (int *)(src->data + (pos[0] * src->height / dst->height)
 				* src->size_line);
-		dst_row = (int *)(dst->data + dst_y * dst->size_line);
-		x = 0;
-		while (x < dst->width)
+		dst_row = (int *)(dst->data + (pos[0] + y_offset) * dst->size_line);
+		pos[1] = 0;
+		while (pos[1] < dst->width)
 		{
-			if (src_row[x * src->width / dst->width] >= 0)
-				dst_row[x] = src_row[x * src->width / dst->width];
-			x++;
+			if (src_row[pos[1] * src->width / dst->width] >= 0)
+				dst_row[pos[1]] = src_row[pos[1] * src->width / dst->width];
+			pos[1]++;
 		}
-		y++;
+		pos[0]++;
 	}
 }
 

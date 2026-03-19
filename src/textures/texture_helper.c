@@ -67,6 +67,21 @@ void	init_texture_step(t_img *texture, t_ray *ray,
 	td->tex_pos = screen_y * td->step;
 }
 
+void	fill_wall_images(t_cub3d *data, void **images)
+{
+	images[0] = data->wall_textures.north.image;
+	images[1] = data->wall_textures.south.image;
+	images[2] = data->wall_textures.east.image;
+	images[3] = data->wall_textures.west.image;
+	images[4] = data->wall_textures.door.image;
+	images[5] = data->wall_textures.button.image;
+	images[6] = data->wall_textures.alt_button.image;
+	images[7] = data->wall_textures.alt_north.image;
+	images[8] = data->wall_textures.alt_south.image;
+	images[9] = data->wall_textures.alt_east.image;
+	images[10] = data->wall_textures.alt_west.image;
+}
+
 /*
 ** Draws one vertical wall column using current texture sampling state.
 ** Wraps tex_y with modulo so any texture height is supported.
