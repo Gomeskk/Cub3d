@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:18:54 by joafaust          #+#    #+#             */
-/*   Updated: 2026/03/18 22:18:56 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/19 21:13:27 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	apply_difficulty_settings(t_cub3d *data)
 	i = 0;
 	while (i < data->map.enemy_count)
 	{
-		data->map.enemies[i].speed = ENEMY_SPEED_BASE
+		data->map.enemies[i].speed = ENEMY_SPEED_BASE * data->tile
 			* data->game_settings.difficulty_mult;
 		data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS
 			* data->game_settings.difficulty_mult;

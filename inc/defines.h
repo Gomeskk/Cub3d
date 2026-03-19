@@ -24,7 +24,7 @@
 # define M_PI           3.14159265358979323846
 
 ///          ENEMY SETTINGS          ///
-# define ENEMY_SPEED_BASE 40.0 // podes usar
+# define ENEMY_SPEED_BASE 1.5 // tiles per second base speed
 # define ENEMY_VISION_RADIUS 2.5 // podes usar
 # define ENEMY_CHASE_SPEED_MULT 2.0 // podes usar 
 # define ENEMY_COLLISION_RADIUS 0.3

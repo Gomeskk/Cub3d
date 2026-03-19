@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:28 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 00:55:55 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 21:13:27 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	init_vars(t_cub3d *data, int x, int y, int i)
 	data->map.enemies[i].dir = 1.0;
 	data->map.enemies[i].patrol_min = (double)scan_patrol_min(data, y, x);
 	data->map.enemies[i].patrol_max = (double)scan_patrol_max(data, y, x);
-	data->map.enemies[i].speed = ENEMY_SPEED_BASE
+	data->map.enemies[i].speed = ENEMY_SPEED_BASE * data->tile
 		* data->game_settings.difficulty_mult;
 	data->map.enemies[i].vision_radius = ENEMY_VISION_RADIUS
 		* data->game_settings.difficulty_mult;
