@@ -6,12 +6,13 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:50 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 22:56:51 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 18:48:54 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//Helper function to prepare sorting data
 static void	fill_enemy_distances(t_cub3d *data, int *order, double *dist)
 {
 	int	i;

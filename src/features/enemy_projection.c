@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:38 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 00:55:07 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 18:45:58 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //computes the 2D positional difference between an enemy sprite 
 //and the player based on tile. It then calculates 
 //the transformed sprite coordinates (tx and ty) using the
-//inverse camera matrix, effectively translating the sprite into the player's
+//inverse camera matrix, translating the sprite into the player's
 //localized camera space for raycasting rendering.
 void	calc_sprite_transform(t_cub3d *data, t_enemy *enemy,
 	t_sprite_calc *sc)
@@ -62,7 +62,7 @@ static void	set_sprite_horizontal_bounds(t_cub3d *data, t_sprite_calc *sc)
 //by scaling the sprite relative to the screen size and camera plane
 void	calc_sprite_dims(t_cub3d *data, t_sprite_calc *sc)
 {
-	double	plane_mag;
+	double	plane_lenght;
 	double	fov_scale;
 
 	if (sc->ty <= 0.01)
@@ -70,9 +70,9 @@ void	calc_sprite_dims(t_cub3d *data, t_sprite_calc *sc)
 		sc->height = 0;
 		return ;
 	}
-	plane_mag = sqrt(data->player.plane_x * data->player.plane_x
+	plane_lenght = sqrt(data->player.plane_x * data->player.plane_x
 			+ data->player.plane_y * data->player.plane_y);
-	fov_scale = FOV_NORMAL / plane_mag;
+	fov_scale = FOV_NORMAL / plane_lenght;
 	sc->screen_x = (int)((data->current_width / 2)
 			* (1 + sc->tx / sc->ty));
 	sc->height = (int)(data->current_height / sc->ty * fov_scale);

@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:43 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 01:00:45 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:33:45 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	draw_sprite_wave(t_cub3d *data, t_sprite_calc *sc,
 	}
 }
 
+//draws a vertical column of the enemy on the screen 
+//by iterating through its vertical bounds
 static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc,
 	t_img *texture, int stripe)
 {
@@ -71,7 +73,9 @@ static void	draw_sprite_column(t_cub3d *data, t_sprite_calc *sc,
 		wave.y++;
 	}
 }
-
+//gets the current texture
+//calculates the sprite's position and dimensions on the screen
+//iterates through the vertical columns of the sprite and draws each column
 static void	draw_single_enemy(t_cub3d *data, t_enemy *enemy)
 {
 	t_sprite_calc	sc;

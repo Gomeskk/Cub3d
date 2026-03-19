@@ -154,22 +154,6 @@ typedef struct s_mouse
 	int			locked;
 }				t_mouse; // mouse rotation
 
-typedef enum e_status
-{
-	MAIN_MENU_SCREEN,
-	MENU_START,
-	MENU_OPTIONS,
-	MENU_CREDITS,
-	DIFFICULTY_SCREEN,
-	DIFF_EASY,
-	DIFF_MEDIUM,
-	DIFF_HARD,
-	SKIN_SELECT,
-	GAME,
-	OPTIONS_SCREEN,
-	CREDITS_SCREEN,
-}				t_status;
-
 typedef enum e_options_section
 {
 	SECTION_SOUND,

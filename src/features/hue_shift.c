@@ -6,12 +6,15 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:57:13 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 22:57:14 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 18:58:31 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//Function to "clamp" one color channel.
+//clamp is the usual term for nounding a value to a min/max range
+//bound for me is just easier to read :D
 int	bound_color(int value)
 {
 	if (value < 0)
@@ -20,6 +23,8 @@ int	bound_color(int value)
 		return (255);
 	return (value);
 }
+
+//Checks whether a color is near white/gray.
 
 int	is_whiteish_pixel(int r, int g, int b)
 {
