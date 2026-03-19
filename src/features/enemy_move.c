@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:34 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/19 00:23:15 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 00:55:29 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	enemy_can_move(t_cub3d *data, double px, double py)
 }
 
 //Moves an enemy towards the player's position if it's in chasing mode,
-//calculating the direction vector and applying movement based on speed and delta time.
+//calculating the direction vector and applying movement based 
+//on speed and delta time.
 void	chase_player(t_cub3d *data, t_enemy *enemy, double dt)
 {
 	double	dx;

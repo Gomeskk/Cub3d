@@ -6,12 +6,14 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:56:43 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 22:56:45 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/19 01:00:45 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//Retrieves the current texture to use for rendering an enemy, 
+//based on animation settings and frame count.
 static t_img	*get_current_enemy_texture(t_cub3d *data)
 {
 	int		frame;
@@ -25,6 +27,10 @@ static t_img	*get_current_enemy_texture(t_cub3d *data)
 	return (&data->enemy_frames[frame]);
 }
 
+//calculates the corresponding texture coordinates for a specific 
+//vertical segment of a sprite wave and retrieves its pixel color. 
+//It then optionally applies an enemy hue gradient based on the animation 
+//time before drawing the non-transparent pixel to the screen.
 static void	draw_sprite_wave(t_cub3d *data, t_sprite_calc *sc,
 	t_img *texture, t_sprite_wave *wave)
 {
