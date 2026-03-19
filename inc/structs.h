@@ -1,8 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bpires-r <bpires-r@student.42lisboa.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026-03-19 21:47:19 by bpires-r          #+#    #+#             */
+/*   Updated: 2026-03-19 21:47:19 by bpires-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
 # include "../complete_lib/minilibx-linux/mlx.h"
 # include "../complete_lib/minilibx-linux/mlx_int.h"
+# include "defines.h"
+
+typedef struct s_cub3d	t_cub3d;
 
 typedef struct s_menu_img
 {
