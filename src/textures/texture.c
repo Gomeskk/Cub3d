@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 01:25:22 by joafaust          #+#    #+#             */
-/*   Updated: 2026/03/19 01:25:23 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/19 22:10:23 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	load_wall_textures(t_cub3d *data)
 			"Png_images/Walls/Button.xpm"))
 		return (0);
 	if (!load_single_texture(data->mlx, &data->wall_textures.alt_north,
-			data->textures.we))
+			"Png_images/Walls/Fofos.xpm"))
 		return (0);
 	data->wall_textures.textures_swapped = 0;
 	return (1);
