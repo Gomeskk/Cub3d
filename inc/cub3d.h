@@ -179,20 +179,6 @@ void			init_texture_step(t_img *texture, t_ray *ray,
 void			draw_texture_column(t_cub3d *data, t_tex_draw *td,
 					t_img *texture, int x);
 void			fill_wall_images(t_cub3d *data, void **images);
-================================] 100%
-Bringing cub3d to life!
-Creating cub3d's executable...
-clang: error: no such file or directory: 'obj/mouse_rotate.o'
-clang: error: no such file or directory: 'obj/menu_images.o'
-clang: error: no such file or directory: 'obj/menu_images_options.o'
-clang: error: no such file or directory: 'obj/menu_images_arrays.o'
-clang: error: no such file or directory: 'obj/menu_input.o'
-clang: error: no such file or directory: 'obj/menu_input_loop.o'
-clang: error: no such file or directory: 'obj/menu_navigation.o'
-clang: error: no such file or directory: 'obj/menu_navigation_options.o'
-clang: error: no such file or directory: 'obj/menu_options_settings.o'
-clang: error: no such file or directory: 'obj/menu_render.o'
-clang: error: no such file or directory: 'obj/menu_render_utils.o'
 
 //			DOORS				//
 void			init_doors(t_cub3d *data);

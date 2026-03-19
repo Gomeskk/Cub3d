@@ -108,28 +108,47 @@ For more information on the parsing you can also check the **Parsing** section i
 | S - down arrow  | Move backward          |
 | A - left arrow  | Move left              |
 | D - right arrow | Move right             |
+| space           | Jump                   |
 | ← / → - mouse   | Rotate camera          |
-| ESC             | Exit program / go back |
+| ctrl            | Crouch                 |
+| left shift      | Sprint                 |
 | tab             | next selection - menu  |
-|                 |                        |
+| F               | Flashlight             |
+| V               | FOV change             |
+| ESC             | Exit program / go back |
 
 ## Resources
 
-A `“Resources”` section listing classic references related to the topic (documen tation, articles, tutorials, etc.), as well as a description of how AI was used — specifying for which tasks and which parts of the project.
+This is where I share my tools used for learning in this project. Every Highlited word will be a direct link for the reference used.
 
-WIIPPPPPPPPP
+Keeping in mind that some learning resources came from bpires-r's job - SHARKCODERS.
+SHARKCODERS is a coding school so I, (bpires-r), used a lot of my learnings and teachings through the gameDev courses I lecture to apply here.
 
 ### Raycasting && Graphics
 
+- How [Raycast](https://youtu.be/yds-8Ii0wSM "Visual Reference") is Visualized.
+
+- How [Raycast](https://lodev.org/cgtutor/raycasting.html) works through the Raycasting Documentation
+
+- How [Raytracing](https://youtu.be/H5TB2l7zq6s "Raytracing") works.
+
+- What is [Euclidean Geometry](https://en.wikipedia.org/wiki/Euclidean_space) and studies around it.
+
 ### MiniLibX
 
-- 42 MiniLibX documentation
-- Harm Smits MiniLibX guide
+- 42 MiniLibX documentation inside [42 Docs](https://harm-smits.github.io/42docs/libs/minilibx "42 Docs MinilibX")
 
 ### Mathematics
 
-- Basic trigonometry for ray direction and projection
-- Vector normalization and distance correction
+- Introduction to [Linear Algebra](https://en.wikipedia.org/wiki/Linear_algebra "Linear Algebra")
+
+- [Tranformation Matrix](https://en.wikipedia.org/wiki/Transformation_matrix) and [Rotation](<https://en.wikipedia.org/wiki/Rotation_(mathematics)> "rotation")
+
+- The [DDA Algorythm](https://www.youtube.com/watch?v=W5P8GlaEOSI)
+
+- [Calculus Introduction](https://www.youtube.com/watch?v=WsQQvHm4lSw&t=183s)
+
+- [Camera Bob](https://developer.valvesoftware.com/wiki/Camera_Bob) for the Hands motion.
 
 ## AI Usage Disclosure
 
@@ -261,8 +280,9 @@ To get perpendicular direction (90° clockwise rotation):
 ## Raycasting
 
 > [!example] The Basic Idea
-> The map is a 2D grid and each cell can be empty floor or blocking geometry.
-> Raycasting means: for each vertical column of the screen, cast one ray, find the first hit in the grid, then draw a wall slice with height based on distance.
+> The basic idea of raycasting is as follows: the map is a 2D square grid, and each square can either be 0 (= no wall), or a positive value (= a wall with a certain color or texture).
+
+Some raycasters work with Euclidean angles to represent the direction of the player and the rays, and determinate the Field Of View with another angle.
 
 Instead of using only Euclidean angles for each ray, this implementation follows the vector + camera plane approach:
 
@@ -369,9 +389,193 @@ This is the anti-fisheye part because we use perpendicular distance to the camer
 
 ## Enemies
 
-### WIPPPPPP
+### Enemy idea
+
+The enemy is marked as F in the map and is a sprite "AI" entity with 2 behaviour states:
+
+1. Patrol mode: moves Left-Right in a precomputed horizontal lane based on free space to walk on (basically collisions with walls, buttons and doors)
+2. Chase mode: once player enters the vision/listening radius, the enemy caughts their presence and starts following the player with collision checks.
+
+### Full enemy flow (simple)
+
+1. Parse map and find all `F` tiles
+
+- `F` means enemy spawn point in the map file.
+- We count how many there are and allocate an enemy array with exact size.
+
+2. Save enemy data
+
+- Store spawn grid position (`grid_x`, `grid_y`).
+- Compute patrol limits (`patrol_min`, `patrol_max`) by scanning left/right on the same row.
+- Set enemy speed and vision radius (scaled by difficulty).
+- Replace map `F` with `0` because runtime enemy now lives in `map.enemies[]`.
+
+3. Convert grid spawn to world position
+
+- Runtime movement/rendering uses pixel/world coordinates (`pos_x`, `pos_y`).
+- Position is centered in tile: `grid * tile + tile/2`.
+
+4. Every game frame
+
+- `update_enemies(dt)`:
+  - if `chasing == 0` -> patrol
+  - if `chasing == 1` -> chase player
+- `check_enemy_detection()`:
+  - if player is close enough, set `chasing = 1`
+- `check_enemy_collision()`:
+  - if too close to player, game over
+
+5. Render frame
+
+- Raycast walls first and fill `z_buffer`.
+- Sort enemies by distance (far -> near).
+- Project each enemy sprite to screen.
+- Draw only if enemy depth is in front of wall depth (`z_buffer` check).
+
+### Patrol logic
+
+Enemy patrol is horizontal (X axis only) between two precomputed limits.
+
+- `new_x = pos_x + dir * speed * dt`
+- if reached min/max limit:
+  - flip direction (`dir *= -1`)
+  - clamp position to limit
+
+`dir` is either `+1` (right) or `-1` (left).
+
+### Chase logic
+
+We compute vector from enemy to player:
+
+- `dx = player_x - enemy_x`
+- `dy = player_y - enemy_y`
+
+Distance:
+
+```C
+dist = sqrt(dx * dx + dy * dy);
+```
+
+If distance is almost zero, return early to avoid division issues.
+
+Normalize direction (unit vector):
+
+```C
+u_x = dx / dist;
+u_y = dy / dist;
+```
+
+Frame movement:
+
+```C
+new_x = enemy_x + u_x * speed * dt
+```
+
+```C
+new_y = enemy_y + u_y * speed * dt
+```
+
+This gives constant speed independent of distance and FPS.
+
+### Why `dt` is used everywhere
+
+`dt` = delta time (seconds since last frame).
+
+- With `dt`, movement is frame-rate independent.
+- Without `dt`, same code moves faster on higher FPS and slower on lower FPS.
+
+### Enemy collision checks (map)
+
+Enemy movement only enters valid cells:
+
+- blocks on `1` (wall)
+- blocks on `B` (button tile)
+- blocks on closed `D` door
+- allows open `D` door
+
+This is why enemies do not pass through solid geometry.
+
+### Detection + game over radii
+
+Both use Euclidean distance in world units.
+
+Detection:
+
+```C
+dist < vision_radius * tile
+```
+
+Game over collision:
+
+```C
+dist < ENEMY_COLLISION_RADIUS * tile
+```
+
+Simple meaning: one radius is "enemy sees you", another smaller radius is "enemy caught you".
+
+### Enemy projection math (render)
+
+After sorting by distance, each enemy is projected into camera space.
+
+1. Relative sprite position from player:
+
+- `sx = enemy_x - player_x` (in tile units)
+- `sy = enemy_y - player_y`
+
+2. Transform to camera space using inverse camera matrix:
+
+- `tx` = left/right position on screen space
+- `ty` = depth in front of camera
+
+If `ty <= 0`, sprite is behind camera, so skip.
+
+3. Screen placement:
+
+- `screen_x` comes from `tx/ty`
+- sprite `height` is proportional to `1/ty`
+
+Near enemy => bigger sprite.
+Far enemy => smaller sprite.
+
+### Depth occlusion (why enemies hide behind walls)
+
+For each screen stripe of the sprite, compare:
+
+- enemy depth `ty`
+- wall depth `z_buffer[stripe]`
+
+Draw sprite stripe only if enemy is closer than wall.
+
+That is the exact reason occlusion works.
+
+### Animation + hue effect (simple)
+
+Enemy texture frame:
+
+- `frame = (time * ENEMY_ANIM_FPS) % frame_count`
+
+Hue shift:
+
+- only selected blue-ish pixels are tinted
+- target RGB and mix are generated from smooth `sin()` waves
+- original color is blended toward animated target color
+
+This creates the shiny animated enemy effect without recoloring everything.
+
+### Difficulty scaling
+
+Difficulty multiplier affects:
+
+- enemy speed
+- enemy vision radius
+- chase speed still multiplies with chase constant
+
+So difficulty changes both pressure (speed) and detection range.
+
+> [!example] Resume
+> Enemy system = spawn from map markers -> patrol/chase AI with distance math -> collision checks -> sprite projection + depth test render.
+> Main math ideas are: Euclidean distance, vector normalization, delta-time movement, and perspective scaling (`1/depth`).
 
 ## Texture Mapping
 
 vai gomes :D
-
