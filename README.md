@@ -576,6 +576,312 @@ So difficulty changes both pressure (speed) and detection range.
 > Enemy system = spawn from map markers -> patrol/chase AI with distance math -> collision checks -> sprite projection + depth test render.
 > Main math ideas are: Euclidean distance, vector normalization, delta-time movement, and perspective scaling (`1/depth`).
 
+## Menu UI
+
+The menu UI system provides a complete graphical interface for game configuration and navigation before entering gameplay. It features custom-drawn sprites, double-buffered rendering, and a hierarchical navigation system.
+
+### Menu Architecture
+
+**Screen States:**
+- `MAIN_MENU` - Primary menu with Start/Options/Credits
+- `DIFFICULTY_SCREEN` - Difficulty selection (Easy/Medium/Hard)
+- `SKIN_SELECT_SCREEN` - Player skin customization
+- `OPTIONS_SCREEN` - Settings configuration
+- `CREDITS_SCREEN` - Developer credits display
+
+**Double Buffering System:**
+All menu elements are rendered to an off-screen buffer (`screen_buffer`) before being displayed. This prevents flickering and allows for complex compositing operations including alpha-channel transparency.
+
+### Navigation System
+
+The menu uses a state machine approach with distinct handlers for each screen:
+
+```c
+// Example: Main menu navigation
+- Up/Down arrows or W/S: Cycle through options
+- Enter: Select current option
+- ESC: Exit game or return to previous screen
+```
+
+Each menu screen maintains its own:
+- Current selection index
+- Rendering function
+- Input handler
+- State transition logic
+
+**Tab Navigation:**
+The tab key cycles through different option sections, particularly useful in the Options menu where users can navigate between Sound, Controls, and Display settings.
+
+### Options & Settings
+
+**Configurable Parameters:**
+
+1. **Sensibility** (5 levels: 0-4)
+   - Controls mouse rotation speed
+   - Converts to movement multiplier (0.0x to 2.0x)
+   - Level 0: No rotation, Level 2: Default (1.0x), Level 4: Double speed (2.0x)
+
+2. **Difficulty** (3 modes)
+   - Easy: 0.60x enemy speed and vision
+   - Medium: 1.0x baseline difficulty
+   - Hard: 1.25x enemy speed and vision
+   - Applied dynamically to all active enemies
+
+3. **Volume** (Audio level control)
+   - Visual indicator with level bars
+   - Saved across menu sessions
+
+4. **Resolution** (Dynamic screen size)
+   - Changes window dimensions in real-time
+   - Confirmation dialog to prevent accidental changes
+   - Rebuilds all menu images at new resolution
+
+### Image Management
+
+**Image Loading:**
+- All menu images loaded from `Png_images/` directory
+- Categories: StartGame, Difficulty, Options, SkinSelection, Credits
+- Uses MiniLibX XPM format for transparency support
+
+**Transparency Rendering:**
+Custom alpha-blending implementation using **bitshifting**:
+- Extracts RGB channels from source and destination
+- Blends colors based on alpha value
+- Optimized for real-time menu rendering
+
+```c
+// Transparency overlay: menu elements drawn over backgrounds
+// Prevents hard edges and allows layered UI composition
+```
+
+### Resolution System
+
+**Dynamic Resize Flow:**
+1. User adjusts resolution slider in Options
+2. Arrow direction tracking for visual feedback
+3. Confirmation dialog appears
+4. If confirmed:
+   - All XPM images reloaded at new dimensions
+   - Screen buffer recreated
+   - Menu state preserved across resize
+5. If cancelled: reverts to previous resolution
+
+**Resolution Confirmation:**
+- Prevents accidental window size changes
+- Two-step process: adjust → confirm
+- Clear visual feedback during selection
+
+### Menu Rendering
+
+**Render Pipeline:**
+1. Clear screen buffer
+2. Draw background image
+3. Composite foreground elements with transparency
+4. Apply highlights to selected options
+5. Display buffer to window
+
+**Visual Feedback:**
+- Selected menu items highlighted
+- Arrow indicators for multi-choice options
+- Real-time preview of settings changes
+- Smooth state transitions
+
+### Input Handling
+
+**Keyboard Input:**
+- Arrow keys / WASD: Navigation
+- Enter: Confirm selection
+- ESC: Back/Exit
+- Tab: Switch option sections
+
+**Input Loop:**
+The menu runs in a separate event loop from gameplay, processing inputs through screen-specific handlers. Each screen's input function returns control flow instructions (continue menu, start game, exit, etc.).
+
+> [!example] Summary
+> The menu UI provides a complete pre-game interface with customizable settings, smooth navigation, and professional visual presentation using double-buffering and custom transparency rendering.
+
 ## Texture Mapping
 
-vai gomes :D
+The texture mapping system transforms flat 2D images (XPM files) onto 3D wall surfaces, creating the illusion of depth and detail. This involves loading textures, selecting the correct face based on ray collision, and sampling pixels based on where the ray hit the wall.
+
+### Texture Loading
+
+**XPM Format:**
+All wall textures are loaded from XPM (X PixMap) files using MiniLibX:
+- North, South, East, West walls (from `.cub` file)
+- Door texture (`Png_images/Walls/Door.xpm`)
+- Button texture (`Png_images/Walls/Button.xpm`)
+
+**Loading Process:**
+```c
+// Each texture is loaded with:
+1. mlx_xpm_file_to_image() - creates image from file
+2. mlx_get_data_addr() - retrieves pixel buffer
+3. Stores: width, height, bits per pixel, size_line, endian
+```
+
+Each texture becomes a `t_img` structure containing:
+- Image pointer (for MiniLibX)
+- Pixel data buffer (direct memory access)
+- Dimensions (width × height in pixels)
+- Metadata (bpp, size_line, endian)
+
+### Face Detection
+
+**Directional Texture Selection:**
+The system automatically selects the correct wall texture based on which side the ray hit:
+
+**Hit Priority:**
+1. **Button surfaces** - If ray hits a 'B' tile
+2. **Door surfaces** - If ray hits a 'D' tile
+3. **Directional walls** - Based on ray side and step direction:
+   - X-side hit + positive step → West texture
+   - X-side hit + negative step → East texture
+   - Y-side hit + positive step → North texture
+   - Y-side hit + negative step → South texture
+
+This ensures each wall face shows the appropriate texture regardless of viewing angle.
+
+### Wall Hit Position (wall_x)
+
+**Calculating Exact Hit Point:**
+When a ray hits a wall, we need to know **where along the wall face** it hit (horizontal position on the wall surface).
+
+```c
+// For X-side hits: use Y coordinate progression
+wall_x = player.pos_y + perp_wall_dist * ray_dir_y
+
+// For Y-side hits: use X coordinate progression
+wall_x = player.pos_x + perp_wall_dist * ray_dir_x
+```
+
+**Fractional Part Extraction:**
+```c
+wall_x -= floor(wall_x);  // Keep only 0.0 to 1.0
+```
+
+This gives us a normalized position (0.0 to 1.0) representing how far across the wall face the hit occurred. A wall_x of 0.25 means the ray hit at 25% across the wall surface.
+
+### Texture Coordinate Mapping
+
+**Horizontal Mapping (tex_x):**
+Converts the wall hit position into a texture column:
+
+```c
+tex_x = (int)(wall_x * texture_width)
+```
+
+**Texture Mirroring:**
+Certain wall orientations need horizontal flipping for correct appearance:
+- West walls (ray coming from left)
+- South walls (ray coming from top)
+
+```c
+if (needs_mirror)
+    tex_x = texture_width - tex_x - 1;
+```
+
+This prevents textures from appearing reversed when viewed from different angles.
+
+**Vertical Mapping (tex_y):**
+Uses a **stepping system** to sample the correct vertical position in the texture:
+
+```c
+// Calculate vertical step per screen pixel
+step = texture_height / line_height
+
+// Initialize starting position (accounts for pitch and z_offset)
+tex_pos = (draw_start - pitch - z_offset + wall_center_offset) * step
+
+// For each screen Y pixel:
+tex_y = (int)tex_pos
+tex_pos += step
+```
+
+### Vertical Texture Stepping
+
+**Why Stepping?**
+A wall might be rendered as 200 pixels tall on screen, but the texture might be only 64 pixels tall. The step value determines how much to advance through the texture per screen pixel.
+
+**Step Calculation:**
+```c
+step = (double)texture_height / (double)line_height
+```
+
+Examples:
+- 64px texture, 200px wall → step = 0.32 (slow texture scroll)
+- 64px texture, 32px wall → step = 2.0 (fast texture scroll)
+
+**Accounting for Camera Effects:**
+The initial texture position adjusts for:
+1. **Pitch** - Looking up/down shifts texture sampling
+2. **Z-offset** - Jumping/crouching vertically offsets the viewport
+3. **Wall centering** - Aligns texture middle with screen middle
+
+### Modulo Wrapping
+
+**Handling Texture Overflow:**
+When pitch or z_offset push sampling beyond texture bounds, modulo wrapping keeps coordinates valid:
+
+```c
+tex_y = tex_y % texture_height;
+if (tex_y < 0)
+    tex_y += texture_height;  // Handle negative values
+```
+
+This allows unlimited camera pitch and jumping without texture coordinate errors.
+
+### Pixel Sampling
+
+**Direct Memory Access:**
+Instead of slow pixel-by-pixel API calls, the renderer reads directly from texture memory:
+
+```c
+// Calculate byte position in texture buffer
+row_offset = tex_y * size_line
+col_offset = tex_x * (bpp / 8)
+pixel_address = texture_data + row_offset + col_offset
+
+// Read color value (32-bit ARGB)
+color = *(unsigned int *)pixel_address
+```
+
+**Bounds Safety:**
+Before sampling, coordinates are validated:
+```c
+if (x < 0 || x >= width || y < 0 || y >= height)
+    return 0x000000;  // Return black for out-of-bounds
+```
+
+### Rendering Pipeline
+
+**Per-Column Texture Rendering:**
+For each screen column `x` from `draw_start` to `draw_end`:
+
+1. Select appropriate wall texture (face detection)
+2. Calculate `tex_x` from wall hit position
+3. Initialize `tex_pos` with offset adjustments
+4. Loop through screen Y pixels:
+   - Calculate `tex_y` from current `tex_pos`
+   - Wrap `tex_y` with modulo
+   - Sample texture pixel at (`tex_x`, `tex_y`)
+   - Draw pixel to screen at (`x`, `y`)
+   - Increment `tex_pos` by `step`
+
+### Special Textures
+
+**Interactive Elements:**
+- **Doors** - Render door texture when hitting 'D' tiles
+- **Buttons** - Render button texture when hitting 'B' tiles
+- Priority system ensures correct texture even if multiple types overlap
+
+**Texture Swapping:**
+The system supports runtime texture swapping:
+```c
+data->wall_textures.textures_swapped = 0;  // Can toggle alternative textures
+```
+
+This allows for dynamic texture changes during gameplay (alternate skins, damage states, etc.).
+
+> [!example] Summary
+> Texture mapping converts wall ray hits into pixel-perfect textured columns by calculating precise hit positions (wall_x), mapping them to texture coordinates (tex_x, tex_y), and sampling with adjustments for camera pitch, jumping, and wall orientation. The system handles face detection, mirroring, modulo wrapping, and direct memory access for optimal performance.
