@@ -1,4 +1,4 @@
-This project has been created as part of the 42 curriculum by [bpires-r], [joafaust].
+*This project has been created as part of the 42 curriculum by [bpires-r], [joafaust].*
 
 # Cub3d
 
@@ -885,3 +885,143 @@ This allows for dynamic texture changes during gameplay (alternate skins, damage
 
 > [!example] Summary
 > Texture mapping converts wall ray hits into pixel-perfect textured columns by calculating precise hit positions (wall_x), mapping them to texture coordinates (tex_x, tex_y), and sampling with adjustments for camera pitch, jumping, and wall orientation. The system handles face detection, mirroring, modulo wrapping, and direct memory access for optimal performance.
+
+
+## Flashlight
+
+### Overview
+
+The flashlight is a **post-process screen-space effect** applied as the very last step of each rendered frame, after all walls, floor, ceiling, enemies and sprites have been drawn to the image buffer. It costs nothing in ray logic — it simply rewrites every pixel's brightness before flushing to the window.
+
+Toggle key: `F` — stored in `data->player.flashlight_on` (1 = on, 0 = off).
+
+### Constants (defined in `defines.h`)
+
+| Constant | Value | Meaning |
+| --- | --- | --- |
+| `FLASHLIGHT_RADIUS` | `0.45` | Radius of the lit circle, as a fraction of screen height |
+| `FLASHLIGHT_MIN_LIGHT` | `0.14` | Minimum brightness for pixels outside or at the edge of the circle (ambient darkness level) |
+
+### How it works (step by step)
+
+#### 1. `apply_flashlight(data)` — entry point
+
+Called once per frame, after the full scene is rendered:
+
+```c
+void apply_flashlight(t_cub3d *data)
+```
+
+It iterates over **every pixel** `(x, y)` of the screen:
+
+- If flashlight is **off**: applies a constant `FLASHLIGHT_MIN_LIGHT` to all pixels (the whole screen is dimmed to ambient darkness).
+- If flashlight is **on**: computes a per-pixel `brightness` value based on the pixel's distance from the screen center.
+
+#### 2. `get_brightness(data, x, y)` — radial light falloff
+
+This is the core math of the effect:
+
+```c
+static double get_brightness(t_cub3d *data, int x, int y)
+```
+
+**Step 1 — Compute the radius in pixels:**
+
+```c
+radius2 = data->current_height * FLASHLIGHT_RADIUS;
+radius2 = radius2 * radius2;
+```
+
+The radius is proportional to the screen height so it scales with any window resolution. It is squared immediately to avoid a `sqrt` later.
+
+**Step 2 — Distance from center (squared):**
+
+```c
+dx = x - current_width  / 2.0;
+dy = y - current_height / 2.0;
+dist2 = (dx * dx + dy * dy) / radius2;
+```
+
+`dist2` is the normalised squared distance from the screen centre. `dist2 == 0` means the exact centre; `dist2 == 1` means exactly on the circle boundary.
+
+**Step 3 — Brightness curve:**
+
+```c
+if (dist2 >= 1.0)
+    return (min_light);               // outside the circle → ambient darkness
+return (1.0 - (1.0 - min_light) * dist2 * dist2);
+```
+
+Inside the lit circle the brightness follows a **quartic falloff** (`dist2²`):
+
+$$B(d) = 1 - (1 - B_{min}) \cdot d^4$$
+
+where $d$ is the normalised distance (0 at centre, 1 at edge).
+
+| Distance from center | Brightness |
+| --- | --- |
+| 0.0 (center) | 1.0 (full brightness) |
+| 0.5 | ≈ 0.86 |
+| 0.8 | ≈ 0.52 |
+| 1.0 (edge) | `FLASHLIGHT_MIN_LIGHT` (0.14) |
+| > 1.0 (outside) | `FLASHLIGHT_MIN_LIGHT` (0.14) |
+
+The quartic curve produces a **brighter, wider hotspot** at the centre with a rapid drop near the edge, matching the look of a real torch beam.
+
+#### 3. `darken_pixel(color, brightness)` — bitshift colour scaling
+
+```c
+static int darken_pixel(int color, double brightness)
+```
+
+The packed 32-bit colour is split into its three RGB channels using **bitshifting**:
+
+```c
+r = ((color >> 16) & 0xFF) * brightness;
+g = ((color >>  8) & 0xFF) * brightness;
+b = ( color        & 0xFF) * brightness;
+```
+
+Each channel is multiplied by the brightness factor (0.0–1.0) and then repacked:
+
+```c
+return ((r << 16) | (g << 8) | b);
+```
+
+This scales all three channels uniformly, preserving the original hue while only changing luminosity.
+
+#### 4. `get_pixel(img, x, y)` — direct pixel read
+
+```c
+static int get_pixel(t_img *img, int x, int y)
+```
+
+Reads a pixel directly from the MiniLibX image buffer using pointer arithmetic:
+
+```c
+*(int *)(img->data + y * img->size_line + x * (img->bpp / 8))
+```
+
+- `img->size_line` is the byte width of one scanline.
+- `img->bpp / 8` converts bits-per-pixel to bytes-per-pixel.
+
+### Full call chain per frame
+
+```
+raycast_scene()
+  └─ draw all columns (walls, floor, ceiling)
+     └─ render enemies (sprite projection + z-buffer)
+        └─ apply_flashlight(data)       ← post-process, very last step
+              └─ for every pixel:
+                    get_pixel → get_brightness → darken_pixel → pixel_put
+```
+
+### Flashlight off vs on
+
+| State | Behaviour |
+| --- | --- |
+| Off (`flashlight_on == 0`) | Constant `FLASHLIGHT_MIN_LIGHT` applied to all pixels — full scene darkness |
+| On  (`flashlight_on == 1`) | Radial brightness gradient: full light at center, fades to `FLASHLIGHT_MIN_LIGHT` at the edges |
+
+> [!example] Resume
+> The flashlight is a screen-space post-process effect. It reads every rendered pixel, computes a radial brightness from screen centre using a quartic falloff, and rescales each RGB channel with bitshifting. When off, the whole scene is dimmed to `FLASHLIGHT_MIN_LIGHT`. No changes to the raycasting logic are needed — it is a pure image filter applied to the final frame.
