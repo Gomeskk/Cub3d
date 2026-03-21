@@ -54,8 +54,12 @@ This project focuses on:
 ### Compilation
 
 1. Clone the repository
-2. Make inside the repository
-   This will compile the project and create the executable: ./cub3d
+2. Download minilibx through the zip given on intra's evaluation sheet
+3. Add it inside the complete_lib directory
+   
+   you can use this command inside the root of the repository : **cd complete_lib**  - the name of the mlx directory should be exctly - minilibx-linux
+4. Go back to the root of the repository and use the command **make** inside it
+   This will compile the project with the minilibx and create the executable: ./cub3d
 
 ### Execution
 
@@ -95,7 +99,6 @@ The program validates:
 - Texture path accessibility
 - Correct color format
 - Duplicate or missing identifiers
-- WIPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
 On error, the program exits with an error message.
 For more information on the parsing you can also check the **Parsing** section in this README.

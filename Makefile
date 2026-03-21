@@ -13,7 +13,7 @@ WHITE   		= \e[1;37m
 DEFAULT 		= \e[0m
 
 # Variables
-NAME 			= cub3d
+NAME 			= cub3D
 CC 				= cc
 CFLAGS 			= -Wall -Wextra -Werror -g -O3
 INCLUDES 		= -I inc/
