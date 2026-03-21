@@ -64,10 +64,12 @@ GNL_PATH        = complete_lib/42_GNL
 GNL             = $(GNL_PATH)/libgnl.a
 PERSONAL_LIBS   = -lft -lgnl -lftprintf
 LIBS			= -L$(LIBFT_PATH) -L$(FT_PRINTF_PATH) -L$(GNL_PATH) $(PERSONAL_LIBS)
+MLX_PATH		= complete_lib/minilibx-linux
+MLX				= $(MLX_PATH)/libmlx_Linux.a
 
 ### MLX COMPILE FLAGS ###
-MLX_CC			= -L complete_lib/minilibx-linux -L/usr/lib -lmlx_Linux -lXext -lX11 -lm -lz
-MLX_INC			= -I/usr/include -I mlx_linux -O3 
+MLX_CC			= -L $(MLX_PATH) -L/usr/lib -lmlx_Linux -lXext -lX11 -lm -lz
+MLX_INC			= -I/usr/include -I $(MLX_PATH) -O3 
 
 
 vpath %.c $(SRC_DIR) $(PARSER_DIR) $(RAYC_DIR) $(PLAYER_DIR) $(FEATURES_DIR) $(TEXTURES_DIR) $(MENU_DIR)
@@ -83,7 +85,7 @@ $(OBJ_DIR):
 				@mkdir -p $@
 
 # Add mlx library as dependency here
-$(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(GNL) $(OBJ_DIR)
+$(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(GNL) $(MLX) $(OBJ_DIR)
 				@echo "$(WHITE)Bringing $(PINK)$(NAME)$(WHITE) to life!$(DEFAULT)"
 				@echo "$(WHITE)Creating $(PINK)$(NAME)'s$(WHITE) executable...$(DEFAULT)"
 				@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(MLX_CC) $(LIBS) -o $@
@@ -116,6 +118,9 @@ _$(PINK)88$(WHITE)_________________________________________$(PINK)88\n\
 88$(WHITE)___________       ___________$(PINK)888$(WHITE)_______$(PINK)88\n\
 _88$(WHITE)________________________________$(PINK)88\n\
 $(WHITE)__$(PINK)888888888888888888888888888888888"
+
+$(MLX):
+				@make -C complete_lib/minilibx-linux
 
 $(LIBFT):
 				@make -C $(LIBFT_PATH)
