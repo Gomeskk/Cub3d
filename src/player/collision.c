@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:57:46 by bpires-r          #+#    #+#             */
-/*   Updated: 2026/03/18 22:57:47 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/21 15:55:57 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	circle_intersects_rectangle(t_cub3d *data,
 void	get_col_range(t_cub3d *data, t_circle_center center,
 	int *col_range)
 {
-	col_range[0] = (int)floor((center.x - data->player.radius)
-			/ (double)data->tile);
-	col_range[1] = floor((center.x + data->player.radius) / (double)data->tile);
+	col_range[0] = (int)(center.x - data->player.radius)
+			/ (double)data->tile;
+	col_range[1] = (center.x + data->player.radius) / (double)data->tile;
 	if (col_range[0] < 0)
 		col_range[0] = 0;
 	if (col_range[1] >= data->map.col_count)
@@ -98,8 +98,8 @@ int	circle_collides_wall(t_cub3d *data, double cx, double cy)
 		|| cy + data->player.radius < 0
 		|| cy - data->player.radius >= data->map.row_count * data->tile)
 		return (1);
-	start_row = (int)floor((cy - data->player.radius) / (double)data->tile);
-	end_row = (int)floor((cy + data->player.radius) / (double)data->tile);
+	start_row = (int)(cy - data->player.radius) / (double)data->tile;
+	end_row = (int)(cy + data->player.radius) / (double)data->tile;
 	center.x = cx;
 	center.y = cy;
 	if (start_row < 0)

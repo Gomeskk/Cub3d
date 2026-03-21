@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 21:21:01 by bpires-r          #+#    #+#             */
-/*   Updated: 2025/12/09 00:22:21 by bpires-r         ###   ########.fr       */
+/*   Updated: 2026/03/21 16:14:34 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,17 @@ int	parse_colour(char *s, int *dest, t_cub3d *data)
 
 static void	parse_identifier_line(t_cub3d *data, char *line)
 {
-	if (!ft_strncmp(line, "NO", 2) && is_space(line[2]) && (data->textures.no
-			|| !parse_texture(&line[2], &data->textures.no)))
+	if (!ft_strncmp(line, "NO", 2) && is_space(line[2]) && ((data->textures.no
+			|| !parse_texture(&line[2], &data->textures.no))))
 		exit_error(data, DUP_NO);
 	else if (!ft_strncmp(line, "SO", 2) && is_space(line[2])
-		&& (data->textures.so || !parse_texture(&line[2], &data->textures.so)))
+		&& ((data->textures.so || !parse_texture(&line[2], &data->textures.so))))
 		exit_error(data, DUP_SO);
 	else if (!ft_strncmp(line, "EA", 2) && is_space(line[2])
-		&& (data->textures.ea || !parse_texture(&line[2], &data->textures.ea)))
+		&& ((data->textures.ea || !parse_texture(&line[2], &data->textures.ea))))
 		exit_error(data, DUP_EA);
 	else if (!ft_strncmp(line, "WE", 2) && is_space(line[2])
-		&& (data->textures.we || !parse_texture(&line[2], &data->textures.we)))
+		&& ((data->textures.we || !parse_texture(&line[2], &data->textures.we))))
 		exit_error(data, DUP_WE);
 	else if (!ft_strncmp(line, "C", 1) && is_space(line[1])
 		&& (data->textures.ceiling != -1
