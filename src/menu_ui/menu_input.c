@@ -6,7 +6,7 @@
 /*   By: joafaust <joafaust@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 22:18:08 by joafaust          #+#    #+#             */
-/*   Updated: 2026/03/18 22:18:09 by joafaust         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:41:57 by joafaust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	set_key_state(int keycode, t_cub3d *data, int state)
 int	key_press_handler(int keycode, t_cub3d *data)
 {
 	if (keycode == XK_Escape && data->status == MAIN_MENU_SCREEN)
-		exit(0);
+		x_window(data);
 	set_key_state(keycode, data, 1);
 	if (keycode == XK_Return || keycode == XK_Tab || keycode == XK_Escape)
 		return (menu_key_handler(keycode, data));
