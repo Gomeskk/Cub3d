@@ -78,21 +78,35 @@ int	is_door_open(t_cub3d *data, int x, int y)
 	return (0);
 }
 
+static int	check_door_in_view(t_cub3d *data, int i, double *dist)
+{
+	double	to_door_x;
+	double	to_door_y;
+	double	dot;
+
+	to_door_x = data->map.doors[i].x + 0.5;
+	to_door_x -= (data->player.pos_x / data->tile);
+	to_door_y = data->map.doors[i].y + 0.5;
+	to_door_y -= (data->player.pos_y / data->tile);
+	*dist = sqrt(to_door_x * to_door_x + to_door_y * to_door_y);
+	if (*dist <= 0.0)
+		return (0);
+	dot = (to_door_x * data->player.dir_x + to_door_y * data->player.dir_y)
+		/ *dist;
+	if (*dist < 1.0 && dot > 0.8)
+		return (1);
+	return (0);
+}
+
 void	toggle_door(t_cub3d *data)
 {
-	int		grid_x;
-	int		grid_y;
 	int		i;
 	double	dist;
 
-	grid_x = (int)(data->player.pos_x / data->tile);
-	grid_y = (int)(data->player.pos_y / data->tile);
 	i = 0;
 	while (i < data->map.door_count)
 	{
-		dist = sqrt(pow(data->map.doors[i].x - grid_x, 2)
-				+ pow(data->map.doors[i].y - grid_y, 2));
-		if (dist < 1.5)
+		if (check_door_in_view(data, i, &dist))
 		{
 			data->map.doors[i].is_open = !data->map.doors[i].is_open;
 			return ;
