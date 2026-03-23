@@ -40,16 +40,12 @@ int	get_texture_pixel(t_img *texture, int x, int y)
 */
 int	get_tex_x(t_img *texture, double wall_x, t_ray *ray)
 {
-	int		tex_x;
-	int		is_west_wall;
-	int		is_south_wall;
-	int		needs_mirror;
+	int	tex_x;
 
 	tex_x = (int)(wall_x * (double)texture->width);
-	is_west_wall = (ray->side == 0 && ray->ray_dir_x > 0);
-	is_south_wall = (ray->side == 1 && ray->ray_dir_y < 0);
-	needs_mirror = is_west_wall || is_south_wall;
-	if (needs_mirror)
+	if (ray->side == 0 && ray->step_x < 0)
+		tex_x = texture->width - tex_x - 1;
+	if (ray->side == 1 && ray->step_y > 0)
 		tex_x = texture->width - tex_x - 1;
 	if (tex_x < 0)
 		tex_x = 0;

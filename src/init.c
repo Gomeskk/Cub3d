@@ -81,14 +81,15 @@ void	init_game(t_cub3d *data)
 	data->img.width = WIDTH;
 	data->img.height = HEIGHT;
 	if (!load_wall_textures(data))
-		exit_error(data, "Failed to load wall textures");
+		exit_error(data, CUB3D_ERR_PREFIX "Failed to load wall textures");
 	data->z_buffer = malloc(sizeof(double) * WIDTH);
 	if (!data->z_buffer)
-		exit_error(data, "Failed to allocate z_buffer");
+		exit_error(data, CUB3D_ERR_PREFIX "Failed to allocate z_buffer");
 	if (!load_enemy_animations(data))
-		exit_error(data, "Failed to load enemy animation textures");
+		exit_error(data, CUB3D_ERR_PREFIX
+			"Failed to load enemy animation textures");
 	if (!load_hands_textures(data))
-		exit_error(data, "Failed to load hand textures");
+		exit_error(data, CUB3D_ERR_PREFIX "Failed to load hand textures");
 	init_runtime_state(data);
 }
 

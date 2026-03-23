@@ -67,7 +67,7 @@ void	game_start(t_cub3d *data)
 	data->current_height = HEIGHT;
 	mlx_mouse_show(data->mlx, data->window);
 	if (init_menu_images(data) == -1)
-		exit_error(data, "Failed to load menu images");
+		exit_error(data, CUB3D_ERR_PREFIX "Failed to load menu images");
 	init_menu_state(data);
 	render_main_menu(data);
 	mlx_hook(data->window, 2, 1L << 0, unified_key_press, data);

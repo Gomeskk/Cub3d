@@ -44,7 +44,7 @@ void	get_col_range(t_cub3d *data, t_circle_center center,
 	int *col_range)
 {
 	col_range[0] = (int)(center.x - data->player.radius)
-			/ (double)data->tile;
+		/ (double)data->tile;
 	col_range[1] = (center.x + data->player.radius) / (double)data->tile;
 	if (col_range[0] < 0)
 		col_range[0] = 0;

@@ -86,6 +86,7 @@
 # define ARROW_DIRECTION_DOWN -1
 
 ///         ERROR HANDLE            ///
+# define CUB3D_ERR_PREFIX "\033[1;35mcub3D:\033[1;0m "
 # define WRONG_ARGC "\033[1;35mcub3d:\033[1;0m singular map argument expected."
 # define WRONG_MAP_NAME "\033[1;35mcub3d:\033[1;0m .cub argument \
 extended expected."
