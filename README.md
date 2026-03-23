@@ -54,7 +54,7 @@ This project focuses on:
 ### Compilation
 
 1. Clone the repository
-2. Download minilibx through the zip given on intra's evaluation sheet
+2. Download minilibx through the folder given on intra's evaluation sheet
 3. Add it inside the complete_lib directory
    
    you can use this command inside the root of the repository : **cd complete_lib**  - the name of the mlx directory should be exctly - minilibx-linux
@@ -64,7 +64,18 @@ This project focuses on:
 ### Execution
 
 Run the program with a valid `.cub` map file:
+
+```bash
 ./cub3D maps/example.cub
+```
+
+For valgrind testing you can execute by using our .supp file to supress leaks that come from the minilibx library.
+_Example:_
+
+```bash
+valgrind --suppressions=mlx.supp ./cub3D ../../bpires-r/Cub3d/maps/door_test.cub
+```
+
 **Map File Format (.cub)**
 The configuration file must contain:
 
@@ -166,7 +177,14 @@ All final code was written, reviewed, tested, and validated manually.
 ## Technical Choices
 
 - Raycasting using DDA algorithm
-- Blah blah blah
+- Player/Entities as points in space with a circular collision shape
+- Rotation and Direction using the Transformation Matrix
+- Camera Matrix / Camera Plane
+- Camera Bob implementation for walking/running hands
+- Depth/Occlusion for Enemies/Entities
+- Camera inversion for image transformation associated with the player's camera
+- Step Calculation for Textures
+- Bitshifting for any colour usage
 
 ## Parser
 
@@ -498,7 +516,7 @@ Enemy movement only enters valid cells:
 
 This is why enemies do not pass through solid geometry.
 
-### Detection + game over radii
+### Detection + game over
 
 Both use Euclidean distance in world units.
 
@@ -847,13 +865,6 @@ pixel_address = texture_data + row_offset + col_offset
 
 // Read color value (32-bit ARGB)
 color = *(unsigned int *)pixel_address
-```
-
-**Bounds Safety:**
-Before sampling, coordinates are validated:
-```c
-if (x < 0 || x >= width || y < 0 || y >= height)
-    return 0x000000;  // Return black for out-of-bounds
 ```
 
 ### Rendering Pipeline
