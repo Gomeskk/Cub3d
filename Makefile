@@ -15,7 +15,7 @@ DEFAULT 		= \e[0m
 # Variables
 NAME 			= cub3D
 CC 				= cc
-CFLAGS 			= -Wall -Wextra -Werror -g -O3
+CFLAGS 			= -Wall -Wextra -Werror -g -O3 -march=native -flto -ftree-vectorize -funroll-loops -ffast-math
 INCLUDES 		= -I inc/
 
 RAYC_SRCS		= draw.c raycast.c dda.c
